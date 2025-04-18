@@ -11,7 +11,6 @@ enum class TRANSACTION_TYPE {
     WITHDRAWAL,
 
 };
-
 enum class RequestStatus {
     NONE,
     PENDING,
