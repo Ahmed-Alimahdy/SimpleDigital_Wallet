@@ -48,4 +48,5 @@ public:
     string getTypeString() const;
     string getStatusString() const;
 };
+// Constructor
 #endif
