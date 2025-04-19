@@ -120,6 +120,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Payment.h" />
+    <ClInclude Include="Sign.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Transaction.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>
@@ -132,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Admin_UI.cpp" />
+    <ClCompile Include="Sign.cpp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Admin_UI.resx">
