@@ -1,20 +1,20 @@
 #pragma once
-#include <string>
+#ifndef USER_H
+#define USER_H
 #include <unordered_map>
 #include <list>
-using namespace std;
+#include"Transaction.h"
 class user
 {
 private:
     string username;
     string email;
     string hashedPassword;
-    list<transaction> history_transaction;
     list<transaction> requested_transaction;
-    double balance;
 public:
+    double balance;
+    list<transaction> history_transaction;
     static unordered_map<string, user> allusers;
-    user(string& id, string& uname, string& mail, string& hashedPwd);
     string getUsername();
     string getEmail();
     double getBalance();
@@ -30,3 +30,4 @@ public:
     void change_password(string, string);
     void delete_account();
 };
+#endif
