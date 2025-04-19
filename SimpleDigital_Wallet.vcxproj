@@ -115,13 +115,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Admin.h" />
     <ClInclude Include="Admin_UI.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="Payment.h" />
-    <ClInclude Include="Transaction.h" />
-    <ClInclude Include="User.h" />
+    <ClInclude Include="Classes\Admin.h" />
+    <ClInclude Include="Classes\Payment.h" />
+    <ClInclude Include="Classes\Transaction.h" />
+    <ClInclude Include="Classes\User.h" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Admin_UI.cpp" />
+    <ClCompile Include="Classes\Admin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Admin_UI.resx">
