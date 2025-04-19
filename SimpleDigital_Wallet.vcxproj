@@ -116,6 +116,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
+    <ClInclude Include="Admin_UI.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Payment.h" />
     <ClInclude Include="Transaction.h" />
     <ClInclude Include="User.h" />
@@ -126,6 +129,14 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Admin_UI.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Admin_UI.resx">
+      <DependentUpon>Admin_UI.h</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
