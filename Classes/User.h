@@ -8,18 +8,19 @@ class user
 private:
     string username;
     string email;
-    string hashedPassword;
-    list<transaction> history_transaction;
-    list<transaction> requested_transaction;
+    //list<transaction> history_transaction;
+    //list<transaction> requested_transaction;
     double balance;
 public:
     static unordered_map<string, user> allusers;
-    user(string& id, string& uname, string& mail, string& hashedPwd);
+    user();
+    user(string& uname, string& mail, string& hashedPwd);
+    string hashedPassword;
     string getUsername();
     string getEmail();
     double getBalance();
     unordered_map<string, user>& getAllusers();
-    list<transaction> get_history_transaction();
+    //list<transaction> get_history_transaction();
     double calculate_balance();
     void edit_balance();
     void display_transaction_history();
