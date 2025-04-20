@@ -33,12 +33,15 @@
     <ClInclude Include="Classes\Transaction.h">
       <Filter>Header Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="userwrapper.h">
-      <Filter>Header Files\Classes</Filter>
+    <ClInclude Include="profile.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dashboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="profile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
