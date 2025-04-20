@@ -107,9 +107,6 @@ namespace SimpleDigitalWallet {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->pnlTerms = (gcnew System::Windows::Forms::Panel());
-			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
-			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->pnlSignUp = (gcnew System::Windows::Forms::Panel());
 			this->label15 = (gcnew System::Windows::Forms::Label());
 			this->textBox7 = (gcnew System::Windows::Forms::TextBox());
@@ -124,6 +121,9 @@ namespace SimpleDigitalWallet {
 			this->label9 = (gcnew System::Windows::Forms::Label());
 			this->label10 = (gcnew System::Windows::Forms::Label());
 			this->label8 = (gcnew System::Windows::Forms::Label());
+			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->pnlTerms->SuspendLayout();
 			this->pnlSignUp->SuspendLayout();
@@ -289,49 +289,6 @@ namespace SimpleDigitalWallet {
 			this->pnlTerms->Size = System::Drawing::Size(982, 553);
 			this->pnlTerms->TabIndex = 23;
 			this->pnlTerms->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Sign::pnlTerms_Paint);
-			// 
-			// button3
-			// 
-			this->button3->BackColor = System::Drawing::Color::DarkGreen;
-			this->button3->FlatAppearance->BorderSize = 0;
-			this->button3->FlatAppearance->MouseOverBackColor = System::Drawing::Color::Lime;
-			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button3->ForeColor = System::Drawing::Color::Transparent;
-			this->button3->Location = System::Drawing::Point(478, 443);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(95, 39);
-			this->button3->TabIndex = 2;
-			this->button3->Text = L"OK";
-			this->button3->UseVisualStyleBackColor = false;
-			this->button3->Click += gcnew System::EventHandler(this, &Sign::button3_Click_1);
-			// 
-			// textBox3
-			// 
-			this->textBox3->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->textBox3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->textBox3->Location = System::Drawing::Point(82, 100);
-			this->textBox3->Multiline = true;
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->ReadOnly = true;
-			this->textBox3->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
-			this->textBox3->Size = System::Drawing::Size(491, 337);
-			this->textBox3->TabIndex = 1;
-			this->textBox3->Text = resources->GetString(L"textBox3.Text");
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->BackColor = System::Drawing::Color::Transparent;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->label2->Location = System::Drawing::Point(76, 54);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(306, 36);
-			this->label2->TabIndex = 0;
-			this->label2->Text = L"Terms and Conditions";
 			// 
 			// pnlSignUp
 			// 
@@ -518,6 +475,50 @@ namespace SimpleDigitalWallet {
 			this->label8->TabIndex = 2;
 			this->label8->Text = L"Sign Up";
 			this->label8->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			this->label8->Click += gcnew System::EventHandler(this, &Sign::label8_Click);
+			// 
+			// button3
+			// 
+			this->button3->BackColor = System::Drawing::Color::DarkGreen;
+			this->button3->FlatAppearance->BorderSize = 0;
+			this->button3->FlatAppearance->MouseOverBackColor = System::Drawing::Color::Lime;
+			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button3->ForeColor = System::Drawing::Color::Transparent;
+			this->button3->Location = System::Drawing::Point(478, 443);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(95, 39);
+			this->button3->TabIndex = 2;
+			this->button3->Text = L"OK";
+			this->button3->UseVisualStyleBackColor = false;
+			this->button3->Click += gcnew System::EventHandler(this, &Sign::button3_Click_1);
+			// 
+			// textBox3
+			// 
+			this->textBox3->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->textBox3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->textBox3->Location = System::Drawing::Point(82, 100);
+			this->textBox3->Multiline = true;
+			this->textBox3->Name = L"textBox3";
+			this->textBox3->ReadOnly = true;
+			this->textBox3->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
+			this->textBox3->Size = System::Drawing::Size(491, 337);
+			this->textBox3->TabIndex = 1;
+			this->textBox3->Text = resources->GetString(L"textBox3.Text");
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->BackColor = System::Drawing::Color::Transparent;
+			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label2->Location = System::Drawing::Point(76, 54);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(306, 36);
+			this->label2->TabIndex = 0;
+			this->label2->Text = L"Terms and Conditions";
 			// 
 			// label7
 			// 
@@ -705,6 +706,8 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 private: System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void pnlTerms_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+}
+private: System::Void label8_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }
