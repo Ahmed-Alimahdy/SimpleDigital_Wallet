@@ -82,9 +82,12 @@ namespace SimpleDigitalWallet {
 			this->Name = L"Admin_UI";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Admin_UI";
+			this->Load += gcnew System::EventHandler(this, &Admin_UI::Admin_UI_Load);
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
+	private: System::Void Admin_UI_Load(System::Object^ sender, System::EventArgs^ e) {
+	}
 	};
 }
