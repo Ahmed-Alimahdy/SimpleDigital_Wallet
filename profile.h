@@ -1,4 +1,5 @@
 #pragma once
+#include"Requested_transactions.h"
 namespace SimpleDigitalWallet {
 
 	using namespace System;
@@ -551,6 +552,7 @@ namespace SimpleDigitalWallet {
 			this->transaction_button->Size = System::Drawing::Size(49, 50);
 			this->transaction_button->TabIndex = 7;
 			this->transaction_button->UseVisualStyleBackColor = false;
+			this->transaction_button->Click += gcnew System::EventHandler(this, &profile::transaction_button_Click);
 			// 
 			// profile_button
 			// 
@@ -671,6 +673,11 @@ private: System::Void home_button_Click(System::Object^ sender, System::EventArg
 }
 private: System::Void profile_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
 	Application::Exit();
+}
+private: System::Void transaction_button_Click(System::Object^ sender, System::EventArgs^ e) {
+	this->Hide();
+	Requested_transactions^ transaction = gcnew Requested_transactions(this);
+	transaction->Show();
 }
 };
 }

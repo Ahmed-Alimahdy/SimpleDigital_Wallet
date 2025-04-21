@@ -1,6 +1,8 @@
 #pragma once
 #include "Classes/User.h"
 #include "profile.h"
+#include "Requested_transactions.h"
+#include"Balance_managment.h"
 namespace SimpleDigitalWallet {
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -14,7 +16,43 @@ namespace SimpleDigitalWallet {
 	/// </summary>
 	public ref class Dashboard : public System::Windows::Forms::Form
 	{
+		void MakeRoundedButton(Button^ button, int radius) {
+			GraphicsPath^ path = gcnew Drawing2D::GraphicsPath();
+			System::Drawing::Rectangle bounds = button->ClientRectangle;
+			int diameter = radius * 2;
 
+			// Define the rounded rectangle path
+			path->AddArc(bounds.X, bounds.Y, diameter, diameter, 180, 90);
+			path->AddArc(bounds.Right - diameter, bounds.Y, diameter, diameter, 270, 90);
+			path->AddArc(bounds.Right - diameter, bounds.Bottom - diameter, diameter, diameter, 0, 90);
+			path->AddArc(bounds.X, bounds.Bottom - diameter, diameter, diameter, 90, 90);
+			path->CloseFigure();
+
+			// Set the region of the Button to the rounded rectangle
+			button->Region = gcnew System::Drawing::Region(path);
+
+			// Optional: Add a border by drawing the path
+			button->FlatStyle = FlatStyle::Flat; // Ensure the button has a flat style
+			button->Paint += gcnew PaintEventHandler(this, &Dashboard::DrawRoundedButtonBorder);
+		}
+
+		void DrawRoundedButtonBorder(Object^ sender, PaintEventArgs^ e) {
+			Button^ button = safe_cast<Button^>(sender);
+			GraphicsPath^ path = gcnew Drawing2D::GraphicsPath();
+			System::Drawing::Rectangle bounds = button->ClientRectangle;
+			int radius = 10; // Adjust radius as needed
+			int diameter = radius * 2;
+
+			// Define the rounded rectangle path
+			path->AddArc(bounds.X, bounds.Y, diameter, diameter, 180, 90);
+			path->AddArc(bounds.Right - diameter, bounds.Y, diameter, diameter, 270, 90);
+			path->AddArc(bounds.Right - diameter, bounds.Bottom - diameter, diameter, diameter, 0, 90);
+			path->AddArc(bounds.X, bounds.Bottom - diameter, diameter, diameter, 90, 90);
+			path->CloseFigure();
+
+			Pen^ pen = gcnew Pen(Color::Gray, 2); // Adjust color and thickness as needed
+			e->Graphics->DrawPath(pen, path);
+		}
 		property System::String^ PlaceholderText
 		{
 			void set(System::String^ value) { placeholder = value; Invalidate(); }
@@ -60,6 +98,7 @@ namespace SimpleDigitalWallet {
 					transaction_date_label->Text = gcnew String(/*t.getTimestampAsString().c_str()*/"19/4/2025");  //"1"
 					transaction_date_label->Location = System::Drawing::Point(17, 10);
 					transaction_date_label->AutoSize = true;
+					transaction_date_label->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold);
 					Label^ to_form_field = gcnew Label();
 					/*if (t.getType() == TRANSACTION_TYPE::WITHDRAWAL || t.getType() == TRANSACTION_TYPE::REQUEST_MONEY)
 						to_form_field->Text = "From";
@@ -67,6 +106,7 @@ namespace SimpleDigitalWallet {
 						to_form_field->Text = "To: ";  
 					to_form_field->Location = System::Drawing::Point(17, 45);
 					to_form_field->AutoSize = true;
+					to_form_field->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold);
 					Label^ sender_reciever_label = gcnew Label();
 					/*if (t.getType() == TRANSACTION_TYPE::SEND_MONEY) {
 						sender_reciever_label->Text = gcnew String(t.getSender().c_str());
@@ -74,12 +114,14 @@ namespace SimpleDigitalWallet {
 					else if (t.getType() == TRANSACTION_TYPE::REQUEST_MONEY) {*/
 						sender_reciever_label->Text = gcnew String(/*t.getRecipient().c_str()*/"John Smith"); //"2"
 					//}
-					sender_reciever_label->Location = System::Drawing::Point(50, 45);
+					sender_reciever_label->Location = System::Drawing::Point(55, 45);
 					sender_reciever_label->AutoSize = true;
+					sender_reciever_label->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold);
 					Label^ amount_label = gcnew Label();
 					amount_label->Text = "amount: $100"; //t.getAmount();
-					amount_label->Location = System::Drawing::Point(430, 30);
+					amount_label->Location = System::Drawing::Point(380, 30);
 					amount_label->AutoSize = true;
+					amount_label->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold);
 					panel->Controls->Add(transaction_date_label);
 					panel->Controls->Add(to_form_field);
 					panel->Controls->Add(sender_reciever_label);
@@ -289,10 +331,10 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			// 
 			// button3
 			// 
-			this->button3->BackColor = System::Drawing::SystemColors::ControlLight;
+			this->button3->BackColor = System::Drawing::Color::Black;
 			this->button3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button3->ForeColor = System::Drawing::Color::Gray;
+			this->button3->ForeColor = System::Drawing::Color::White;
 			this->button3->Location = System::Drawing::Point(34, 189);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(444, 43);
@@ -414,10 +456,10 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			// 
 			// button2
 			// 
-			this->button2->BackColor = System::Drawing::SystemColors::ControlLight;
+			this->button2->BackColor = System::Drawing::Color::Black;
 			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button2->ForeColor = System::Drawing::Color::Gray;
+			this->button2->ForeColor = System::Drawing::Color::White;
 			this->button2->Location = System::Drawing::Point(33, 190);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(444, 43);
@@ -519,6 +561,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->transaction_button->Size = System::Drawing::Size(49, 50);
 			this->transaction_button->TabIndex = 7;
 			this->transaction_button->UseVisualStyleBackColor = false;
+			this->transaction_button->Click += gcnew System::EventHandler(this, &Dashboard::transaction_button_Click);
 			// 
 			// profile_button
 			// 
@@ -593,6 +636,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->add_to_balance->Size = System::Drawing::Size(61, 56);
 			this->add_to_balance->TabIndex = 2;
 			this->add_to_balance->UseVisualStyleBackColor = false;
+			this->add_to_balance->Click += gcnew System::EventHandler(this, &Dashboard::add_to_balance_Click);
 			// 
 			// current_label
 			// 
@@ -656,6 +700,8 @@ private: System::Void transaction_panel_Paint(System::Object^ sender, System::Wi
 private: System::Void Dashboard_Load(System::Object^ sender, System::EventArgs^ e) {
 	generate_transaction_history_panels();
 	MakeRoundedPanel(panel2, 15);
+	MakeRoundedButton(button3, 15);
+	MakeRoundedButton(button2, 15);
 }
 private: System::Void sender_reciever_label_Click(System::Object^ sender, System::EventArgs^ e) {
 }
@@ -781,6 +827,16 @@ private: System::Void domainUpDown2_KeyPress(System::Object^ sender, System::Win
 	if (!Char::IsDigit(e->KeyChar) && e->KeyChar != '\b' && e->KeyChar != '.') {
 		e->Handled = true;
 	}
+}
+private: System::Void transaction_button_Click(System::Object^ sender, System::EventArgs^ e) {
+	Requested_transactions^ transaction_form = gcnew Requested_transactions(this);
+	transaction_form->Show();
+	this->Hide();
+}
+private: System::Void add_to_balance_Click(System::Object^ sender, System::EventArgs^ e) {
+	Balance_managment^ balance_form = gcnew Balance_managment(this);
+	balance_form->Show();
+	this->Hide();
 }
 };
 }

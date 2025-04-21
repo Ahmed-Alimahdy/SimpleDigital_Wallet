@@ -120,6 +120,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
+    <ClInclude Include="Balance_managment.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Classes\Transaction.h" />
     <ClInclude Include="Classes\User.h" />
     <ClInclude Include="Dashboard.h">
@@ -127,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="Payment.h" />
     <ClInclude Include="profile.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Requested_transactions.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
@@ -138,15 +144,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Balance_managment.cpp" />
     <ClCompile Include="Dashboard.cpp" />
     <ClCompile Include="profile.cpp" />
+    <ClCompile Include="Requested_transactions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Balance_managment.resx">
+      <DependentUpon>Balance_managment.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dashboard.resx">
       <DependentUpon>Dashboard.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="profile.resx">
       <DependentUpon>profile.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Requested_transactions.resx">
+      <DependentUpon>Requested_transactions.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
