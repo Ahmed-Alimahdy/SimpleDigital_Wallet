@@ -120,6 +120,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
+    <ClInclude Include="Admin_UI.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Classes\Payment.h" />
+    <ClInclude Include="Classes\Transaction.h" />
+    <ClInclude Include="Classes\User.h" />
+    <ClInclude Include="Sign.h">
     <ClInclude Include="Balance_managment.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -144,6 +151,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Admin_UI.cpp" />
+    <ClCompile Include="Sign.cpp" />
+    <ClCompile Include="Transaction.cpp" />
+    <ClCompile Include="User.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Admin_UI.resx">
+      <DependentUpon>Admin_UI.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sign.resx">
+      <DependentUpon>Sign.h</DependentUpon>
     <ClCompile Include="Balance_managment.cpp" />
     <ClCompile Include="Dashboard.cpp" />
     <ClCompile Include="profile.cpp" />
