@@ -1,5 +1,6 @@
 #pragma once
 #include "Classes/User.h"
+#include "profile.h"
 namespace SimpleDigitalWallet {
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -51,7 +52,7 @@ namespace SimpleDigitalWallet {
 					/*transaction t = user_account->history_transaction.front();
 					user_account->history_transaction.pop_front();*/
 					Panel^ panel = gcnew Panel();
-					panel->Size = System::Drawing::Size(450, 83);
+					panel->Size = System::Drawing::Size(520, 83);
 					panel->BackColor = System::Drawing::SystemColors::ControlLight;
 					panel->Location = System::Drawing::Point(0, (i * 100));
 					MakeRoundedPanel(panel, 15);
@@ -73,11 +74,11 @@ namespace SimpleDigitalWallet {
 					else if (t.getType() == TRANSACTION_TYPE::REQUEST_MONEY) {*/
 						sender_reciever_label->Text = gcnew String(/*t.getRecipient().c_str()*/"John Smith"); //"2"
 					//}
-					sender_reciever_label->Location = System::Drawing::Point(146, 45);
+					sender_reciever_label->Location = System::Drawing::Point(50, 45);
 					sender_reciever_label->AutoSize = true;
 					Label^ amount_label = gcnew Label();
 					amount_label->Text = "amount: $100"; //t.getAmount();
-					amount_label->Location = System::Drawing::Point(300, 30);
+					amount_label->Location = System::Drawing::Point(430, 30);
 					amount_label->AutoSize = true;
 					panel->Controls->Add(transaction_date_label);
 					panel->Controls->Add(to_form_field);
@@ -474,7 +475,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->scrollable_transaction_panel->BackColor = System::Drawing::Color::White;
 			this->scrollable_transaction_panel->Location = System::Drawing::Point(12, 252);
 			this->scrollable_transaction_panel->Name = L"scrollable_transaction_panel";
-			this->scrollable_transaction_panel->Size = System::Drawing::Size(629, 548);
+			this->scrollable_transaction_panel->Size = System::Drawing::Size(550, 548);
 			this->scrollable_transaction_panel->TabIndex = 2;
 			// 
 			// black_panel
@@ -540,7 +541,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->home_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->home_button->ForeColor = System::Drawing::Color::ForestGreen;
 			this->home_button->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"home_button.Image")));
-			this->home_button->Location = System::Drawing::Point(938, 1);
+			this->home_button->Location = System::Drawing::Point(938, 3);
 			this->home_button->Name = L"home_button";
 			this->home_button->Size = System::Drawing::Size(49, 52);
 			this->home_button->TabIndex = 5;
@@ -617,8 +618,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			// 
 			// Dashboard
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
-			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
 			this->ClientSize = System::Drawing::Size(1200, 800);
 			this->Controls->Add(this->panel3);
 			this->Controls->Add(this->panel1);
@@ -668,6 +668,9 @@ private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArg
 private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void profile_button_Click(System::Object^ sender, System::EventArgs^ e) {
+	profile^ profile_form = gcnew profile(this);
+	profile_form->Show();
+	this->Hide();
 }
 private: System::Void panel2_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 }

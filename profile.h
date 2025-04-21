@@ -1,5 +1,4 @@
 #pragma once
-
 namespace SimpleDigitalWallet {
 
 	using namespace System;
@@ -8,18 +7,108 @@ namespace SimpleDigitalWallet {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Drawing::Drawing2D;
 
 	/// <summary>
 	/// Summary for profile
 	/// </summary>
 	public ref class profile : public System::Windows::Forms::Form
 	{
+		void MakeRoundedButton(Button^ button, int radius) {
+			GraphicsPath^ path = gcnew Drawing2D::GraphicsPath();
+			System::Drawing::Rectangle bounds = button->ClientRectangle;
+			int diameter = radius * 2;
+
+			// Define the rounded rectangle path
+			path->AddArc(bounds.X, bounds.Y, diameter, diameter, 180, 90);
+			path->AddArc(bounds.Right - diameter, bounds.Y, diameter, diameter, 270, 90);
+			path->AddArc(bounds.Right - diameter, bounds.Bottom - diameter, diameter, diameter, 0, 90);
+			path->AddArc(bounds.X, bounds.Bottom - diameter, diameter, diameter, 90, 90);
+			path->CloseFigure();
+
+			// Set the region of the Button to the rounded rectangle
+			button->Region = gcnew System::Drawing::Region(path);
+
+			// Optional: Add a border by drawing the path
+			button->FlatStyle = FlatStyle::Flat; // Ensure the button has a flat style
+			button->Paint += gcnew PaintEventHandler(this, &profile::DrawRoundedButtonBorder);
+		}
+
+		void DrawRoundedButtonBorder(Object^ sender, PaintEventArgs^ e) {
+			Button^ button = safe_cast<Button^>(sender);
+			GraphicsPath^ path = gcnew Drawing2D::GraphicsPath();
+			System::Drawing::Rectangle bounds = button->ClientRectangle;
+			int radius = 10; // Adjust radius as needed
+			int diameter = radius * 2;
+
+			// Define the rounded rectangle path
+			path->AddArc(bounds.X, bounds.Y, diameter, diameter, 180, 90);
+			path->AddArc(bounds.Right - diameter, bounds.Y, diameter, diameter, 270, 90);
+			path->AddArc(bounds.Right - diameter, bounds.Bottom - diameter, diameter, diameter, 0, 90);
+			path->AddArc(bounds.X, bounds.Bottom - diameter, diameter, diameter, 90, 90);
+			path->CloseFigure();
+
+			Pen^ pen = gcnew Pen(Color::Gray, 2); // Adjust color and thickness as needed
+			e->Graphics->DrawPath(pen, path);
+		}
+
+		void MakeRoundedTextBox(TextBox^ textBox, int radius) {
+			GraphicsPath^ path = gcnew Drawing2D::GraphicsPath();
+			System::Drawing::Rectangle bounds = textBox->ClientRectangle;
+			int diameter = radius * 2;
+
+			// Define the rounded rectangle path
+			path->AddArc(bounds.X, bounds.Y, diameter, diameter, 180, 90);
+			path->AddArc(bounds.Right - diameter, bounds.Y, diameter, diameter, 270, 90);
+			path->AddArc(bounds.Right - diameter, bounds.Bottom - diameter, diameter, diameter, 0, 90);
+			path->AddArc(bounds.X, bounds.Bottom - diameter, diameter, diameter, 90, 90);
+			path->CloseFigure();
+
+			// Set the region of the TextBox to the rounded rectangle
+			textBox->Region = gcnew System::Drawing::Region(path);
+
+			// Optional: Add a border by drawing the path
+			textBox->BorderStyle = BorderStyle::None; // Remove default border
+			textBox->Paint += gcnew PaintEventHandler(this, &profile::DrawRoundedBorder);
+		}
+
+		void DrawRoundedBorder(Object^ sender, PaintEventArgs^ e) {
+			TextBox^ textBox = safe_cast<TextBox^>(sender);
+			GraphicsPath^ path = gcnew Drawing2D::GraphicsPath();
+			System::Drawing::Rectangle bounds = textBox->ClientRectangle;
+			int radius = 10; // Adjust radius as needed
+			int diameter = radius * 2;
+
+			// Define the rounded rectangle path
+			path->AddArc(bounds.X, bounds.Y, diameter, diameter, 180, 90);
+			path->AddArc(bounds.Right - diameter, bounds.Y, diameter, diameter, 270, 90);
+			path->AddArc(bounds.Right - diameter, bounds.Bottom - diameter, diameter, diameter, 0, 90);
+			path->AddArc(bounds.X, bounds.Bottom - diameter, diameter, diameter, 90, 90);
+			path->CloseFigure();
+
+			Pen^ pen = gcnew Pen(Color::Gray, 2); // Adjust color and thickness as needed
+			e->Graphics->DrawPath(pen, path);
+		}
+
+
+
+		void MakeRoundedPanel(Panel^ panel, int radius) {
+			GraphicsPath^ path = gcnew Drawing2D::GraphicsPath();
+			System::Drawing::Rectangle  bounds = panel->ClientRectangle;
+			int diameter = radius * 2;
+			path->AddArc(bounds.X, bounds.Y, diameter, diameter, 180, 90);
+			path->AddArc(bounds.Right - diameter, bounds.Y, diameter, diameter, 270, 90);
+			path->AddArc(bounds.Right - diameter, bounds.Bottom - diameter, diameter, diameter, 0, 90);
+			path->AddArc(bounds.X, bounds.Bottom - diameter, diameter, diameter, 90, 90);
+			path->CloseFigure();
+			panel->Region = gcnew System::Drawing::Region(path);
+		}
 		void generate_payment_methods_panels()
 		{
 			/*if (user_account->history_transaction.size() == 0)
 			{*/
 			/*Label^ noTransactionsLabel = gcnew Label();
-			noTransactionsLabel->Text = "No transactions yet";
+			noTransactionsLabel->Text = "No payment methods yet";
 			noTransactionsLabel->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular);
 			noTransactionsLabel->AutoSize = true;
 			int centerX = (this->scrollable_transaction_panel->Width - noTransactionsLabel->Width) /6 ;
@@ -31,8 +120,7 @@ namespace SimpleDigitalWallet {
 			//{
 			for (int i = 0;i < 20;i++)
 			{
-				/*transaction t = user_account->history_transaction.front();
-				user_account->history_transaction.pop_front();*/
+
 				Panel^ panel = gcnew Panel();
 				panel->Size = System::Drawing::Size(450, 83);
 				panel->BackColor = System::Drawing::Color::White;
@@ -56,7 +144,7 @@ namespace SimpleDigitalWallet {
 				remove_button->ForeColor = System::Drawing::Color::White;   // Text color remains white
 				remove_button->Location = System::Drawing::Point(370, 20);
 				remove_button->AutoSize = true;
-				remove_button->Size = System::Drawing::Size(70, 40);
+				remove_button->Size = System::Drawing::Size(70, 30);
 				panel->Controls->Add(payment_method_id_label);
 				panel->Controls->Add(payment_category_label);
 				panel->Controls->Add(remove_button);
@@ -66,8 +154,17 @@ namespace SimpleDigitalWallet {
 			//}
 		}
 	public:
+		Form^ dashboard;
 		profile(void)
 		{
+			InitializeComponent();
+			//
+			//TODO: Add the constructor code here
+			//
+		}
+		profile(Form^ dashboard)
+		{
+			this->dashboard = dashboard;
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
@@ -100,6 +197,26 @@ namespace SimpleDigitalWallet {
 	private: System::Windows::Forms::PictureBox^ wallet_icon;
 	private: System::Windows::Forms::Label^ wallet_label;
 	private:System::Windows::Forms::Panel^ scrollable_payment_panel;
+	private: System::Windows::Forms::TextBox^ VisaNumber;
+	private: System::Windows::Forms::TextBox^ VisaCategory;
+	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::Label^ label2;
+	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::Panel^ panel1;
+	private: System::Windows::Forms::Panel^ pic_panel;
+    private: System::Windows::Forms::PictureBox^ profile_picbox;
+    private: System::Windows::Forms::Label^ name_label;
+    private: System::Windows::Forms::Panel^ profile_panel;
+    private: System::Windows::Forms::TextBox^ username_textbox;
+    private: System::Windows::Forms::Label^ username_label;
+    private: System::Windows::Forms::Label^ details_label;
+    private: System::Windows::Forms::TextBox^ email_textbox;
+    private: System::Windows::Forms::Label^ email_label;
+    private: System::Windows::Forms::Button^ save_button;
+    private: System::Windows::Forms::TextBox^ password_textbox;
+    private: System::Windows::Forms::Label^ password_label;
+
+
 #pragma region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify
@@ -108,6 +225,24 @@ namespace SimpleDigitalWallet {
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(profile::typeid));
+			this->pic_panel = (gcnew System::Windows::Forms::Panel());
+			this->name_label = (gcnew System::Windows::Forms::Label());
+			this->profile_picbox = (gcnew System::Windows::Forms::PictureBox());
+			this->profile_panel = (gcnew System::Windows::Forms::Panel());
+			this->save_button = (gcnew System::Windows::Forms::Button());
+			this->password_textbox = (gcnew System::Windows::Forms::TextBox());
+			this->password_label = (gcnew System::Windows::Forms::Label());
+			this->email_textbox = (gcnew System::Windows::Forms::TextBox());
+			this->email_label = (gcnew System::Windows::Forms::Label());
+			this->username_textbox = (gcnew System::Windows::Forms::TextBox());
+			this->username_label = (gcnew System::Windows::Forms::Label());
+			this->details_label = (gcnew System::Windows::Forms::Label());
+			this->VisaNumber = (gcnew System::Windows::Forms::TextBox());
+			this->VisaCategory = (gcnew System::Windows::Forms::TextBox());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->scrollable_payment_panel = (gcnew System::Windows::Forms::Panel());
 			this->manage_payment_method_label = (gcnew System::Windows::Forms::Label());
 			this->black_panel = (gcnew System::Windows::Forms::Panel());
@@ -117,15 +252,250 @@ namespace SimpleDigitalWallet {
 			this->home_button = (gcnew System::Windows::Forms::Button());
 			this->wallet_icon = (gcnew System::Windows::Forms::PictureBox());
 			this->wallet_label = (gcnew System::Windows::Forms::Label());
+			this->pic_panel->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->profile_picbox))->BeginInit();
+			this->profile_panel->SuspendLayout();
+			this->panel1->SuspendLayout();
 			this->black_panel->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->wallet_icon))->BeginInit();
 			this->SuspendLayout();
+			// 
+			// pic_panel
+			// 
+			this->pic_panel->BackColor = System::Drawing::Color::Gainsboro;
+			this->pic_panel->Controls->Add(this->name_label);
+			this->pic_panel->Controls->Add(this->profile_picbox);
+			this->pic_panel->ForeColor = System::Drawing::Color::Black;
+			this->pic_panel->Location = System::Drawing::Point(12, 132);
+			this->pic_panel->Name = L"pic_panel";
+			this->pic_panel->Size = System::Drawing::Size(610, 124);
+			this->pic_panel->TabIndex = 0;
+			this->pic_panel->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &profile::profile_panel_Paint);
+			// 
+			// name_label
+			// 
+			this->name_label->AutoSize = true;
+			this->name_label->Font = (gcnew System::Drawing::Font(L"Arial", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->name_label->Location = System::Drawing::Point(132, 50);
+			this->name_label->Name = L"name_label";
+			this->name_label->Size = System::Drawing::Size(235, 32);
+			this->name_label->TabIndex = 1;
+			this->name_label->Text = L"Bruno fernandes";
+			// 
+			// profile_picbox
+			// 
+			this->profile_picbox->ErrorImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"profile_picbox.ErrorImage")));
+			this->profile_picbox->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"profile_picbox.Image")));
+			this->profile_picbox->Location = System::Drawing::Point(27, 19);
+			this->profile_picbox->Name = L"profile_picbox";
+			this->profile_picbox->Size = System::Drawing::Size(80, 80);
+			this->profile_picbox->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->profile_picbox->TabIndex = 0;
+			this->profile_picbox->TabStop = false;
+			this->profile_picbox->Click += gcnew System::EventHandler(this, &profile::pictureBox1_Click);
+			// 
+			// profile_panel
+			// 
+			this->profile_panel->BackColor = System::Drawing::Color::Gainsboro;
+			this->profile_panel->Controls->Add(this->save_button);
+			this->profile_panel->Controls->Add(this->password_textbox);
+			this->profile_panel->Controls->Add(this->password_label);
+			this->profile_panel->Controls->Add(this->email_textbox);
+			this->profile_panel->Controls->Add(this->email_label);
+			this->profile_panel->Controls->Add(this->username_textbox);
+			this->profile_panel->Controls->Add(this->username_label);
+			this->profile_panel->Controls->Add(this->details_label);
+			this->profile_panel->ForeColor = System::Drawing::Color::Transparent;
+			this->profile_panel->Location = System::Drawing::Point(12, 320);
+			this->profile_panel->Name = L"profile_panel";
+			this->profile_panel->Size = System::Drawing::Size(610, 421);
+			this->profile_panel->TabIndex = 1;
+			// 
+			// save_button
+			// 
+			this->save_button->BackColor = System::Drawing::Color::Black;
+			this->save_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->save_button->Font = (gcnew System::Drawing::Font(L"Arial", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->save_button->ForeColor = System::Drawing::Color::White;
+			this->save_button->Location = System::Drawing::Point(16, 373);
+			this->save_button->Name = L"save_button";
+			this->save_button->Size = System::Drawing::Size(158, 38);
+			this->save_button->TabIndex = 7;
+			this->save_button->Text = L"Save changes";
+			this->save_button->UseVisualStyleBackColor = false;
+			this->save_button->Click += gcnew System::EventHandler(this, &profile::button1_Click);
+			// 
+			// password_textbox
+			// 
+			this->password_textbox->BackColor = System::Drawing::Color::LightGray;
+			this->password_textbox->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->password_textbox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->password_textbox->Location = System::Drawing::Point(16, 313);
+			this->password_textbox->Name = L"password_textbox";
+			this->password_textbox->Size = System::Drawing::Size(546, 23);
+			this->password_textbox->TabIndex = 6;
+			this->password_textbox->UseSystemPasswordChar = true;
+			// 
+			// password_label
+			// 
+			this->password_label->AutoSize = true;
+			this->password_label->Font = (gcnew System::Drawing::Font(L"Arial", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->password_label->ForeColor = System::Drawing::Color::Black;
+			this->password_label->Location = System::Drawing::Point(14, 278);
+			this->password_label->Name = L"password_label";
+			this->password_label->Size = System::Drawing::Size(103, 24);
+			this->password_label->TabIndex = 5;
+			this->password_label->Text = L"Password";
+			// 
+			// email_textbox
+			// 
+			this->email_textbox->BackColor = System::Drawing::Color::LightGray;
+			this->email_textbox->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->email_textbox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->email_textbox->Location = System::Drawing::Point(17, 215);
+			this->email_textbox->Multiline = true;
+			this->email_textbox->Name = L"email_textbox";
+			this->email_textbox->Size = System::Drawing::Size(544, 24);
+			this->email_textbox->TabIndex = 4;
+			this->email_textbox->Text = L"bruno@gmail.com";
+			// 
+			// email_label
+			// 
+			this->email_label->AutoSize = true;
+			this->email_label->Font = (gcnew System::Drawing::Font(L"Arial", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->email_label->ForeColor = System::Drawing::Color::Black;
+			this->email_label->Location = System::Drawing::Point(14, 181);
+			this->email_label->Name = L"email_label";
+			this->email_label->Size = System::Drawing::Size(61, 24);
+			this->email_label->TabIndex = 3;
+			this->email_label->Text = L"Email";
+			// 
+			// username_textbox
+			// 
+			this->username_textbox->BackColor = System::Drawing::Color::LightGray;
+			this->username_textbox->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->username_textbox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->username_textbox->Location = System::Drawing::Point(16, 125);
+			this->username_textbox->Name = L"username_textbox";
+			this->username_textbox->Size = System::Drawing::Size(545, 23);
+			this->username_textbox->TabIndex = 2;
+			this->username_textbox->Text = L"Bruno fernandes";
+			this->username_textbox->TextChanged += gcnew System::EventHandler(this, &profile::username_textbox_TextChanged);
+			// 
+			// username_label
+			// 
+			this->username_label->AutoSize = true;
+			this->username_label->Font = (gcnew System::Drawing::Font(L"Arial", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->username_label->ForeColor = System::Drawing::Color::Black;
+			this->username_label->Location = System::Drawing::Point(11, 91);
+			this->username_label->Name = L"username_label";
+			this->username_label->Size = System::Drawing::Size(105, 24);
+			this->username_label->TabIndex = 1;
+			this->username_label->Text = L"Username";
+			// 
+			// details_label
+			// 
+			this->details_label->AutoSize = true;
+			this->details_label->Font = (gcnew System::Drawing::Font(L"Arial", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->details_label->ForeColor = System::Drawing::Color::Black;
+			this->details_label->Location = System::Drawing::Point(9, 15);
+			this->details_label->Name = L"details_label";
+			this->details_label->Size = System::Drawing::Size(211, 35);
+			this->details_label->TabIndex = 0;
+			this->details_label->Text = L"Profile details";
+			// 
+			// VisaNumber
+			// 
+			this->VisaNumber->BackColor = System::Drawing::Color::LightGray;
+			this->VisaNumber->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->VisaNumber->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->VisaNumber->ForeColor = System::Drawing::Color::Black;
+			this->VisaNumber->Location = System::Drawing::Point(9, 63);
+			this->VisaNumber->Name = L"VisaNumber";
+			this->VisaNumber->Size = System::Drawing::Size(462, 31);
+			this->VisaNumber->TabIndex = 0;
+			this->VisaNumber->TextChanged += gcnew System::EventHandler(this, &profile::VisaNumber_TextChanged);
+			// 
+			// VisaCategory
+			// 
+			this->VisaCategory->BackColor = System::Drawing::Color::LightGray;
+			this->VisaCategory->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->VisaCategory->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->VisaCategory->ForeColor = System::Drawing::Color::Black;
+			this->VisaCategory->Location = System::Drawing::Point(9, 160);
+			this->VisaCategory->Name = L"VisaCategory";
+			this->VisaCategory->Size = System::Drawing::Size(462, 31);
+			this->VisaCategory->TabIndex = 1;
+			this->VisaCategory->TextChanged += gcnew System::EventHandler(this, &profile::VisaCategory_TextChanged);
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label1->Location = System::Drawing::Point(3, 28);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(188, 32);
+			this->label1->TabIndex = 2;
+			this->label1->Text = L"Visa Number";
+			this->label1->Click += gcnew System::EventHandler(this, &profile::label1_Click);
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label2->Location = System::Drawing::Point(3, 125);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(205, 32);
+			this->label2->TabIndex = 3;
+			this->label2->Text = L"Visa Category";
+			this->label2->Click += gcnew System::EventHandler(this, &profile::label2_Click);
+			// 
+			// button1
+			// 
+			this->button1->BackColor = System::Drawing::Color::Black;
+			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button1->ForeColor = System::Drawing::Color::Transparent;
+			this->button1->Location = System::Drawing::Point(9, 236);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(462, 40);
+			this->button1->TabIndex = 4;
+			this->button1->Text = L"Add Payment Method";
+			this->button1->UseVisualStyleBackColor = false;
+			this->button1->Click += gcnew System::EventHandler(this, &profile::button1_Click);
+			// 
+			// panel1
+			// 
+			this->panel1->BackColor = System::Drawing::Color::Gainsboro;
+			this->panel1->Controls->Add(this->label1);
+			this->panel1->Controls->Add(this->button1);
+			this->panel1->Controls->Add(this->VisaNumber);
+			this->panel1->Controls->Add(this->VisaCategory);
+			this->panel1->Controls->Add(this->label2);
+			this->panel1->Location = System::Drawing::Point(696, 435);
+			this->panel1->Name = L"panel1";
+			this->panel1->Size = System::Drawing::Size(474, 306);
+			this->panel1->TabIndex = 5;
+			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &profile::panel1_Paint);
 			// 
 			// scrollable_payment_panel
 			// 
 			this->scrollable_payment_panel->AutoScroll = true;
 			this->scrollable_payment_panel->BackColor = System::Drawing::Color::Transparent;
-			this->scrollable_payment_panel->Location = System::Drawing::Point(690, 149);
+			this->scrollable_payment_panel->Location = System::Drawing::Point(690, 132);
 			this->scrollable_payment_panel->Name = L"scrollable_payment_panel";
 			this->scrollable_payment_panel->Size = System::Drawing::Size(480, 280);
 			this->scrollable_payment_panel->TabIndex = 0;
@@ -135,7 +505,7 @@ namespace SimpleDigitalWallet {
 			this->manage_payment_method_label->AutoSize = true;
 			this->manage_payment_method_label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->manage_payment_method_label->Location = System::Drawing::Point(684, 114);
+			this->manage_payment_method_label->Location = System::Drawing::Point(685, 96);
 			this->manage_payment_method_label->Name = L"manage_payment_method_label";
 			this->manage_payment_method_label->Size = System::Drawing::Size(349, 32);
 			this->manage_payment_method_label->TabIndex = 1;
@@ -207,6 +577,7 @@ namespace SimpleDigitalWallet {
 			this->home_button->Size = System::Drawing::Size(49, 52);
 			this->home_button->TabIndex = 5;
 			this->home_button->UseVisualStyleBackColor = false;
+			this->home_button->Click += gcnew System::EventHandler(this, &profile::home_button_Click);
 			// 
 			// wallet_icon
 			// 
@@ -239,18 +610,67 @@ namespace SimpleDigitalWallet {
 			this->Controls->Add(this->black_panel);
 			this->Controls->Add(this->manage_payment_method_label);
 			this->Controls->Add(this->scrollable_payment_panel);
+			this->Controls->Add(this->profile_panel);
+			this->Controls->Add(this->panel1);
+			this->Controls->Add(this->pic_panel);
+			this->ForeColor = System::Drawing::Color::Black;
 			this->Name = L"profile";
 			this->Text = L"profile";
+			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &profile::profile_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &profile::profile_Load);
+			this->pic_panel->ResumeLayout(false);
+			this->pic_panel->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->profile_picbox))->EndInit();
+			this->profile_panel->ResumeLayout(false);
+			this->profile_panel->PerformLayout();
+			this->panel1->ResumeLayout(false);
+			this->panel1->PerformLayout();
 			this->black_panel->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->wallet_icon))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
+		
 #pragma endregion
-	private: System::Void profile_Load(System::Object^ sender, System::EventArgs^ e) {
-		generate_payment_methods_panels();
-	}
-	};
+
+private: System::Void profile_panel_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+}
+private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void username_textbox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
+		}
+private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void VisaNumber_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void VisaCategory_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+}
+private: System::Void profile_Load(System::Object^ sender, System::EventArgs^ e) {
+	MakeRoundedTextBox(username_textbox, 5);
+	MakeRoundedTextBox(password_textbox,5);
+	MakeRoundedTextBox(email_textbox, 5);
+	MakeRoundedTextBox(VisaCategory, 5);
+	MakeRoundedTextBox(VisaNumber, 5);
+	generate_payment_methods_panels();
+	MakeRoundedPanel(profile_panel, 15);
+	MakeRoundedPanel(pic_panel, 15);
+	MakeRoundedPanel(panel1, 15);
+	MakeRoundedButton(save_button, 15);
+	MakeRoundedButton(button1, 15);
+}
+private: System::Void home_button_Click(System::Object^ sender, System::EventArgs^ e) {
+	this->Hide();
+	dashboard->Show();
+}
+private: System::Void profile_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
+	Application::Exit();
+}
+};
 }
