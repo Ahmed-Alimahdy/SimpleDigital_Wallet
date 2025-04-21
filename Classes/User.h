@@ -1,9 +1,11 @@
 #pragma once
+#ifndef USER_H
+#define USER_H
 #include "Classes\Transaction.h"
 #include <string>
 #include <unordered_map>
 #include <list>
-using namespace std;
+#include"Transaction.h"
 class user
 {
 private:
@@ -13,9 +15,9 @@ private:
     list<transaction> history_transaction;
     list<transaction> requested_transaction;
     double balance;
-
+    string hashedPassword;
+   static unordered_map<string, user> allusers;
 public:
-    static unordered_map<string, user> allusers;
     user();
     user(string& uname, string& mail, string& hashedPwd);
     string getUsername();
@@ -25,3 +27,4 @@ public:
     list<transaction> get_history_transaction();
     double calculate_balance();
 };
+#endif

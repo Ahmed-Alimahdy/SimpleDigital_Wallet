@@ -78,9 +78,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Header Files/Classes</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
-      <AdditionalDependencies />
+      <AdditionalDependencies>gdiplus.lib</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
@@ -89,9 +91,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Header Files/Classes</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
-      <AdditionalDependencies />
+      <AdditionalDependencies>gdiplus.lib</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
@@ -123,6 +127,19 @@
     <ClInclude Include="Classes\Transaction.h" />
     <ClInclude Include="Classes\User.h" />
     <ClInclude Include="Sign.h">
+    <ClInclude Include="Balance_managment.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Classes\Transaction.h" />
+    <ClInclude Include="Classes\User.h" />
+    <ClInclude Include="Dashboard.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Payment.h" />
+    <ClInclude Include="profile.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Requested_transactions.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
@@ -145,6 +162,23 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Sign.resx">
       <DependentUpon>Sign.h</DependentUpon>
+    <ClCompile Include="Balance_managment.cpp" />
+    <ClCompile Include="Dashboard.cpp" />
+    <ClCompile Include="profile.cpp" />
+    <ClCompile Include="Requested_transactions.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Balance_managment.resx">
+      <DependentUpon>Balance_managment.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dashboard.resx">
+      <DependentUpon>Dashboard.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="profile.resx">
+      <DependentUpon>profile.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Requested_transactions.resx">
+      <DependentUpon>Requested_transactions.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
