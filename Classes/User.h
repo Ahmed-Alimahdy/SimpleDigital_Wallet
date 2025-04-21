@@ -2,6 +2,7 @@
 #ifndef USER_H
 #define USER_H
 #include "Classes\Transaction.h"
+#include "Classes\payment.h"
 #include <string>
 #include <unordered_map>
 #include <list>
@@ -11,15 +12,17 @@ class user
 private:
     string username;
     string email;
-    string hashedPassword; // Removed duplicate declaration
+    string hashedPassword; 
     list<transaction> history_transaction;
     list<transaction> requested_transaction;
+	list<PaymentGateway> payment_methods;
     double balance;
-    string hashedPassword;
-   static unordered_map<string, user> allusers;
+	bool suspended;
+
 public:
     user();
     user(string& uname, string& mail, string& hashedPwd);
+    static unordered_map<string, user> allusers;
     string getUsername();
     string getHashedPassword();
     string getEmail();

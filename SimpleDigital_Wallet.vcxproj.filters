@@ -18,12 +18,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Payment.h">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Admin.h">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Dashboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -42,6 +36,21 @@
     <ClInclude Include="Balance_managment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Admin_UI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Payment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sign.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="payment.h">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="admin.h">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dashboard.cpp">
@@ -54,6 +63,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Balance_managment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Admin_UI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sign.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Transaction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="User.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
