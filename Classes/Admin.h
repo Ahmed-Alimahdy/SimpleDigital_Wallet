@@ -1,8 +1,11 @@
 #pragma once
 #include <string>
+#include <list>
 #include "User.h"
 class Admin {
     string username, password;
+public:
+    static list<transaction> all_transactions;
 
     //void adminDashboard();
     void viewAllUsers();
