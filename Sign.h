@@ -279,7 +279,6 @@ namespace SimpleDigitalWallet {
 			// 
 			this->pnlTerms->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pnlTerms.BackgroundImage")));
 			this->pnlTerms->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->pnlTerms->Controls->Add(this->pnlSignUp);
 			this->pnlTerms->Controls->Add(this->button3);
 			this->pnlTerms->Controls->Add(this->textBox3);
 			this->pnlTerms->Controls->Add(this->label2);
@@ -544,6 +543,7 @@ namespace SimpleDigitalWallet {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(982, 553);
+			this->Controls->Add(this->pnlSignUp);
 			this->Controls->Add(this->pnlTerms);
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->button2);
@@ -689,8 +689,7 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	// Check username and password if exists
 	auto it = user::allusers.find(username);
 	if (it != user::allusers.end()) {
-		string getpass = it->second.hashedPassword;
-		if (getpass == password) {
+		if (it->second.getHashedPassword() == password) {
 			MessageBox::Show("Sign In Successful!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 			this->Hide();
 		}

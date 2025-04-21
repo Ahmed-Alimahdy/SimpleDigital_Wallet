@@ -30,7 +30,7 @@ private:
 
 public:
 
-    WalletEvent(const std::string& from, const std::string& to, double amount,
+    transaction(const std::string& from, const std::string& to, double amount,
         TRANSACTION_TYPE t, RequestStatus s = RequestStatus::NONE);
 
     // Getters

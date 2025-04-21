@@ -300,6 +300,19 @@
         AAAAQIQBDAAAAAAAABBxATAlyNez8HymAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="textBox3.Text" xml:space="preserve">
+    <value>Welcome to our Digital Wallet System. By accessing or using this application, you agree to be bound by the following terms and conditions. Please read them carefully before proceeding.
+
+This digital wallet is a peer-to-peer money transfer system that allows users to send and receive funds securely within the platform. All users are responsible for maintaining the confidentiality of their credentials and securing their accounts from unauthorized access. The system does not require or connect to any external banks, and all transactions take place exclusively within this internal wallet environment.
+
+Each transaction is subject to a predefined transfer fee, which will be automatically deducted from the sender's wallet balance. The current fee rate is transparent and may be updated in the future by system administrators. Before confirming a transfer, users must review the transaction details carefully. Once a transaction is submitted, it cannot be canceled, reversed, or disputed within the system. The sender is fully responsible for entering the correct receiver username and amount.
+
+The system is provided “as-is,” without any warranties, expressed or implied. While we strive to maintain the security and reliability of the platform, we do not guarantee that the system will be error-free, uninterrupted, or immune to technical issues or data loss. The developers and administrators shall not be held liable for any financial loss, incorrect transfers, loss of access to the system, or damage resulting from misuse or malfunction.
+
+Users are prohibited from using this wallet for illegal, fraudulent, or malicious purposes. Any attempt to compromise the security, integrity, or functionality of the system may result in the immediate suspension or termination of the offending account and may be subject to legal action.
+
+By continuing to use the application, you acknowledge that you have read, understood, and agreed to all the terms outlined above. If you do not agree with any part of these terms, please discontinue the use of this system immediately.</value>
+  </data>
   <data name="pnlSignUp.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAB4AAAAQ4CAYAAADo08FDAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -2048,19 +2061,6 @@
         AAAAAAAAAAAApAgCYAAAAAAAAAAAAABIEQTAAAAAAAAAAAAAAJAiCIABAAAAAAAAAAAAIEUQAAMAAAAA
         AAAAAABAiiAABgAAAAAAAAAAAIAUQQAMAAAAAAAAAAAAACni/wdzqK8LZu0lVQAAAABJRU5ErkJggg==
 </value>
-  </data>
-  <data name="textBox3.Text" xml:space="preserve">
-    <value>Welcome to our Digital Wallet System. By accessing or using this application, you agree to be bound by the following terms and conditions. Please read them carefully before proceeding.
-
-This digital wallet is a peer-to-peer money transfer system that allows users to send and receive funds securely within the platform. All users are responsible for maintaining the confidentiality of their credentials and securing their accounts from unauthorized access. The system does not require or connect to any external banks, and all transactions take place exclusively within this internal wallet environment.
-
-Each transaction is subject to a predefined transfer fee, which will be automatically deducted from the sender's wallet balance. The current fee rate is transparent and may be updated in the future by system administrators. Before confirming a transfer, users must review the transaction details carefully. Once a transaction is submitted, it cannot be canceled, reversed, or disputed within the system. The sender is fully responsible for entering the correct receiver username and amount.
-
-The system is provided “as-is,” without any warranties, expressed or implied. While we strive to maintain the security and reliability of the platform, we do not guarantee that the system will be error-free, uninterrupted, or immune to technical issues or data loss. The developers and administrators shall not be held liable for any financial loss, incorrect transfers, loss of access to the system, or damage resulting from misuse or malfunction.
-
-Users are prohibited from using this wallet for illegal, fraudulent, or malicious purposes. Any attempt to compromise the security, integrity, or functionality of the system may result in the immediate suspension or termination of the offending account and may be subject to legal action.
-
-By continuing to use the application, you acknowledge that you have read, understood, and agreed to all the terms outlined above. If you do not agree with any part of these terms, please discontinue the use of this system immediately.</value>
   </data>
   <data name="$this.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
