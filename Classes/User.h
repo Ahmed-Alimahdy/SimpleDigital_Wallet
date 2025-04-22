@@ -2,6 +2,7 @@
 #include <string>
 #include <unordered_map>
 #include <list>
+#include "Transaction.h"
 using namespace std;
 class user
 {

@@ -122,6 +122,9 @@
     <ClInclude Include="Classes\Payment.h" />
     <ClInclude Include="Classes\Transaction.h" />
     <ClInclude Include="Classes\User.h" />
+    <ClInclude Include="User_Control.h">
+      <FileType>CppControl</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -133,10 +136,14 @@
   <ItemGroup>
     <ClCompile Include="Admin_UI.cpp" />
     <ClCompile Include="Classes\Admin.cpp" />
+    <ClCompile Include="User_Control.cpp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Admin_UI.resx">
       <DependentUpon>Admin_UI.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User_Control.resx">
+      <DependentUpon>User_Control.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
