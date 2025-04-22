@@ -6,6 +6,7 @@ class Admin {
     string username, password;
 public:
     static list<transaction> all_transactions;
+	static Admin currentAdmin;
 
     //void adminDashboard();
     void viewAllUsers();
