@@ -36,12 +36,6 @@
     <ClInclude Include="Balance_managment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Admin_UI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\Payment.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sign.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -65,9 +59,6 @@
     <ClCompile Include="Balance_managment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Admin_UI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sign.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,6 +66,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="User.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="payment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="admin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

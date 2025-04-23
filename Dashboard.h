@@ -16,6 +16,8 @@ namespace SimpleDigitalWallet {
 	/// </summary>
 	public ref class Dashboard : public System::Windows::Forms::Form
 	{
+        private:
+            user* current_user; // Declare the User object
 		void MakeRoundedButton(Button^ button, int radius) {
 			GraphicsPath^ path = gcnew Drawing2D::GraphicsPath();
 			System::Drawing::Rectangle bounds = button->ClientRectangle;
@@ -132,7 +134,6 @@ namespace SimpleDigitalWallet {
 			//}
 		 }
 	public:
-		/*user* user_account;*/
 		Dashboard(void)
 		{
 			InitializeComponent();
@@ -140,9 +141,14 @@ namespace SimpleDigitalWallet {
 			// Initialize the test pointer with a valid user object
 			//
 		}
-		Dashboard(user* user_account)
+		Form^ previous_form;
+		Dashboard(Form^ form, user& currentUser)
 		{
 			InitializeComponent();
+			this->current_user = &currentUser;
+			
+			previous_form = form;
+			
 			/*this->user_account = user_account;*/
 		}
 
@@ -657,7 +663,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->balance_label->Name = L"balance_label";
 			this->balance_label->Size = System::Drawing::Size(66, 25);
 			this->balance_label->TabIndex = 1;
-			this->balance_label->Text = L"$0.00";
+			this->balance_label->Text = L"user_balance";
 			this->balance_label->Click += gcnew System::EventHandler(this, &Dashboard::balance_label_Click);
 			// 
 			// Dashboard
@@ -699,6 +705,7 @@ private: System::Void transaction_panel_Paint(System::Object^ sender, System::Wi
 }
 private: System::Void Dashboard_Load(System::Object^ sender, System::EventArgs^ e) {
 	generate_transaction_history_panels();
+	balance_label->Text = String::Format("${0:F2}", current_user->getBalance());
 	MakeRoundedPanel(panel2, 15);
 	MakeRoundedButton(button3, 15);
 	MakeRoundedButton(button2, 15);
@@ -708,6 +715,7 @@ private: System::Void sender_reciever_label_Click(System::Object^ sender, System
 private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 }
 private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
+	
 }
 private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
 }

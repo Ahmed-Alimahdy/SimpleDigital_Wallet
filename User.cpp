@@ -12,7 +12,7 @@ user::user(string& uname, string& mail, string& hashedPwd)
 	username = uname;
 	email = mail;
 	hashedPassword = hashedPwd;
-	balance = 0;
+	balance = 100;
 }
 unordered_map<string, user> user::allusers;
 string user::getUsername()

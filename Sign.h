@@ -1,5 +1,6 @@
 #pragma once
 #include "Classes\User.h"
+#include"Dashboard.h"
 #include <msclr/marshal_cppstd.h>
 
 namespace SimpleDigitalWallet {
@@ -695,6 +696,8 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	if (it != user::allusers.end()) {
 		if (it->second.getHashedPassword() == password) {
 			MessageBox::Show("Sign In Successful!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			Dashboard^ dashboard = gcnew Dashboard(this, it->second);
+			dashboard->Show();
 			this->Hide();
 		}
 	}
