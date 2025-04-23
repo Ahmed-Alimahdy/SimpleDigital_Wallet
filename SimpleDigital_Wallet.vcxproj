@@ -78,6 +78,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
@@ -136,6 +137,9 @@
   <ItemGroup>
     <ClCompile Include="Admin_UI.cpp" />
     <ClCompile Include="Classes\Admin.cpp" />
+    <ClCompile Include="Classes\Payment.cpp" />
+    <ClCompile Include="Classes\Transaction.cpp" />
+    <ClCompile Include="Classes\User.cpp" />
     <ClCompile Include="User_Control.cpp" />
   </ItemGroup>
   <ItemGroup>

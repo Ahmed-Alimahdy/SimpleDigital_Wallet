@@ -1,5 +1,10 @@
 #pragma once
+#include <msclr/marshal_cppstd.h>
  #include "User_Control.h"
+#include "Classes/user.h"
+#include "Classes/Admin.h"
+//user selected_user;
+std::string key;
 namespace SimpleDigitalWallet {
 
 	using namespace System;
@@ -63,7 +68,6 @@ namespace SimpleDigitalWallet {
 	public:
 
 
-
 	public: System::Windows::Forms::Label^ No_user_ms;
 	private: System::Windows::Forms::Panel^ UserInfo_panal;
 	private: System::Windows::Forms::Button^ Save_button;
@@ -85,6 +89,14 @@ namespace SimpleDigitalWallet {
 	private: System::Windows::Forms::Button^ Add_user_button;
 	private: System::Windows::Forms::Label^ label12;
 	private: System::Windows::Forms::TextBox^ password_Box;
+	private: System::Windows::Forms::Label^ massage_name_LB;
+	private: System::Windows::Forms::Button^ Delete_button;
+	public: System::Windows::Forms::Label^ payments_label;
+	private: System::Windows::Forms::ListBox^ listBox1;
+	public:
+
+	public:
+	//public:void MakeRoundedButton(System::Windows::Forms::Button^ button, int radius);
 
 	private:
 
@@ -92,7 +104,8 @@ namespace SimpleDigitalWallet {
 	private: System::ComponentModel::IContainer^ components;
 	public:
 	private:
-	public:
+	
+	
 	private:
 
 
@@ -129,6 +142,9 @@ namespace SimpleDigitalWallet {
 			this->flowLayoutPanel_Users_Data = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			this->Users_lable = (gcnew System::Windows::Forms::Label());
 			this->UserInfo_panal = (gcnew System::Windows::Forms::Panel());
+			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
+			this->Delete_button = (gcnew System::Windows::Forms::Button());
+			this->massage_name_LB = (gcnew System::Windows::Forms::Label());
 			this->label12 = (gcnew System::Windows::Forms::Label());
 			this->password_Box = (gcnew System::Windows::Forms::TextBox());
 			this->Add_user_button = (gcnew System::Windows::Forms::Button());
@@ -156,6 +172,7 @@ namespace SimpleDigitalWallet {
 			this->suspended_LB = (gcnew System::Windows::Forms::Label());
 			this->Edit_button = (gcnew System::Windows::Forms::Button());
 			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->payments_label = (gcnew System::Windows::Forms::Label());
 			this->No_user_ms = (gcnew System::Windows::Forms::Label());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
@@ -184,7 +201,7 @@ namespace SimpleDigitalWallet {
 			// 
 			// label3
 			// 
-			this->label3->BackColor = System::Drawing::Color::Olive;
+			this->label3->BackColor = System::Drawing::Color::Green;
 			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label3->Location = System::Drawing::Point(169, 216);
@@ -217,7 +234,7 @@ namespace SimpleDigitalWallet {
 			// 
 			// label1
 			// 
-			this->label1->BackColor = System::Drawing::Color::Olive;
+			this->label1->BackColor = System::Drawing::Color::Green;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label1->Location = System::Drawing::Point(626, 230);
@@ -251,6 +268,9 @@ namespace SimpleDigitalWallet {
 			// UserInfo_panal
 			// 
 			this->UserInfo_panal->BackColor = System::Drawing::SystemColors::Control;
+			this->UserInfo_panal->Controls->Add(this->listBox1);
+			this->UserInfo_panal->Controls->Add(this->Delete_button);
+			this->UserInfo_panal->Controls->Add(this->massage_name_LB);
 			this->UserInfo_panal->Controls->Add(this->label12);
 			this->UserInfo_panal->Controls->Add(this->password_Box);
 			this->UserInfo_panal->Controls->Add(this->Add_user_button);
@@ -274,14 +294,58 @@ namespace SimpleDigitalWallet {
 			this->UserInfo_panal->Controls->Add(this->suspended_LB);
 			this->UserInfo_panal->Controls->Add(this->Edit_button);
 			this->UserInfo_panal->Controls->Add(this->label4);
+			this->UserInfo_panal->Controls->Add(this->payments_label);
 			this->UserInfo_panal->Location = System::Drawing::Point(634, 230);
 			this->UserInfo_panal->Name = L"UserInfo_panal";
 			this->UserInfo_panal->Size = System::Drawing::Size(563, 498);
 			this->UserInfo_panal->TabIndex = 17;
 			// 
+			// listBox1
+			// 
+			this->listBox1->BackColor = System::Drawing::SystemColors::Control;
+			this->listBox1->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->listBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->listBox1->ForeColor = System::Drawing::Color::Gray;
+			this->listBox1->FormattingEnabled = true;
+			this->listBox1->ItemHeight = 29;
+			this->listBox1->Location = System::Drawing::Point(11, 303);
+			this->listBox1->Name = L"listBox1";
+			this->listBox1->SelectionMode = System::Windows::Forms::SelectionMode::None;
+			this->listBox1->Size = System::Drawing::Size(549, 58);
+			this->listBox1->TabIndex = 33;
+			// 
+			// Delete_button
+			// 
+			this->Delete_button->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(0)),
+				static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->Delete_button->Cursor = System::Windows::Forms::Cursors::Arrow;
+			this->Delete_button->FlatAppearance->BorderSize = 0;
+			this->Delete_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->Delete_button->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->Delete_button->ForeColor = System::Drawing::SystemColors::ButtonFace;
+			this->Delete_button->Location = System::Drawing::Point(11, 15);
+			this->Delete_button->Name = L"Delete_button";
+			this->Delete_button->Size = System::Drawing::Size(103, 43);
+			this->Delete_button->TabIndex = 30;
+			this->Delete_button->Text = L"X Delete";
+			this->Delete_button->UseVisualStyleBackColor = false;
+			this->Delete_button->Click += gcnew System::EventHandler(this, &Admin_UI::Delete_button_Click);
+			// 
+			// massage_name_LB
+			// 
+			this->massage_name_LB->AutoSize = true;
+			this->massage_name_LB->ForeColor = System::Drawing::Color::Red;
+			this->massage_name_LB->Location = System::Drawing::Point(149, 114);
+			this->massage_name_LB->Name = L"massage_name_LB";
+			this->massage_name_LB->Size = System::Drawing::Size(196, 16);
+			this->massage_name_LB->TabIndex = 29;
+			this->massage_name_LB->Text = L"* this user Name is already exist";
+			// 
 			// label12
 			// 
-			this->label12->BackColor = System::Drawing::Color::Olive;
+			this->label12->BackColor = System::Drawing::Color::Green;
 			this->label12->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label12->Location = System::Drawing::Point(149, 294);
@@ -303,7 +367,7 @@ namespace SimpleDigitalWallet {
 			// 
 			// Add_user_button
 			// 
-			this->Add_user_button->BackColor = System::Drawing::Color::Olive;
+			this->Add_user_button->BackColor = System::Drawing::Color::Black;
 			this->Add_user_button->Cursor = System::Windows::Forms::Cursors::Arrow;
 			this->Add_user_button->FlatAppearance->BorderSize = 0;
 			this->Add_user_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
@@ -331,14 +395,17 @@ namespace SimpleDigitalWallet {
 			// 
 			// flowLayoutPanel_Users_Transaction
 			// 
+			this->flowLayoutPanel_Users_Transaction->AutoScroll = true;
+			this->flowLayoutPanel_Users_Transaction->FlowDirection = System::Windows::Forms::FlowDirection::TopDown;
 			this->flowLayoutPanel_Users_Transaction->Location = System::Drawing::Point(12, 115);
 			this->flowLayoutPanel_Users_Transaction->Name = L"flowLayoutPanel_Users_Transaction";
 			this->flowLayoutPanel_Users_Transaction->Size = System::Drawing::Size(542, 367);
 			this->flowLayoutPanel_Users_Transaction->TabIndex = 9;
+			this->flowLayoutPanel_Users_Transaction->WrapContents = false;
 			// 
 			// DownTransaction_button
 			// 
-			this->DownTransaction_button->BackColor = System::Drawing::Color::Olive;
+			this->DownTransaction_button->BackColor = System::Drawing::Color::Green;
 			this->DownTransaction_button->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"DownTransaction_button.BackgroundImage")));
 			this->DownTransaction_button->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->DownTransaction_button->Cursor = System::Windows::Forms::Cursors::Hand;
@@ -364,7 +431,7 @@ namespace SimpleDigitalWallet {
 			// 
 			// label11
 			// 
-			this->label11->BackColor = System::Drawing::Color::Olive;
+			this->label11->BackColor = System::Drawing::Color::Green;
 			this->label11->Dock = System::Windows::Forms::DockStyle::Top;
 			this->label11->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
@@ -378,7 +445,7 @@ namespace SimpleDigitalWallet {
 			this->suspended_checkBox->AutoSize = true;
 			this->suspended_checkBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->suspended_checkBox->Location = System::Drawing::Point(12, 339);
+			this->suspended_checkBox->Location = System::Drawing::Point(12, 372);
 			this->suspended_checkBox->Name = L"suspended_checkBox";
 			this->suspended_checkBox->Size = System::Drawing::Size(137, 29);
 			this->suspended_checkBox->TabIndex = 24;
@@ -387,10 +454,10 @@ namespace SimpleDigitalWallet {
 			// 
 			// label10
 			// 
-			this->label10->BackColor = System::Drawing::Color::Olive;
+			this->label10->BackColor = System::Drawing::Color::Green;
 			this->label10->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label10->Location = System::Drawing::Point(111, 230);
+			this->label10->Location = System::Drawing::Point(111, 231);
 			this->label10->Name = L"label10";
 			this->label10->Size = System::Drawing::Size(198, 2);
 			this->label10->TabIndex = 23;
@@ -405,13 +472,14 @@ namespace SimpleDigitalWallet {
 			this->BalanceEdit_Box->Name = L"BalanceEdit_Box";
 			this->BalanceEdit_Box->Size = System::Drawing::Size(199, 28);
 			this->BalanceEdit_Box->TabIndex = 22;
+			this->BalanceEdit_Box->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &Admin_UI::BalanceEdit_Box_KeyPress);
 			// 
 			// label9
 			// 
-			this->label9->BackColor = System::Drawing::Color::Olive;
+			this->label9->BackColor = System::Drawing::Color::Green;
 			this->label9->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label9->Location = System::Drawing::Point(86, 172);
+			this->label9->Location = System::Drawing::Point(86, 174);
 			this->label9->Name = L"label9";
 			this->label9->Size = System::Drawing::Size(394, 2);
 			this->label9->TabIndex = 21;
@@ -429,10 +497,10 @@ namespace SimpleDigitalWallet {
 			// 
 			// label8
 			// 
-			this->label8->BackColor = System::Drawing::Color::Olive;
+			this->label8->BackColor = System::Drawing::Color::Green;
 			this->label8->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label8->Location = System::Drawing::Point(149, 107);
+			this->label8->Location = System::Drawing::Point(149, 108);
 			this->label8->Name = L"label8";
 			this->label8->Size = System::Drawing::Size(216, 2);
 			this->label8->TabIndex = 19;
@@ -465,10 +533,11 @@ namespace SimpleDigitalWallet {
 			this->UserEdit_Box->Name = L"UserEdit_Box";
 			this->UserEdit_Box->Size = System::Drawing::Size(217, 28);
 			this->UserEdit_Box->TabIndex = 18;
+			this->UserEdit_Box->Leave += gcnew System::EventHandler(this, &Admin_UI::UserEdit_Box_Leave);
 			// 
 			// Save_button
 			// 
-			this->Save_button->BackColor = System::Drawing::Color::Olive;
+			this->Save_button->BackColor = System::Drawing::Color::Black;
 			this->Save_button->Cursor = System::Windows::Forms::Cursors::Arrow;
 			this->Save_button->FlatAppearance->BorderSize = 0;
 			this->Save_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
@@ -481,6 +550,7 @@ namespace SimpleDigitalWallet {
 			this->Save_button->TabIndex = 16;
 			this->Save_button->Text = L"Save";
 			this->Save_button->UseVisualStyleBackColor = false;
+			this->Save_button->Click += gcnew System::EventHandler(this, &Admin_UI::Save_button_Click);
 			// 
 			// LB_Email_info
 			// 
@@ -526,7 +596,7 @@ namespace SimpleDigitalWallet {
 			// 
 			// Transactions_button
 			// 
-			this->Transactions_button->BackColor = System::Drawing::Color::Olive;
+			this->Transactions_button->BackColor = System::Drawing::Color::Black;
 			this->Transactions_button->Cursor = System::Windows::Forms::Cursors::Arrow;
 			this->Transactions_button->FlatAppearance->BorderSize = 0;
 			this->Transactions_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
@@ -568,7 +638,7 @@ namespace SimpleDigitalWallet {
 			this->suspended_LB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->suspended_LB->ForeColor = System::Drawing::Color::Green;
-			this->suspended_LB->Location = System::Drawing::Point(7, 339);
+			this->suspended_LB->Location = System::Drawing::Point(7, 372);
 			this->suspended_LB->Name = L"suspended_LB";
 			this->suspended_LB->Size = System::Drawing::Size(163, 29);
 			this->suspended_LB->TabIndex = 13;
@@ -576,7 +646,7 @@ namespace SimpleDigitalWallet {
 			// 
 			// Edit_button
 			// 
-			this->Edit_button->BackColor = System::Drawing::Color::Olive;
+			this->Edit_button->BackColor = System::Drawing::Color::Black;
 			this->Edit_button->Cursor = System::Windows::Forms::Cursors::Arrow;
 			this->Edit_button->FlatAppearance->BorderSize = 0;
 			this->Edit_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
@@ -602,6 +672,18 @@ namespace SimpleDigitalWallet {
 			this->label4->TabIndex = 9;
 			this->label4->Text = L"User Name:";
 			// 
+			// payments_label
+			// 
+			this->payments_label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->payments_label->ForeColor = System::Drawing::Color::Gray;
+			this->payments_label->Location = System::Drawing::Point(7, 298);
+			this->payments_label->Name = L"payments_label";
+			this->payments_label->Size = System::Drawing::Size(553, 71);
+			this->payments_label->TabIndex = 31;
+			this->payments_label->Text = L"No payments";
+			this->payments_label->UseCompatibleTextRendering = true;
+			// 
 			// No_user_ms
 			// 
 			this->No_user_ms->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
@@ -619,7 +701,7 @@ namespace SimpleDigitalWallet {
 			// 
 			// panel1
 			// 
-			this->panel1->BackColor = System::Drawing::Color::Olive;
+			this->panel1->BackColor = System::Drawing::Color::Green;
 			this->panel1->Dock = System::Windows::Forms::DockStyle::Top;
 			this->panel1->Location = System::Drawing::Point(0, 0);
 			this->panel1->Name = L"panel1";
@@ -657,49 +739,79 @@ namespace SimpleDigitalWallet {
 
 		}
 #pragma endregion
+	
 	public:int count=0;
 	private: System::Void Users_page_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-		No_user_ms->Show();
-		UserInfo_panal->Hide();
-		UserEdit_Box->Hide();
-		EmailEdit_Box->Hide();
-		BalanceEdit_Box->Hide();
-		suspended_checkBox->Hide();
-		Save_button->Hide();
-		cancel_button->Hide();
-		label8->Hide();
-		label9->Hide();
-		label10->Hide();
-		password_Box->Hide();
-		label12->Hide();
+		ResetUsersPageUI();
 	}
+	Void ResetUsersPageUI() {
+			   No_user_ms->Show();
+			   UserInfo_panal->Hide();
+			   UserEdit_Box->Hide();
+			   EmailEdit_Box->Hide();
+			   BalanceEdit_Box->Hide();
+			   suspended_checkBox->Hide();
+			   Save_button->Hide();
+			   cancel_button->Hide();
+			   label8->Hide();
+			   label9->Hide();
+			   label10->Hide();
+			   password_Box->Hide();
+			   label12->Hide();
+			   massage_name_LB->Hide();
+			   Delete_button->Hide();
+			   //MakeRoundedButton(Add_user_button, 15);
+			   //MakeRoundedButton(Edit_button, 15);
+			   //MakeRoundedButton(Transactions_button, 15);
+			   //MakeRoundedButton(Save_button, 15);
+			   //MakeRoundedButton(cancel_button, 15);
+			   //MakeRoundedButton(Delete_button, 15);
+		   }
 private: System::Void Admin_UI_Load(System::Object^ sender, System::EventArgs^ e) {
-	users = gcnew List<User_Control^>();
-	for (int i = 0; i <5 ; i++)
-	{
 
-	User_Control^ userControl = gcnew User_Control();
-	userControl->LB_Name->Text = "ahmed";
-	userControl->LB_Balance->Text = "5000";
-	userControl->LB_Email->Text = "ahmedebrahim57@gmail.com";
-	//flowLayoutPanel_Users_Data->Controls->Add(userControl);
-	userControl->OnUserControlClick += gcnew User_Control::UserControlClickEventHandler(this, &Admin_UI::UserControl_Click);
-	users->Add(userControl);
-	}
-	for (int i = 0; i < 5; i++)
-	{
-
-		User_Control^ userControl = gcnew User_Control();
-		userControl->LB_Name->Text = "mohamed";
-		userControl->LB_Balance->Text = "1000";
-		userControl->LB_Email->Text = "mohamed#ss@gmail.com";
-		userControl->OnUserControlClick += gcnew User_Control::UserControlClickEventHandler(this, &Admin_UI::UserControl_Click);
-		//flowLayoutPanel_Users_Data->Controls->Add(userControl);
-		users->Add(userControl);
-	}
-	UpdateUserDisplay(users);
-	
+	draw_usercontrols();
 }
+	   void draw_usercontrols()
+	   {
+		   //string username = "ahmed";
+   //string email = "ahmed";
+   //string password = "ahmed";
+   //user newUser(username, email, password);
+           users = gcnew List<User_Control^>();
+		   //for (int i = 0; i <5 ; i++)
+		   //{
+
+		   //User_Control^ userControl = gcnew User_Control();
+		   //userControl->LB_Name->Text = "ahmed";
+		   //userControl->LB_Balance->Text = "5000";
+		   //userControl->LB_Email->Text = "ahmedebrahim57@gmail.com";
+		   ////flowLayoutPanel_Users_Data->Controls->Add(userControl);
+		   //userControl->OnUserControlClick += gcnew User_Control::UserControlClickEventHandler(this, &Admin_UI::UserControl_Click);
+		   //users->Add(userControl);
+		   //}
+		   //for (int i = 0; i < 5; i++)
+		   //{
+
+		   //	User_Control^ userControl = gcnew User_Control();
+		   //	userControl->LB_Name->Text = "mohamed";
+		   //	userControl->LB_Balance->Text = "1000";
+		   //	userControl->LB_Email->Text = "mohamed#ss@gmail.com";
+		   //	userControl->OnUserControlClick += gcnew User_Control::UserControlClickEventHandler(this, &Admin_UI::UserControl_Click);
+		   //	//flowLayoutPanel_Users_Data->Controls->Add(userControl);
+		   //	users->Add(userControl);
+		   //}
+		   for (auto u : user::allusers)
+		   {
+			   User_Control^ userControl = gcnew User_Control();
+			   userControl->LB_Name->Text = gcnew System::String(u.second.getUsername().c_str());
+			   userControl->LB_Balance->Text = gcnew System::String(u.second.getBalance().ToString());
+			   userControl->LB_Email->Text = gcnew System::String(u.second.getEmail().c_str());
+			   userControl->OnUserControlClick += gcnew User_Control::UserControlClickEventHandler(this, &Admin_UI::UserControl_Click);
+			   //flowLayoutPanel_Users_Data->Controls->Add(userControl);
+			   users->Add(userControl);
+		   }
+		   UpdateUserDisplay(users);
+	   }
 	 void UpdateUserDisplay(List<User_Control^>^ usersToDisplay)
 	   {
 		   flowLayoutPanel_Users_Data->Controls->Clear();
@@ -732,9 +844,43 @@ private: System::Void searchTextBox_TextChanged(System::Object^ sender, System::
 	   void UserControl_Click(Object^ sender, User_Control^ userControl)
 	   {
 		   //MessageBox::Show("User control clicked: " + userControl->LB_Name->Text);
+		   //selected_user=user::allusers[key];
 		   LB_Name_info->Text = userControl->LB_Name->Text;
+		   key = msclr::interop::marshal_as<std::string>(LB_Name_info->Text);
 		   LB_Email_info->Text = userControl->LB_Email->Text;
 		   LB_Balance_info->Text = userControl->LB_Balance->Text;
+		   if (user::allusers[key].getsuspended())
+		   {
+			   suspended_LB->Text = "suspended";
+			   suspended_LB->ForeColor = System::Drawing::Color::Red;
+		   }
+		   else
+		   {
+			   suspended_LB->Text = "Unsuspended";
+			   suspended_LB->ForeColor = System::Drawing::Color::Green;
+		   }
+		   user* user_account = &user::allusers[key];
+		   if (user_account->payment_methods.size()!=0)
+		   {
+			   //string payments = "";
+			   listBox1->Items->Clear(); // Clear previous items
+			   for (auto p : user_account->payment_methods)
+			   {
+				   //payments += p.getGatewayCategory() + " --> " + p.getGatewayNumber() + "||";
+				   System::String^ paymentInfo =
+					   gcnew System::String(p.getGatewayCategory().c_str()) + " --> " +
+					   gcnew System::String(p.getGatewayNumber().c_str());
+						listBox1->Items->Add(paymentInfo);
+			   }
+		   }
+		   else
+		   {
+			   listBox1->Items->Clear(); // Clear previous items
+			   listBox1->Items->Add("No Payments");
+		   }
+		   
+		   generate_transaction_history_panels();
+		   
 		   UserInfo_panal->Show();
 		   No_user_ms->Hide();
 
@@ -762,7 +908,10 @@ private: System::Void searchTextBox_TextChanged(System::Object^ sender, System::
 		   LB_Balance_info->Show();
 		   suspended_LB->Show();
 		   Add_user_button->Show();
+		   Delete_button->Show();
 		   label7->Text = "payment:";
+		   payments_label->Show();
+		   listBox1->Show();
 		   // Show the Edit and Transactions buttons
 		   Edit_button->Show();
 		   Transactions_button->Show();
@@ -790,6 +939,7 @@ private: System::Void Edit_button_Click(System::Object^ sender, System::EventArg
 	{
 		suspended_checkBox->Checked = false;
 	}
+	//user::allusers[selected_user.getUsername()];
 	// Hide the labels and show the text boxes
 	LB_Name_info->Hide();
 	LB_Email_info->Hide();
@@ -809,6 +959,7 @@ private: System::Void Edit_button_Click(System::Object^ sender, System::EventArg
 	// Hide the Edit and Transactions buttons
 	Edit_button->Hide();
 	Transactions_button->Hide();
+	Delete_button->Hide();
 
 }
 private: System::Void cancel_button_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -824,6 +975,7 @@ private: System::Void cancel_button_Click(System::Object^ sender, System::EventA
 	label10->Hide();
 	password_Box->Hide();
 	label12->Hide();
+	massage_name_LB->Hide();
 	// Show the labels and hide the text boxes
 	LB_Name_info->Show();
 	LB_Email_info->Show();
@@ -831,11 +983,14 @@ private: System::Void cancel_button_Click(System::Object^ sender, System::EventA
 	suspended_LB->Show();
 	Add_user_button->Show();
 	label7->Text = "payment:";
+	payments_label->Show();
+	listBox1->Show();
 
 
 	// Show the Edit and Transactions buttons
 	Edit_button->Show();
 	Transactions_button->Show();
+	Delete_button->Show();
 }
 private: System::Void Transactions_button_Click(System::Object^ sender, System::EventArgs^ e) {
 	//timer2->Stop();
@@ -844,6 +999,7 @@ private: System::Void Transactions_button_Click(System::Object^ sender, System::
 	Transactions_user_panel->Location = System::Drawing::Point(0, 493);
 	Transactions_user_panel->Height = 25;
 	Transactions_user_panel->BringToFront();
+	//generate_transaction_history_panels();
 	timer1->Interval = 20;
 	timer1->Start();
 }
@@ -938,11 +1094,13 @@ private: System::Void DownTransaction_button_Click(System::Object^ sender, Syste
 private: System::Void Add_user_button_Click(System::Object^ sender, System::EventArgs^ e) {
 	
 	//label6->Location = System::Drawing::Point(7, 267);
+	//UserEdit_Box->Focus();
 	UserEdit_Box->Text ="";
 	EmailEdit_Box->Text = "";
 	BalanceEdit_Box->Text = "";
 	label7->Text="password:";
 	password_Box->Show();
+	password_Box->Text = "";
 	label12->Show();
 	suspended_checkBox->Checked = false;
 	LB_Name_info->Hide();
@@ -950,6 +1108,8 @@ private: System::Void Add_user_button_Click(System::Object^ sender, System::Even
 	LB_Balance_info->Hide();
 	suspended_LB->Hide();
 	Add_user_button->Hide();
+	payments_label->Hide();
+	listBox1->Hide();
 	// Show the text boxes and buttons
 	UserEdit_Box->Show();
 	EmailEdit_Box->Show();
@@ -964,7 +1124,275 @@ private: System::Void Add_user_button_Click(System::Object^ sender, System::Even
 	Edit_button->Hide();
 	Transactions_button->Hide();
 	Add_user_button->Hide();
+	Delete_button->Hide();
+	UserEdit_Box->Focus();
 	
+}
+
+	void MakeRoundedButton(System::Windows::Forms::Button^ button, int radius) {
+		   System::Drawing::Drawing2D::GraphicsPath^ path = gcnew System::Drawing::Drawing2D::GraphicsPath();
+		   path->AddArc(0, 0, radius, radius, 180, 90); // Top-left corner
+		   path->AddArc(button->Width - radius, 0, radius, radius, 270, 90); // Top-right corner
+		   path->AddArc(button->Width - radius, button->Height - radius, radius, radius, 0, 90); // Bottom-right corner
+		   path->AddArc(0, button->Height - radius, radius, radius, 90, 90); // Bottom-left corner
+		   path->CloseAllFigures();
+		   button->Region = gcnew System::Drawing::Region(path);
+	   }
+	   void MakeRoundedPanel(System::Windows::Forms::Panel^ panel, int radius)
+	   {
+		   System::Drawing::Drawing2D::GraphicsPath^ path = gcnew System::Drawing::Drawing2D::GraphicsPath();
+		   path->AddArc(0, 0, radius, radius, 180, 90);
+		   path->AddArc(panel->Width - radius, 0, radius, radius, 270, 90);
+		   path->AddArc(panel->Width - radius, panel->Height - radius, radius, radius, 0, 90);
+		   path->AddArc(0, panel->Height - radius, radius, radius, 90, 90);
+		   path->CloseAllFigures();
+		   panel->Region = gcnew System::Drawing::Region(path);
+	   }
+	   void generate_transaction_history_panels()
+	   {
+		   flowLayoutPanel_Users_Transaction->Controls->Clear();
+		   int count_t = 0;
+		   user* user_account = &user::allusers[key];
+		   if (user_account->history_transaction.size() == 0)
+		   {
+		   Label^ noTransactionsLabel = gcnew Label();
+		   noTransactionsLabel->Text = "No transactions yet";
+		   noTransactionsLabel->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular);
+		   noTransactionsLabel->AutoSize = true;
+		   int centerX = (this->flowLayoutPanel_Users_Transaction->Width - noTransactionsLabel->Width) /6 ;
+		   int centerY = (this->flowLayoutPanel_Users_Transaction->Height - noTransactionsLabel->Height) / 3;
+		   noTransactionsLabel->Location = System::Drawing::Point(centerX, centerY);
+		   this->flowLayoutPanel_Users_Transaction->Controls->Add(noTransactionsLabel);
+		   }
+		   else
+		   {
+			for (auto t: user_account->history_transaction)
+			{
+			   /*transaction t = user_account->history_transaction.front();
+			   user_account->history_transaction.pop_front();*/
+			   Panel^ panel = gcnew Panel();
+			   panel->Size = System::Drawing::Size(515, 83);
+			   panel->BackColor = System::Drawing::SystemColors::ControlLight;
+			   panel->Location = System::Drawing::Point(0, (count_t * 100));
+			   MakeRoundedPanel(panel, 15);
+			   Label^ transaction_date_label = gcnew Label();
+			   transaction_date_label->Text = gcnew String(t.getTimestampAsString().c_str()/*"19/4/2025"*/);  //"1"
+			   transaction_date_label->Location = System::Drawing::Point(17, 10);
+			   transaction_date_label->AutoSize = true;
+			   Label^ to_form_field = gcnew Label();
+			   to_form_field->Text = "To: ";
+			   to_form_field->Location = System::Drawing::Point(17, 45);
+			   to_form_field->AutoSize = true;
+			   Label^ sender_reciever_label = gcnew Label();
+			   sender_reciever_label->Text = gcnew String(t.getSender().c_str());
+			   sender_reciever_label->Location = System::Drawing::Point(40, 45);
+			   sender_reciever_label->AutoSize = false;
+			   if (t.getType() == TRANSACTION_TYPE::WITHDRAWAL || t.getType() == TRANSACTION_TYPE::REQUEST_MONEY)
+			   {
+				   to_form_field->Text = "From:";
+				   sender_reciever_label->Location = System::Drawing::Point(50, 45);
+			   }
+			   if (t.getType() == TRANSACTION_TYPE::SEND_MONEY) {
+				   sender_reciever_label->Text = gcnew String(t.getSender().c_str());
+			   }
+			   else if (t.getType() == TRANSACTION_TYPE::REQUEST_MONEY) {
+				sender_reciever_label->Text = gcnew String(t.getRecipient().c_str()/*"John Smith"*/); //"2"
+			   }
+			   Label^ amount_label = gcnew Label();
+			   //amount_label->Text = t.getAmount() /*"amount: $100"*/; //t.getAmount();
+			   //amount_label->Text = gcnew System::String(("amount: $" + std::to_string(t.getAmount())).c_str());
+			   amount_label->Text = "amount: $" + t.getAmount().ToString("F2");
+			   amount_label->Location = System::Drawing::Point(300, 45);
+			   amount_label->AutoSize = true;
+			   String^ stautus = gcnew String(t.getStatusString().c_str());
+			   Label^ status_label = gcnew Label();
+			   status_label->Text = gcnew String("");
+			   status_label->Location = System::Drawing::Point(300, 10);
+			   status_label->AutoSize = true;
+			   if (stautus=="Accepted")
+			   {
+				   status_label->Text = gcnew String("Accepted");
+				   status_label->ForeColor = System::Drawing::Color::Green;
+			   }
+			   else if (stautus =="Declined")
+			   {
+				   status_label->Text = gcnew String("Declined");
+				   status_label->ForeColor = System::Drawing::Color::Red;
+			   }
+			   panel->Controls->Add(transaction_date_label);
+			   panel->Controls->Add(to_form_field);
+			   panel->Controls->Add(sender_reciever_label);
+			   panel->Controls->Add(status_label);
+			   panel->Controls->Add(amount_label);
+			   this->Controls->Add(panel);
+			   this->flowLayoutPanel_Users_Transaction->Controls->Add(panel);
+			   count_t++;
+			}
+		   }
+	   }
+private: System::Void Save_button_Click(System::Object^ sender, System::EventArgs^ e) {
+	Admin currentAdmin1;// this should be the current admin
+	// Hide the text boxes and buttons
+	UserEdit_Box->Hide();
+	EmailEdit_Box->Hide();
+	BalanceEdit_Box->Hide();
+	suspended_checkBox->Hide();
+	Save_button->Hide();
+	cancel_button->Hide();
+	label8->Hide();
+	label9->Hide();
+	label10->Hide();
+	password_Box->Hide();
+	label12->Hide();
+	// Show the labels and hide the text boxes
+	LB_Name_info->Show();
+	LB_Email_info->Show();
+	LB_Balance_info->Show();
+	suspended_LB->Show();
+	Add_user_button->Show();
+	payments_label->Show();//show that?!
+	listBox1->Show();
+	// Show the Edit and Transactions buttons
+	Edit_button->Show();
+	Transactions_button->Show();
+	Delete_button->Show();
+	if (suspended_checkBox->Checked)
+	{
+		suspended_LB->Text = "suspended";
+	}
+	else
+	{
+		suspended_LB->Text = "unsuspended";
+	}
+	//it is Add user
+	if (label7->Text=="password:")
+	{
+		string username = msclr::interop::marshal_as<std::string>(UserEdit_Box->Text);
+		string email = msclr::interop::marshal_as<std::string>(EmailEdit_Box->Text);
+		string balance = msclr::interop::marshal_as<std::string>(BalanceEdit_Box->Text);
+		string password = msclr::interop::marshal_as<std::string>(password_Box->Text);
+		string specialChars = "!@$%^&*+#";
+		if (username.empty() || email.empty() || balance.empty()||password.empty()) {
+			Add_user_button_Click(nullptr, gcnew System::EventArgs());
+			MessageBox::Show("Please fill all fields!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+		if (password.find_first_of(specialChars) == std::string::npos) {
+			Add_user_button_Click(nullptr, gcnew System::EventArgs());
+			password_Box->Text = "";
+			MessageBox::Show("Password must contain at least one special character (!@$%^&*+#)!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+		//here will check to the errors:
+		//auto ur_Ed = user::allusers.extract(key);
+		//ur_Ed.key() = username;
+		//ur_Ed.mapped().setUsername(ur_Ed.key());
+		//ur_Ed.mapped().setEmail(newemail);
+		//ur_Ed.mapped().setBalance(stoi(newbalance));
+		if (suspended_checkBox->Checked)
+		{
+			//ur_Ed.mapped().setSuspended(true);
+			currentAdmin1.addUser(username, email, balance, password, true);
+			suspended_LB->Text = "suspended";
+			suspended_LB->ForeColor = System::Drawing::Color::Red;
+		}
+		else
+		{
+			//ur_Ed.mapped().setSuspended(false);
+
+			currentAdmin1.addUser(username, email, balance, password, false);
+			suspended_LB->Text = "unsuspended";
+			suspended_LB->ForeColor = System::Drawing::Color::Green;
+		}
+		//user::allusers.insert(std::move(ur_Ed));
+		LB_Name_info->Text = UserEdit_Box->Text;
+		LB_Email_info->Text = EmailEdit_Box->Text;
+		LB_Balance_info->Text = BalanceEdit_Box->Text;
+		draw_usercontrols();
+	}
+	//it is Edit user
+	else
+	{
+		string username = msclr::interop::marshal_as<std::string>(UserEdit_Box->Text);
+		string newemail = msclr::interop::marshal_as<std::string>(EmailEdit_Box->Text);
+		string newbalance = msclr::interop::marshal_as<std::string>(BalanceEdit_Box->Text);
+		if (username.empty() || newemail.empty() || newbalance.empty()) {
+			Edit_button_Click(nullptr, gcnew System::EventArgs());
+			MessageBox::Show("Please fill all fields!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+		//here will check to the errors:
+		//auto ur_Ed = user::allusers.extract(key);
+		//ur_Ed.key() = username;
+		//ur_Ed.mapped().setUsername(ur_Ed.key());
+		//ur_Ed.mapped().setEmail(newemail);
+		//ur_Ed.mapped().setBalance(stoi(newbalance));
+		if (suspended_checkBox->Checked)
+		{
+			//ur_Ed.mapped().setSuspended(true);
+			currentAdmin1.updateUserData(key, username, newemail, newbalance, true);
+			suspended_LB->Text = "suspended";
+			suspended_LB->ForeColor = System::Drawing::Color::Red;
+		}
+		else
+		{
+			//ur_Ed.mapped().setSuspended(false);
+
+			currentAdmin1.updateUserData(key, username, newemail, newbalance, false);
+			suspended_LB->Text = "unsuspended";
+			suspended_LB->ForeColor = System::Drawing::Color::Green;
+		}
+		//user::allusers.insert(std::move(ur_Ed));
+		LB_Name_info->Text = UserEdit_Box->Text;
+		LB_Email_info->Text = EmailEdit_Box->Text;
+		LB_Balance_info->Text = BalanceEdit_Box->Text;
+		draw_usercontrols();
+	}
+}
+private: System::Void UserEdit_Box_Leave(System::Object^ sender, System::EventArgs^ e) {
+	string username = msclr::interop::marshal_as<std::string>(UserEdit_Box->Text);
+	if (username==key && label7->Text=="payment:")
+	{
+		return;
+	}
+	else if (user::allusers.find(username) != user::allusers.end()) {
+		//label15->Show();
+		//textBox5->Text = "";
+		massage_name_LB->Show();
+		label8->BackColor = System::Drawing::Color::Red;
+		Save_button->Enabled = false;
+		return;
+	}
+	else {
+		//label15->Hide();
+		//textBox5->Text = "valid";
+		massage_name_LB->Hide();
+		label8->BackColor = System::Drawing::Color::Green;
+		Save_button->Enabled = true;
+	}
+}
+private: System::Void BalanceEdit_Box_KeyPress(System::Object ^ sender, System::Windows::Forms::KeyPressEventArgs ^ e) {
+
+	if (!Char::IsDigit(e->KeyChar) && e->KeyChar != '\b' && e->KeyChar != '.') {
+		e->Handled = true;
+	}
+	else if (e->KeyChar == '.' && safe_cast<TextBox^>(sender)->Text->Contains(".")) {
+		e->Handled = true;
+	}
+
+}
+private: System::Void Delete_button_Click(System::Object^ sender, System::EventArgs^ e) {
+	Admin currentAdmin1;// this should be the current admin
+	System::Windows::Forms::DialogResult result = System::Windows::Forms::MessageBox::Show(
+		"Are you sure you want to delete this user?", "Confirm Delete",                            
+		System::Windows::Forms::MessageBoxButtons::YesNo, 
+		System::Windows::Forms::MessageBoxIcon::Warning  
+	);
+	if (result == System::Windows::Forms::DialogResult::Yes) {
+		currentAdmin1.deleteUser(key);
+		ResetUsersPageUI();
+		draw_usercontrols();
+	}
 }
 };
 }

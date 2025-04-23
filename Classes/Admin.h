@@ -3,19 +3,19 @@
 #include <list>
 #include "User.h"
 class Admin {
-    string username, password;
 public:
-    static list<transaction> all_transactions;
+    std::string username, password;
+    Admin();
+    static std::list<transaction> all_transactions;
 	static Admin currentAdmin;
-
     //void adminDashboard();
-    void viewAllUsers();
-    user findUser(); //user class behaviour
+    void viewAllUsers();//GUI
+    user findUser(); //user class behaviour,not needed
 
-    void addUser();
-    void viewUserData();
-    void deleteUser(user);
-    void updateUserData(user);
+    void addUser(string name, string email, string balance,string pass,bool su);
+    void viewUserData();//GUI
+    void deleteUser(string k);
+    void updateUserData(string K,string Nname,string Nemail,string Nbalance, bool su);
     void suspendUser(user);
 
     void viewAllTransactions();

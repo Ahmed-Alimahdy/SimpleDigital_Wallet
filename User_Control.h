@@ -197,10 +197,18 @@ private: System::Void panel1_Click(System::Object^ sender, System::EventArgs^ e)
 }
 private: System::Void panel1_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 	panel1->BackColor = System::Drawing::SystemColors::ControlDark;
+	LB_Name->BackColor = System::Drawing::SystemColors::ControlDark;
+	LB_Email->BackColor = System::Drawing::SystemColors::ControlDark;
+	LB_Balance->BackColor = System::Drawing::SystemColors::ControlDark;
+	pictureBox1->BackColor = System::Drawing::SystemColors::ControlDark;
 }
 
 private: System::Void panel1_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 	panel1->BackColor = System::Drawing::SystemColors::ControlLight;
+	LB_Name->BackColor = System::Drawing::SystemColors::ControlLight;
+	LB_Email->BackColor = System::Drawing::SystemColors::ControlLight;
+	LB_Balance->BackColor = System::Drawing::SystemColors::ControlLight;
+	pictureBox1->BackColor = System::Drawing::SystemColors::ControlLight;
 	OnUserControlClick(this, this);
 	//panel1->BackColor = System::Drawing::SystemColors::ControlLight;
 	//panel1->Cursor = System::Windows::Forms::Cursors::Hand;
