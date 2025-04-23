@@ -1,1 +1,25 @@
 #pragma once
+#include <string>
+#include <list>
+#include "User.h"
+class Admin {
+public:
+    std::string username, password;
+    Admin();
+    static std::list<transaction> all_transactions;
+	static Admin currentAdmin;
+    //void adminDashboard();
+    void viewAllUsers();//GUI
+    user findUser(); //user class behaviour,not needed
+
+    void addUser(string name, string email, string balance,string pass,bool su);
+    void viewUserData();//GUI
+    void deleteUser(string k);
+    void updateUserData(string K,string Nname,string Nemail,string Nbalance, bool su);
+    void suspendUser(user);
+
+    void viewAllTransactions();
+
+    void logout();
+    void addAdmin();
+};

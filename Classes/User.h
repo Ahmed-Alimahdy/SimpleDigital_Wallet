@@ -1,32 +1,38 @@
 #pragma once
+//#ifndef USER_H
+//#define USER_H
+#include "Transaction.h"
+#include "payment.h"
 #include <string>
 #include <unordered_map>
 #include <list>
-using namespace std;
+//#include"Transaction.h"
 class user
 {
 private:
     string username;
     string email;
     string hashedPassword;
-    list<transaction> history_transaction;
     list<transaction> requested_transaction;
     double balance;
+    bool suspended=false;
+
 public:
+    list<Payment> payment_methods;
+    list<transaction> history_transaction;
+    user();
+    user(string& uname, string& mail, string& hashedPwd);
     static unordered_map<string, user> allusers;
-    user(string& id, string& uname, string& mail, string& hashedPwd);
     string getUsername();
+    string getHashedPassword();
     string getEmail();
     double getBalance();
-    unordered_map<string, user>& getAllusers();
+    bool getsuspended();
     list<transaction> get_history_transaction();
     double calculate_balance();
-    void edit_balance();
-    void display_transaction_history();
-    void add_to_transaction_history();
-    void send_request(double, string);
-    void send_money(double, string);
-    void edit_profile(string, string, string, string);
-    void change_password(string, string);
-    void delete_account();
+    void setUsername(string& uname);
+    void setHashedPassword(string& hashedPwd);
+    void setEmail(string& mail);
+    void setBalance(double balance);
+	void setSuspended(bool suspended);
 };
