@@ -3,6 +3,7 @@
 #include "profile.h"
 #include "Requested_transactions.h"
 #include"Balance_managment.h"
+#include <msclr/marshal_cppstd.h>
 namespace SimpleDigitalWallet {
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -55,11 +56,6 @@ namespace SimpleDigitalWallet {
 			Pen^ pen = gcnew Pen(Color::Gray, 2); // Adjust color and thickness as needed
 			e->Graphics->DrawPath(pen, path);
 		}
-		property System::String^ PlaceholderText
-		{
-			void set(System::String^ value) { placeholder = value; Invalidate(); }
-			System::String^ get() { return placeholder; }
-		}
 		void MakeRoundedPanel(Panel^ panel, int radius) {
 			GraphicsPath^ path = gcnew Drawing2D::GraphicsPath();
 			System::Drawing::Rectangle  bounds = panel->ClientRectangle;
@@ -74,82 +70,75 @@ namespace SimpleDigitalWallet {
 
 		void generate_transaction_history_panels()
 		{
-			/*if (user_account->history_transaction.size() == 0)
-			{*/
-				/*Label^ noTransactionsLabel = gcnew Label();
+			if (current_user->get_history_transaction().size() == 0)
+			{
+				Label^ noTransactionsLabel = gcnew Label();
 				noTransactionsLabel->Text = "No transactions yet";
-				noTransactionsLabel->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular);
+				noTransactionsLabel->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular);
 				noTransactionsLabel->AutoSize = true;
-				int centerX = (this->scrollable_transaction_panel->Width - noTransactionsLabel->Width) /6 ;
-				int centerY = (this->scrollable_transaction_panel->Height - noTransactionsLabel->Height) / 3;
+				int centerX = (this->scrollable_transaction_panel->Width - noTransactionsLabel->Width)/2 ;
+				int centerY = (this->scrollable_transaction_panel->Height - noTransactionsLabel->Height)/2 ;
 				noTransactionsLabel->Location = System::Drawing::Point(centerX, centerY);
-				this->scrollable_transaction_panel->Controls->Add(noTransactionsLabel);*/
-			//}
-			//else
-			//{
-				for (int i = 0;i < 20;i++)
+				this->scrollable_transaction_panel->Controls->Add(noTransactionsLabel);
+			}
+			else
+			{
+				int i = 0;
+				for(auto it : current_user->get_history_transaction())
 				{
-					/*transaction t = user_account->history_transaction.front();
-					user_account->history_transaction.pop_front();*/
 					Panel^ panel = gcnew Panel();
-					panel->Size = System::Drawing::Size(520, 83);
+					panel->Size = System::Drawing::Size(520, 118);
 					panel->BackColor = System::Drawing::SystemColors::ControlLight;
-					panel->Location = System::Drawing::Point(0, (i * 100));
+					panel->Location = System::Drawing::Point(0, (i * 135));
 					MakeRoundedPanel(panel, 15);
 					Label^ transaction_date_label = gcnew Label();
-					transaction_date_label->Text = gcnew String(/*t.getTimestampAsString().c_str()*/"19/4/2025");  //"1"
+					transaction_date_label->Text = gcnew String(msclr::interop::marshal_as<System::String^>(it.getTimestampAsString()));
 					transaction_date_label->Location = System::Drawing::Point(17, 10);
 					transaction_date_label->AutoSize = true;
 					transaction_date_label->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold);
 					Label^ to_form_field = gcnew Label();
-					/*if (t.getType() == TRANSACTION_TYPE::WITHDRAWAL || t.getType() == TRANSACTION_TYPE::REQUEST_MONEY)
-						to_form_field->Text = "From";
-					else*/
-						to_form_field->Text = "To: ";  
+					if (it.getType() == TRANSACTION_TYPE::DEPOSIT || it.getType() == TRANSACTION_TYPE::REQUEST_MONEY)
+						to_form_field->Text = "From : "+ gcnew String(msclr::interop::marshal_as<System::String^>(it.getSender()));
+					else
+						to_form_field->Text = "To : "+ gcnew String(msclr::interop::marshal_as<System::String^>(it.getRecipient()));;
 					to_form_field->Location = System::Drawing::Point(17, 45);
 					to_form_field->AutoSize = true;
 					to_form_field->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold);
-					Label^ sender_reciever_label = gcnew Label();
-					/*if (t.getType() == TRANSACTION_TYPE::SEND_MONEY) {
-						sender_reciever_label->Text = gcnew String(t.getSender().c_str());
-					}
-					else if (t.getType() == TRANSACTION_TYPE::REQUEST_MONEY) {*/
-						sender_reciever_label->Text = gcnew String(/*t.getRecipient().c_str()*/"John Smith"); //"2"
-					//}
-					sender_reciever_label->Location = System::Drawing::Point(55, 45);
-					sender_reciever_label->AutoSize = true;
-					sender_reciever_label->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold);
 					Label^ amount_label = gcnew Label();
-					amount_label->Text = "amount: $100"; //t.getAmount();
-					amount_label->Location = System::Drawing::Point(380, 30);
+					amount_label->Text = "amount : "+it.getAmount();
+					amount_label->Location = System::Drawing::Point(360, 45);
 					amount_label->AutoSize = true;
 					amount_label->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold);
+					Label^ status_label = gcnew Label();
+					status_label->Text = "Status : " + gcnew String(msclr::interop::marshal_as<System::String^>(it.getStatusString()));
+					if (it.getStatus() == RequestStatus::ACCEPTED)
+						status_label->ForeColor = System::Drawing::Color::Green;
+					else if (it.getStatus() == RequestStatus::DECLINED)
+						status_label->ForeColor = System::Drawing::Color::Red;
+					status_label->Location = System::Drawing::Point(17, 80);
+					status_label->AutoSize = true;
+					status_label->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold);
 					panel->Controls->Add(transaction_date_label);
+					panel->Controls->Add(status_label);
 					panel->Controls->Add(to_form_field);
-					panel->Controls->Add(sender_reciever_label);
 					panel->Controls->Add(amount_label);
 					this->Controls->Add(panel);
 					this->scrollable_transaction_panel->Controls->Add(panel);
+					i++;
 				}
-			//}
+			}
 		 }
 	public:
 		Dashboard(void)
 		{
 			InitializeComponent();
-			//
-			// Initialize the test pointer with a valid user object
-			//
 		}
 		Form^ previous_form;
 		Dashboard(Form^ form, user& currentUser)
 		{
 			InitializeComponent();
 			this->current_user = &currentUser;
-			
 			previous_form = form;
-			
-			/*this->user_account = user_account;*/
 		}
 
 	protected:

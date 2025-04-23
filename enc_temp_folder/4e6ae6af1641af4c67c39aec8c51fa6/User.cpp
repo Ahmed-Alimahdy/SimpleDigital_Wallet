@@ -15,6 +15,8 @@ user::user(string& uname, string& mail, string& hashedPwd)
 	hashedPassword = hashedPwd;
 	balance = 0;
 	suspended = false;
+	history_transaction.push_back(transaction("ahmed", "ali", 1000, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::ACCEPTED));
+	history_transaction.push_back(transaction("ahmed", "ali", 1000, TRANSACTION_TYPE::REQUEST_MONEY, RequestStatus::DECLINED));
 }
 unordered_map<string, user> user::allusers;
 string user::getUsername()

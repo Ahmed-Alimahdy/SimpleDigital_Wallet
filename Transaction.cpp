@@ -1,6 +1,6 @@
 #include"Classes\Transaction.h"
 #include <iostream>
-transaction::transaction(const std::string& from, const std::string& to, double amount,
+transaction::transaction(string from, string to, double amount,
 	TRANSACTION_TYPE t, RequestStatus s)
 {
 	sender = from;

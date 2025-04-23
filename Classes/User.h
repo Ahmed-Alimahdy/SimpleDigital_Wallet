@@ -11,17 +11,17 @@ class user
 private:
     string username;
     string email;
-    string hashedPassword; 
+    string hashedPassword;
     list<transaction> history_transaction;
     list<transaction> requested_transaction;
-	list<Payment> payment_methods;
+    list<Payment> payment_methods;
     double balance;
-	bool suspended;
+    bool suspended;
 
 public:
     user();
     user(string& uname, string& mail, string& hashedPwd);
-	// Getters
+    // Getters
     bool isSuspended();
     static unordered_map<string, user> allusers;
     string getUsername();
