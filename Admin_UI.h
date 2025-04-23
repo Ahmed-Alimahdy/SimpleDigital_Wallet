@@ -29,6 +29,7 @@ namespace SimpleDigitalWallet {
 		Admin_UI(void)
 		{
 			InitializeComponent();
+			addAdminPanel->Hide();
 			MakeRoundedPanel(scrollableTransactionsPanel, 20);
 			generate_transaction_history_panels();
 			editAdminPasswordTextbox->Hide();
@@ -84,7 +85,7 @@ namespace SimpleDigitalWallet {
 	private: System::Windows::Forms::Button^ switchToAdminProfileBtn;
 	private: System::Windows::Forms::Panel^ decLine2;
 
-	private: System::Windows::Forms::Panel^ topPanel;
+
 
 	private: System::Windows::Forms::Label^ addAdminLabel;
 	private: System::Windows::Forms::TextBox^ editAdminPasswordTextbox;
@@ -98,7 +99,8 @@ namespace SimpleDigitalWallet {
 	private: System::Windows::Forms::Panel^ Users_page;
 	private: System::Windows::Forms::Label^ Users_lable;
 	private: System::Windows::Forms::FlowLayoutPanel^ flowLayoutPanel_Users_Data;
-	private: System::Windows::Forms::Panel^ panel1;
+	private: System::Windows::Forms::Panel^ top_panal;
+
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::TextBox^ searchTextBox;
 	private: List<User_Control^>^ users;
@@ -144,10 +146,13 @@ namespace SimpleDigitalWallet {
 	private: System::Windows::Forms::Button^ Delete_button;
 	public: System::Windows::Forms::Label^ payments_label;
 	private: System::Windows::Forms::ListBox^ listBox1;
+private: System::Windows::Forms::Button^ button_to_Admin;
+private: System::Windows::Forms::Button^ button_to_users;
+
 	public:
 
 	public:
-	//public:void MakeRoundedButton(System::Windows::Forms::Button^ button, int radius);
+	
 
 	private:
 
@@ -184,7 +189,7 @@ namespace SimpleDigitalWallet {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-
+			this->components = (gcnew System::ComponentModel::Container());
 			this->decLine1 = (gcnew System::Windows::Forms::Panel());
 			this->addAdminPanel = (gcnew System::Windows::Forms::Panel());
 			this->addAdminConfirmationLabel = (gcnew System::Windows::Forms::Label());
@@ -206,9 +211,57 @@ namespace SimpleDigitalWallet {
 			this->addAdminUsernameLabel = (gcnew System::Windows::Forms::Label());
 			this->adminPasswordLabel = (gcnew System::Windows::Forms::Label());
 			this->adminUsenameLabel = (gcnew System::Windows::Forms::Label());
-			this->topPanel = (gcnew System::Windows::Forms::Panel());
+			this->Users_page = (gcnew System::Windows::Forms::Panel());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->searchTextBox = (gcnew System::Windows::Forms::TextBox());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->flowLayoutPanel_Users_Data = (gcnew System::Windows::Forms::FlowLayoutPanel());
+			this->Users_lable = (gcnew System::Windows::Forms::Label());
+			this->UserInfo_panal = (gcnew System::Windows::Forms::Panel());
+			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
+			this->Delete_button = (gcnew System::Windows::Forms::Button());
+			this->massage_name_LB = (gcnew System::Windows::Forms::Label());
+			this->label12 = (gcnew System::Windows::Forms::Label());
+			this->password_Box = (gcnew System::Windows::Forms::TextBox());
+			this->Add_user_button = (gcnew System::Windows::Forms::Button());
+			this->Transactions_user_panel = (gcnew System::Windows::Forms::Panel());
+			this->flowLayoutPanel_Users_Transaction = (gcnew System::Windows::Forms::FlowLayoutPanel());
+			this->DownTransaction_button = (gcnew System::Windows::Forms::Button());
+			this->Tr_label = (gcnew System::Windows::Forms::Label());
+			this->label11 = (gcnew System::Windows::Forms::Label());
+			this->suspended_checkBox = (gcnew System::Windows::Forms::CheckBox());
+			this->label10 = (gcnew System::Windows::Forms::Label());
+			this->BalanceEdit_Box = (gcnew System::Windows::Forms::TextBox());
+			this->label9 = (gcnew System::Windows::Forms::Label());
+			this->EmailEdit_Box = (gcnew System::Windows::Forms::TextBox());
+			this->label8 = (gcnew System::Windows::Forms::Label());
+			this->cancel_button = (gcnew System::Windows::Forms::Button());
+			this->UserEdit_Box = (gcnew System::Windows::Forms::TextBox());
+			this->Save_button = (gcnew System::Windows::Forms::Button());
+			this->LB_Email_info = (gcnew System::Windows::Forms::Label());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->LB_Name_info = (gcnew System::Windows::Forms::Label());
+			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->Transactions_button = (gcnew System::Windows::Forms::Button());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->LB_Balance_info = (gcnew System::Windows::Forms::Label());
+			this->suspended_LB = (gcnew System::Windows::Forms::Label());
+			this->Edit_button = (gcnew System::Windows::Forms::Button());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->payments_label = (gcnew System::Windows::Forms::Label());
+			this->No_user_ms = (gcnew System::Windows::Forms::Label());
+			this->top_panal = (gcnew System::Windows::Forms::Panel());
+			this->button_to_Admin = (gcnew System::Windows::Forms::Button());
+			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->button_to_users = (gcnew System::Windows::Forms::Button());
 			this->addAdminPanel->SuspendLayout();
 			this->allTransactionsPanel->SuspendLayout();
+			this->Users_page->SuspendLayout();
+			this->UserInfo_panal->SuspendLayout();
+			this->Transactions_user_panel->SuspendLayout();
+			this->top_panal->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// decLine1
@@ -241,7 +294,7 @@ namespace SimpleDigitalWallet {
 			this->addAdminPanel->Controls->Add(this->adminUsenameLabel);
 			this->addAdminPanel->Location = System::Drawing::Point(0, 67);
 			this->addAdminPanel->Name = L"addAdminPanel";
-			this->addAdminPanel->Size = System::Drawing::Size(1184, 682);
+			this->addAdminPanel->Size = System::Drawing::Size(1200, 800);
 			this->addAdminPanel->TabIndex = 1;
 			this->addAdminPanel->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Admin_UI::transactionsPanel_Paint);
 			// 
@@ -368,56 +421,97 @@ namespace SimpleDigitalWallet {
 			this->switchToAdminProfileBtn->Text = L"Switch";
 			this->switchToAdminProfileBtn->UseVisualStyleBackColor = false;
 			this->switchToAdminProfileBtn->Click += gcnew System::EventHandler(this, &Admin_UI::switchToAdminProfileBtn_Click);
-
-			this->components = (gcnew System::ComponentModel::Container());
-			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Admin_UI::typeid));
-			this->Users_page = (gcnew System::Windows::Forms::Panel());
-			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->searchTextBox = (gcnew System::Windows::Forms::TextBox());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->flowLayoutPanel_Users_Data = (gcnew System::Windows::Forms::FlowLayoutPanel());
-			this->Users_lable = (gcnew System::Windows::Forms::Label());
-			this->UserInfo_panal = (gcnew System::Windows::Forms::Panel());
-			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
-			this->Delete_button = (gcnew System::Windows::Forms::Button());
-			this->massage_name_LB = (gcnew System::Windows::Forms::Label());
-			this->label12 = (gcnew System::Windows::Forms::Label());
-			this->password_Box = (gcnew System::Windows::Forms::TextBox());
-			this->Add_user_button = (gcnew System::Windows::Forms::Button());
-			this->Transactions_user_panel = (gcnew System::Windows::Forms::Panel());
-			this->flowLayoutPanel_Users_Transaction = (gcnew System::Windows::Forms::FlowLayoutPanel());
-			this->DownTransaction_button = (gcnew System::Windows::Forms::Button());
-			this->Tr_label = (gcnew System::Windows::Forms::Label());
-			this->label11 = (gcnew System::Windows::Forms::Label());
-			this->suspended_checkBox = (gcnew System::Windows::Forms::CheckBox());
-			this->label10 = (gcnew System::Windows::Forms::Label());
-			this->BalanceEdit_Box = (gcnew System::Windows::Forms::TextBox());
-			this->label9 = (gcnew System::Windows::Forms::Label());
-			this->EmailEdit_Box = (gcnew System::Windows::Forms::TextBox());
-			this->label8 = (gcnew System::Windows::Forms::Label());
-			this->cancel_button = (gcnew System::Windows::Forms::Button());
-			this->UserEdit_Box = (gcnew System::Windows::Forms::TextBox());
-			this->Save_button = (gcnew System::Windows::Forms::Button());
-			this->LB_Email_info = (gcnew System::Windows::Forms::Label());
-			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->LB_Name_info = (gcnew System::Windows::Forms::Label());
-			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->Transactions_button = (gcnew System::Windows::Forms::Button());
-			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->LB_Balance_info = (gcnew System::Windows::Forms::Label());
-			this->suspended_LB = (gcnew System::Windows::Forms::Label());
-			this->Edit_button = (gcnew System::Windows::Forms::Button());
-			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->payments_label = (gcnew System::Windows::Forms::Label());
-			this->No_user_ms = (gcnew System::Windows::Forms::Label());
-			this->panel1 = (gcnew System::Windows::Forms::Panel());
-			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->Users_page->SuspendLayout();
-			this->UserInfo_panal->SuspendLayout();
-			this->Transactions_user_panel->SuspendLayout();
-			this->SuspendLayout();
+			// 
+			// editAdminProfileBtn
+			// 
+			this->editAdminProfileBtn->Location = System::Drawing::Point(450, 88);
+			this->editAdminProfileBtn->Name = L"editAdminProfileBtn";
+			this->editAdminProfileBtn->Size = System::Drawing::Size(75, 23);
+			this->editAdminProfileBtn->TabIndex = 10;
+			this->editAdminProfileBtn->Text = L"Edit";
+			this->editAdminProfileBtn->UseVisualStyleBackColor = true;
+			this->editAdminProfileBtn->Click += gcnew System::EventHandler(this, &Admin_UI::editAdminProfileBtn_Click);
+			// 
+			// addAdminButton
+			// 
+			this->addAdminButton->BackColor = System::Drawing::SystemColors::ActiveCaptionText;
+			this->addAdminButton->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->addAdminButton->ForeColor = System::Drawing::Color::White;
+			this->addAdminButton->Location = System::Drawing::Point(77, 472);
+			this->addAdminButton->Name = L"addAdminButton";
+			this->addAdminButton->Size = System::Drawing::Size(309, 35);
+			this->addAdminButton->TabIndex = 7;
+			this->addAdminButton->Text = L"Add Admin";
+			this->addAdminButton->UseVisualStyleBackColor = false;
+			this->addAdminButton->Click += gcnew System::EventHandler(this, &Admin_UI::addAdminButton_Click);
+			// 
+			// addAdminPasswordTextfield
+			// 
+			this->addAdminPasswordTextfield->BackColor = System::Drawing::SystemColors::ActiveBorder;
+			this->addAdminPasswordTextfield->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->addAdminPasswordTextfield->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+			this->addAdminPasswordTextfield->Location = System::Drawing::Point(77, 392);
+			this->addAdminPasswordTextfield->Name = L"addAdminPasswordTextfield";
+			this->addAdminPasswordTextfield->Size = System::Drawing::Size(309, 26);
+			this->addAdminPasswordTextfield->TabIndex = 6;
+			this->addAdminPasswordTextfield->UseSystemPasswordChar = true;
+			// 
+			// addAdminPasswordLabel
+			// 
+			this->addAdminPasswordLabel->AutoSize = true;
+			this->addAdminPasswordLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+			this->addAdminPasswordLabel->Location = System::Drawing::Point(72, 347);
+			this->addAdminPasswordLabel->Name = L"addAdminPasswordLabel";
+			this->addAdminPasswordLabel->Size = System::Drawing::Size(118, 29);
+			this->addAdminPasswordLabel->TabIndex = 5;
+			this->addAdminPasswordLabel->Text = L"password";
+			// 
+			// addAdminUsernameTextfield
+			// 
+			this->addAdminUsernameTextfield->BackColor = System::Drawing::SystemColors::ActiveBorder;
+			this->addAdminUsernameTextfield->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->addAdminUsernameTextfield->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+			this->addAdminUsernameTextfield->Location = System::Drawing::Point(77, 277);
+			this->addAdminUsernameTextfield->Name = L"addAdminUsernameTextfield";
+			this->addAdminUsernameTextfield->Size = System::Drawing::Size(309, 26);
+			this->addAdminUsernameTextfield->TabIndex = 4;
+			// 
+			// addAdminUsernameLabel
+			// 
+			this->addAdminUsernameLabel->AutoSize = true;
+			this->addAdminUsernameLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+			this->addAdminUsernameLabel->Location = System::Drawing::Point(72, 232);
+			this->addAdminUsernameLabel->Name = L"addAdminUsernameLabel";
+			this->addAdminUsernameLabel->Size = System::Drawing::Size(120, 29);
+			this->addAdminUsernameLabel->TabIndex = 3;
+			this->addAdminUsernameLabel->Text = L"username";
+			// 
+			// adminPasswordLabel
+			// 
+			this->adminPasswordLabel->AutoSize = true;
+			this->adminPasswordLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->adminPasswordLabel->Location = System::Drawing::Point(252, 45);
+			this->adminPasswordLabel->Name = L"adminPasswordLabel";
+			this->adminPasswordLabel->Size = System::Drawing::Size(118, 29);
+			this->adminPasswordLabel->TabIndex = 1;
+			this->adminPasswordLabel->Text = L"password";
+			// 
+			// adminUsenameLabel
+			// 
+			this->adminUsenameLabel->AutoSize = true;
+			this->adminUsenameLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->adminUsenameLabel->Location = System::Drawing::Point(32, 45);
+			this->adminUsenameLabel->Name = L"adminUsenameLabel";
+			this->adminUsenameLabel->Size = System::Drawing::Size(120, 29);
+			this->adminUsenameLabel->TabIndex = 0;
+			this->adminUsenameLabel->Text = L"username";
 			// 
 			// Users_page
 			// 
@@ -643,7 +737,6 @@ namespace SimpleDigitalWallet {
 			// DownTransaction_button
 			// 
 			this->DownTransaction_button->BackColor = System::Drawing::Color::Green;
-			this->DownTransaction_button->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"DownTransaction_button.BackgroundImage")));
 			this->DownTransaction_button->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->DownTransaction_button->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->DownTransaction_button->FlatAppearance->BorderSize = 0;
@@ -829,7 +922,6 @@ namespace SimpleDigitalWallet {
 			this->label7->Size = System::Drawing::Size(125, 29);
 			this->label7->TabIndex = 12;
 			this->label7->Text = L"payment:";
-			this->label7->Click += gcnew System::EventHandler(this, &Admin_UI::label7_Click);
 			// 
 			// Transactions_button
 			// 
@@ -935,117 +1027,27 @@ namespace SimpleDigitalWallet {
 			this->No_user_ms->Size = System::Drawing::Size(411, 55);
 			this->No_user_ms->TabIndex = 16;
 			this->No_user_ms->Text = L"NO User Selected";
-
 			// 
-			// editAdminProfileBtn
+			// top_panal
 			// 
-
-			this->editAdminProfileBtn->Location = System::Drawing::Point(450, 88);
-			this->editAdminProfileBtn->Name = L"editAdminProfileBtn";
-			this->editAdminProfileBtn->Size = System::Drawing::Size(75, 23);
-			this->editAdminProfileBtn->TabIndex = 10;
-			this->editAdminProfileBtn->Text = L"Edit";
-			this->editAdminProfileBtn->UseVisualStyleBackColor = true;
-			this->editAdminProfileBtn->Click += gcnew System::EventHandler(this, &Admin_UI::editAdminProfileBtn_Click);
+			this->top_panal->BackColor = System::Drawing::Color::Green;
+			this->top_panal->Controls->Add(this->button_to_users);
+			this->top_panal->Controls->Add(this->button_to_Admin);
+			this->top_panal->Dock = System::Windows::Forms::DockStyle::Top;
+			this->top_panal->Location = System::Drawing::Point(0, 0);
+			this->top_panal->Name = L"top_panal";
+			this->top_panal->Size = System::Drawing::Size(1200, 73);
+			this->top_panal->TabIndex = 2;
 			// 
-			// addAdminButton
+			// button_to_Admin
 			// 
-			this->addAdminButton->BackColor = System::Drawing::SystemColors::ActiveCaptionText;
-			this->addAdminButton->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->addAdminButton->ForeColor = System::Drawing::Color::White;
-			this->addAdminButton->Location = System::Drawing::Point(77, 472);
-			this->addAdminButton->Name = L"addAdminButton";
-			this->addAdminButton->Size = System::Drawing::Size(309, 35);
-			this->addAdminButton->TabIndex = 7;
-			this->addAdminButton->Text = L"Add Admin";
-			this->addAdminButton->UseVisualStyleBackColor = false;
-			this->addAdminButton->Click += gcnew System::EventHandler(this, &Admin_UI::addAdminButton_Click);
-			// 
-			// addAdminPasswordTextfield
-			// 
-			this->addAdminPasswordTextfield->BackColor = System::Drawing::SystemColors::ActiveBorder;
-			this->addAdminPasswordTextfield->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->addAdminPasswordTextfield->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
-				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->addAdminPasswordTextfield->Location = System::Drawing::Point(77, 392);
-			this->addAdminPasswordTextfield->Name = L"addAdminPasswordTextfield";
-			this->addAdminPasswordTextfield->Size = System::Drawing::Size(309, 26);
-			this->addAdminPasswordTextfield->TabIndex = 6;
-			this->addAdminPasswordTextfield->UseSystemPasswordChar = true;
-			// 
-			// addAdminPasswordLabel
-			// 
-			this->addAdminPasswordLabel->AutoSize = true;
-			this->addAdminPasswordLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular,
-				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->addAdminPasswordLabel->Location = System::Drawing::Point(72, 347);
-			this->addAdminPasswordLabel->Name = L"addAdminPasswordLabel";
-			this->addAdminPasswordLabel->Size = System::Drawing::Size(118, 29);
-			this->addAdminPasswordLabel->TabIndex = 5;
-			this->addAdminPasswordLabel->Text = L"password";
-			// 
-			// addAdminUsernameTextfield
-			// 
-			this->addAdminUsernameTextfield->BackColor = System::Drawing::SystemColors::ActiveBorder;
-			this->addAdminUsernameTextfield->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->addAdminUsernameTextfield->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
-				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->addAdminUsernameTextfield->Location = System::Drawing::Point(77, 277);
-			this->addAdminUsernameTextfield->Name = L"addAdminUsernameTextfield";
-			this->addAdminUsernameTextfield->Size = System::Drawing::Size(309, 26);
-			this->addAdminUsernameTextfield->TabIndex = 4;
-			this->addAdminUsernameTextfield->TextChanged += gcnew System::EventHandler(this, &Admin_UI::textBox1_TextChanged);
-			// 
-			// addAdminUsernameLabel
-			// 
-			this->addAdminUsernameLabel->AutoSize = true;
-			this->addAdminUsernameLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular,
-				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->addAdminUsernameLabel->Location = System::Drawing::Point(72, 232);
-			this->addAdminUsernameLabel->Name = L"addAdminUsernameLabel";
-			this->addAdminUsernameLabel->Size = System::Drawing::Size(120, 29);
-			this->addAdminUsernameLabel->TabIndex = 3;
-			this->addAdminUsernameLabel->Text = L"username";
-			// 
-			// adminPasswordLabel
-			// 
-			this->adminPasswordLabel->AutoSize = true;
-			this->adminPasswordLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->adminPasswordLabel->Location = System::Drawing::Point(252, 45);
-			this->adminPasswordLabel->Name = L"adminPasswordLabel";
-			this->adminPasswordLabel->Size = System::Drawing::Size(118, 29);
-			this->adminPasswordLabel->TabIndex = 1;
-			this->adminPasswordLabel->Text = L"password";
-			// 
-			// adminUsenameLabel
-			// 
-			this->adminUsenameLabel->AutoSize = true;
-			this->adminUsenameLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->adminUsenameLabel->Location = System::Drawing::Point(32, 45);
-			this->adminUsenameLabel->Name = L"adminUsenameLabel";
-			this->adminUsenameLabel->Size = System::Drawing::Size(120, 29);
-			this->adminUsenameLabel->TabIndex = 0;
-			this->adminUsenameLabel->Text = L"username";
-			// 
-			// topPanel
-			// 
-			this->topPanel->BackColor = System::Drawing::Color::Green;
-			this->topPanel->Dock = System::Windows::Forms::DockStyle::Top;
-			this->topPanel->Location = System::Drawing::Point(0, 0);
-			this->topPanel->Name = L"topPanel";
-			this->topPanel->Size = System::Drawing::Size(1184, 68);
-			this->topPanel->TabIndex = 12;
-			this->topPanel->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Admin_UI::topPanel_Paint);
-
-			this->panel1->BackColor = System::Drawing::Color::Green;
-			this->panel1->Dock = System::Windows::Forms::DockStyle::Top;
-			this->panel1->Location = System::Drawing::Point(0, 0);
-			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(1200, 73);
-			this->panel1->TabIndex = 2;
+			this->button_to_Admin->Location = System::Drawing::Point(450, 22);
+			this->button_to_Admin->Name = L"button_to_Admin";
+			this->button_to_Admin->Size = System::Drawing::Size(75, 23);
+			this->button_to_Admin->TabIndex = 0;
+			this->button_to_Admin->Text = L"button_to_Admin";
+			this->button_to_Admin->UseVisualStyleBackColor = true;
+			this->button_to_Admin->Click += gcnew System::EventHandler(this, &Admin_UI::button_to_Admin_Click);
 			// 
 			// timer1
 			// 
@@ -1056,40 +1058,41 @@ namespace SimpleDigitalWallet {
 			// 
 			this->timer2->Interval = 1;
 			this->timer2->Tick += gcnew System::EventHandler(this, &Admin_UI::timer2_Tick);
-
+			// 
+			// button_to_users
+			// 
+			this->button_to_users->Location = System::Drawing::Point(564, 22);
+			this->button_to_users->Name = L"button_to_users";
+			this->button_to_users->Size = System::Drawing::Size(75, 23);
+			this->button_to_users->TabIndex = 1;
+			this->button_to_users->Text = L"button1";
+			this->button_to_users->UseVisualStyleBackColor = true;
+			this->button_to_users->Click += gcnew System::EventHandler(this, &Admin_UI::button_to_users_Click);
 			// 
 			// Admin_UI
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
-
-			this->ClientSize = System::Drawing::Size(1184, 749);
-			this->Controls->Add(this->topPanel);
-			this->Controls->Add(this->addAdminPanel);
-			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
-			this->Margin = System::Windows::Forms::Padding(2);
-
 			this->ClientSize = System::Drawing::Size(1200, 800);
-			this->Controls->Add(this->panel1);
+			this->Controls->Add(this->addAdminPanel);
+			this->Controls->Add(this->top_panal);
 			this->Controls->Add(this->Users_page);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
-
+			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"Admin_UI";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Admin_UI";
 			this->Load += gcnew System::EventHandler(this, &Admin_UI::Admin_UI_Load);
-
 			this->addAdminPanel->ResumeLayout(false);
 			this->addAdminPanel->PerformLayout();
 			this->allTransactionsPanel->ResumeLayout(false);
 			this->allTransactionsPanel->PerformLayout();
-
 			this->Users_page->ResumeLayout(false);
 			this->Users_page->PerformLayout();
 			this->UserInfo_panal->ResumeLayout(false);
 			this->UserInfo_panal->PerformLayout();
 			this->Transactions_user_panel->ResumeLayout(false);
 			this->Transactions_user_panel->PerformLayout();
-
+			this->top_panal->ResumeLayout(false);
 			this->ResumeLayout(false);
 
 		}
@@ -1099,18 +1102,15 @@ namespace SimpleDigitalWallet {
 	private: System::Void transactionsPanel_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 
 	}
-	private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 
-
-	}
 private: System::Void switchToAdminProfileBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 	allTransactionsPanel->Hide();
 	
 }
-private: System::Void switchToAllTransactionsBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-	
-	allTransactionsPanel->Show();
-}
+//private: System::Void switchToAllTransactionsBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+//	
+//	allTransactionsPanel->Show();
+//}
 
 
 	   /////////////////
@@ -1119,7 +1119,7 @@ private: System::Void switchToAllTransactionsBtn_Click(System::Object^ sender, S
 
 
 
-	   void MakeRoundedPanel(Panel^ panel, int radius) {
+	   /*void MakeRoundedPanel(Panel^ panel, int radius) {
 		   System::Drawing::Drawing2D::GraphicsPath^ path = gcnew System::Drawing::Drawing2D::GraphicsPath();
 		   System::Drawing::Rectangle  bounds = panel->ClientRectangle;
 		   int diameter = radius * 2;
@@ -1129,7 +1129,7 @@ private: System::Void switchToAllTransactionsBtn_Click(System::Object^ sender, S
 		   path->AddArc(bounds.X, bounds.Bottom - diameter, diameter, diameter, 90, 90);
 		   path->CloseFigure();
 		   panel->Region = gcnew System::Drawing::Region(path);
-	   }
+	   }*/
 
 	   void generate_transaction_history_panels()
 	   {
@@ -1213,6 +1213,7 @@ private: System::Void cancelEditAdmin_Click(System::Object^ sender, System::Even
 	adminUsenameLabel->Show();
 	editAdminUsernameTextbox->Text = "";
 	editAdminPasswordTextbox->Text = "";
+}
 
 	public:int count=0;
 	private: System::Void Users_page_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
@@ -1234,12 +1235,7 @@ private: System::Void cancelEditAdmin_Click(System::Object^ sender, System::Even
 			   label12->Hide();
 			   massage_name_LB->Hide();
 			   Delete_button->Hide();
-			   //MakeRoundedButton(Add_user_button, 15);
-			   //MakeRoundedButton(Edit_button, 15);
-			   //MakeRoundedButton(Transactions_button, 15);
-			   //MakeRoundedButton(Save_button, 15);
-			   //MakeRoundedButton(cancel_button, 15);
-			   //MakeRoundedButton(Delete_button, 15);
+			  
 		   }
 private: System::Void Admin_UI_Load(System::Object^ sender, System::EventArgs^ e) {
 
@@ -1353,7 +1349,7 @@ private: System::Void searchTextBox_TextChanged(System::Object^ sender, System::
 			   listBox1->Items->Add("No Payments");
 		   }
 		   
-		   generate_transaction_history_panels();
+		   generate_transaction_history_panels2();
 		   
 		   UserInfo_panal->Show();
 		   No_user_ms->Hide();
@@ -1390,15 +1386,10 @@ private: System::Void searchTextBox_TextChanged(System::Object^ sender, System::
 		   Edit_button->Show();
 		   Transactions_button->Show();
 	   }
-private: System::Void label4_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void panel2_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-}
-private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 
-}
+
+
+
 private: System::Void Edit_button_Click(System::Object^ sender, System::EventArgs^ e) {
 	//
 	// LB_Name_info
@@ -1603,15 +1594,7 @@ private: System::Void Add_user_button_Click(System::Object^ sender, System::Even
 	
 }
 
-	void MakeRoundedButton(System::Windows::Forms::Button^ button, int radius) {
-		   System::Drawing::Drawing2D::GraphicsPath^ path = gcnew System::Drawing::Drawing2D::GraphicsPath();
-		   path->AddArc(0, 0, radius, radius, 180, 90); // Top-left corner
-		   path->AddArc(button->Width - radius, 0, radius, radius, 270, 90); // Top-right corner
-		   path->AddArc(button->Width - radius, button->Height - radius, radius, radius, 0, 90); // Bottom-right corner
-		   path->AddArc(0, button->Height - radius, radius, radius, 90, 90); // Bottom-left corner
-		   path->CloseAllFigures();
-		   button->Region = gcnew System::Drawing::Region(path);
-	   }
+	
 	   void MakeRoundedPanel(System::Windows::Forms::Panel^ panel, int radius)
 	   {
 		   System::Drawing::Drawing2D::GraphicsPath^ path = gcnew System::Drawing::Drawing2D::GraphicsPath();
@@ -1622,7 +1605,7 @@ private: System::Void Add_user_button_Click(System::Object^ sender, System::Even
 		   path->CloseAllFigures();
 		   panel->Region = gcnew System::Drawing::Region(path);
 	   }
-	   void generate_transaction_history_panels()
+	   void generate_transaction_history_panels2()
 	   {
 		   flowLayoutPanel_Users_Transaction->Controls->Clear();
 		   int count_t = 0;
@@ -1868,9 +1851,7 @@ private: System::Void Delete_button_Click(System::Object^ sender, System::EventA
 		draw_usercontrols();
 	}
 }
-};
 
-}
 private: System::Void confirmEditAdmin_Click(System::Object^ sender, System::EventArgs^ e) {
 	//std::string oldUsername = adminUsernameLabel->Text;
 	//std::string newUsername = editAdminUsernameTextbox->Text;
@@ -1892,12 +1873,19 @@ private: System::Void confirmEditAdmin_Click(System::Object^ sender, System::Eve
 	editAdminUsernameTextbox->Text = "";
 	editAdminPasswordTextbox->Text = "";
 }
-private: System::Void topPanel_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-}
-private: System::Void Admin_UI_Load(System::Object^ sender, System::EventArgs^ e) {
-}
+
+
 private: System::Void addAdminConfirmationLabel_Click(System::Object^ sender, System::EventArgs^ e) {
 }
+private: System::Void button_to_Admin_Click(System::Object^ sender, System::EventArgs^ e) {
+	addAdminPanel->Show();
+
+}
+private: System::Void button_to_users_Click(System::Object^ sender, System::EventArgs^ e) {
+	addAdminPanel->Hide();
+
+}
 };
-};
+}
+
 

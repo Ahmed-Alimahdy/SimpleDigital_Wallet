@@ -8,6 +8,7 @@ public:
     Admin();
     static std::list<transaction> all_transactions;
 	static Admin currentAdmin;
+    static std::unordered_map<std::string, Admin> adminMap;
     //void adminDashboard();
     void viewAllUsers();//GUI
     user findUser(); //user class behaviour,not needed
