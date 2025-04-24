@@ -73,8 +73,38 @@ void user::setSuspended(bool susp)
 {
 	suspended = susp;
 }
-void user::add_transaction(transaction trans)
+void user::add_to_historytransaction(transaction trans)
 {
 	history_transaction.push_back(trans);
+}
+void user::add_payment_method(Payment payment)
+{
+	payment_methods.push_back(payment);
+}
+void user::remove_payment_method(string number)
+{
+	for (auto it = payment_methods.begin(); it != payment_methods.end(); ++it)
+	{
+		if (it->getGatewayNumber() == number)
+		{
+			payment_methods.erase(it);
+			break;
+		}
+	}
+}
+void user::add_to_requestedtransaction(transaction trans)
+{
+	requested_transaction.push_back(trans);
+}
+void user::remove_from_requestedtransaction(string id)
+{
+	for (auto it = requested_transaction.begin(); it != requested_transaction.end(); ++it)
+	{
+		if (it->getId() == id)
+		{
+			requested_transaction.erase(it);
+			break;
+		}
+	}
 }
 

@@ -36,6 +36,10 @@ public:
 	void setHashedPassword(string hashedPwd);
 	void setBalance(double bal);
 	void setSuspended(bool susp);
-    void add_transaction(transaction);
+    void add_to_historytransaction(transaction);
+	void add_to_requestedtransaction(transaction);
+	void add_payment_method(Payment payment);
+	void remove_payment_method(string number);
+	void remove_from_requestedtransaction(string);
 };
 #endif

@@ -9,6 +9,7 @@ transaction::transaction(string from, string to, double amount,
 	type = t;
 	status = s;
 	timestamp = time(nullptr);
+	id = to + "_" + from + "_" + to_string(timestamp);
 }
 string transaction::getSender() const
 {
@@ -73,4 +74,36 @@ string transaction::getStatusString() const
 	default:
 		return "Unknown Status";
 	}
+}
+void transaction::setId(string id)
+{
+	this->id = id;
+}
+void transaction::setSender(string sender)
+{
+	this->sender = sender;
+}
+void transaction::setRecipient(string recipient)
+{
+	this->recipient = recipient;
+}
+void transaction::setAmount(double amount)
+{
+	this->amount = amount;
+}
+void transaction::setType(TRANSACTION_TYPE type)
+{
+	this->type = type;
+}
+void transaction::setTimestamp(time_t timestamp)
+{
+	this->timestamp = timestamp;
+}
+string transaction::getId() const
+{
+	return id;
+}
+void transaction::setStatus(RequestStatus status)
+{
+	this->status = status;
 }

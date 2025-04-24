@@ -22,6 +22,7 @@ enum class RequestStatus {
 class transaction {
 private:
     string sender;
+    string id;
     string recipient;
     double amount;
     time_t timestamp;
@@ -41,10 +42,19 @@ public:
 
     // Setters
     void setStatus(RequestStatus newStatus);
+    void setId(string id);
+	void setSender(string sender);
+	void setRecipient(string recipient);
+	void setAmount(double amount);
+	void setType(TRANSACTION_TYPE type);
+	void setTimestamp(time_t timestamp);
+
 
     // Utility functions
     string getTypeString() const;
     string getStatusString() const;
+    string getId() const;
+
 
 };
 #endif
