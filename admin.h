@@ -10,7 +10,7 @@ class Admin {
     string username, password;
 public:
 	Admin(string& uname, string& pass);
-	list<transaction> alltransactions;
+	static list<transaction> alltransactions;
 	static unordered_map<string,Admin> all_admins;
     //getters
 	string getUsername();

@@ -82,6 +82,7 @@ namespace SimpleDigitalWallet {
 
 		void generate_transaction_history_panels()
 		{
+			this->scrollable_transaction_panel->Controls->Clear();
 			if (current_user->get_history_transaction().size() == 0)
 			{
 				Label^ noTransactionsLabel = gcnew Label();
@@ -122,8 +123,8 @@ namespace SimpleDigitalWallet {
 					amount_label->AutoSize = true;
 					amount_label->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold);
 					Label^ status_label = gcnew Label();
-					status_label->Text = "Status : " + gcnew String(msclr::interop::marshal_as<System::String^>(it.getStatusString()));
-					if (it.getStatus() == RequestStatus::ACCEPTED)
+					it.getStatus() != RequestStatus::NONE?status_label->Text = "Status : " + gcnew String(msclr::interop::marshal_as<System::String^>(it.getStatusString())): status_label->Text = "Status : Accepted";
+					if (it.getStatus() == RequestStatus::ACCEPTED|| it.getStatus() == RequestStatus::NONE)
 						status_label->ForeColor = System::Drawing::Color::Green;
 					else if (it.getStatus() == RequestStatus::DECLINED)
 						status_label->ForeColor = System::Drawing::Color::Red;
@@ -235,6 +236,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->send_amount_label = (gcnew System::Windows::Forms::Label());
 			this->recipient_name_label = (gcnew System::Windows::Forms::Label());
 			this->button3 = (gcnew System::Windows::Forms::Button());
@@ -264,7 +266,6 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->add_to_balance = (gcnew System::Windows::Forms::Button());
 			this->current_label = (gcnew System::Windows::Forms::Label());
 			this->balance_label = (gcnew System::Windows::Forms::Label());
-			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->panel1->SuspendLayout();
 			this->panel3->SuspendLayout();
 			this->black_panel->SuspendLayout();
@@ -312,6 +313,16 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->panel1->Size = System::Drawing::Size(504, 244);
 			this->panel1->TabIndex = 9;
 			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Dashboard::panel1_Paint);
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label3->Location = System::Drawing::Point(27, 180);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(0, 18);
+			this->label3->TabIndex = 12;
 			// 
 			// send_amount_label
 			// 
@@ -671,17 +682,6 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->balance_label->Text = L"user_balance";
 			this->balance_label->Click += gcnew System::EventHandler(this, &Dashboard::balance_label_Click);
 			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->label3->Location = System::Drawing::Point(27, 180);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(52, 18);
-			this->label3->TabIndex = 12;
-			this->label3->Text = L"label3";
-			// 
 			// Dashboard
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
@@ -788,14 +788,17 @@ private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e
 			return;
 		}
 		else {
-			label3->Text = String::Format("The operation was successful! Remaining balance: {0:C}", current_user->getBalance());
-			label3->ForeColor = Color::Green;
 			double newBalance = current_user->getBalance() - amountToSend;
+			label3->Text = String::Format("The operation was successful! Remaining balance: {0:C}", newBalance);
+			label3->ForeColor = Color::Green;
 			current_user->setBalance(newBalance);
 			balance_label->Text = String::Format("${0:F2}", current_user->getBalance());
-			current_user->get_history_transaction().push_back(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
-			it->second.get_history_transaction().push_back(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
-
+			current_user->add_transaction(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
+			it->second.add_transaction(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
+			this->scrollable_transaction_panel->Controls->Clear();
+			generate_transaction_history_panels();
+			textBox1->Text = " ";
+			domainUpDown1->Text = " ";
 		}
 
 

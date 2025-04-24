@@ -22,6 +22,8 @@ void Admin::setPassword(string& pass)
 {
 	password = pass;
 }
+unordered_map<string, Admin> Admin::all_admins;
+list<transaction> Admin::alltransactions;
 
 
 

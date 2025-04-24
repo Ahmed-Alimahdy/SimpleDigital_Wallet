@@ -13,7 +13,7 @@ user::user(string uname, string mail, string hashedPwd)
 	username = uname;
 	email = mail;
 	hashedPassword = hashedPwd;
-	balance = 0;
+	balance = 1000;
 	suspended = false;
 }
 unordered_map<string, user> user::allusers;
@@ -72,5 +72,9 @@ void user::setBalance(double bal)
 void user::setSuspended(bool susp)
 {
 	suspended = susp;
+}
+void user::add_transaction(transaction trans)
+{
+	history_transaction.push_back(trans);
 }
 
