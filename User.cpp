@@ -53,3 +53,24 @@ bool user::isSuspended()
 {
 	return suspended;
 }
+void user::setUsername(string& uname)
+{
+	username = uname;
+}
+void user::setEmail(string& mail)
+{
+	email = mail;
+}
+void user::setHashedPassword(string& hashedPwd)
+{
+	hashedPassword = hashedPwd;
+}
+void user::setBalance(double& bal)
+{
+	balance = bal;
+}
+void user::setSuspended(bool& susp)
+{
+	suspended = susp;
+}
+
