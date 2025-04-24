@@ -1,4 +1,6 @@
 #include"admin.h"
+// Define the static member
+
 Admin::Admin(string& uname, string& pass)
 {
 	username = uname;
@@ -20,3 +22,6 @@ void Admin::setPassword(string& pass)
 {
 	password = pass;
 }
+
+
+

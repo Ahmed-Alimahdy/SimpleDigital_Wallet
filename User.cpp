@@ -8,7 +8,7 @@ user::user()
 	balance = 0;
 	suspended = false;
 }
-user::user(string& uname, string& mail, string& hashedPwd)
+user::user(string uname, string mail, string hashedPwd)
 {
 	username = uname;
 	email = mail;
@@ -53,23 +53,23 @@ bool user::isSuspended()
 {
 	return suspended;
 }
-void user::setUsername(string& uname)
+void user::setUsername(string uname)
 {
 	username = uname;
 }
-void user::setEmail(string& mail)
+void user::setEmail(string mail)
 {
 	email = mail;
 }
-void user::setHashedPassword(string& hashedPwd)
+void user::setHashedPassword(string hashedPwd)
 {
 	hashedPassword = hashedPwd;
 }
-void user::setBalance(double& bal)
+void user::setBalance(double bal)
 {
 	balance = bal;
 }
-void user::setSuspended(bool& susp)
+void user::setSuspended(bool susp)
 {
 	suspended = susp;
 }

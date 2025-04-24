@@ -20,7 +20,7 @@ private:
 
 public:
     user();
-    user(string& uname, string& mail, string& hashedPwd);
+    user(string uname, string mail, string hashedPwd);
     // Getters
     bool isSuspended();
     static unordered_map<string, user> allusers;
@@ -31,10 +31,10 @@ public:
     list<transaction> get_history_transaction();
     double calculate_balance();
     //setters
-	void setUsername(string& uname);
-	void setEmail(string& mail);
-	void setHashedPassword(string& hashedPwd);
-	void setBalance(double& bal);
-	void setSuspended(bool& susp);
+	void setUsername(string uname);
+	void setEmail(string mail);
+	void setHashedPassword(string hashedPwd);
+	void setBalance(double bal);
+	void setSuspended(bool susp);
 };
 #endif

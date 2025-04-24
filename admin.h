@@ -1,4 +1,6 @@
 #pragma once
+#ifndef ADMIN_H
+#define ADMIN_H
 #include <string>
 #include <list>
 #include <unordered_map>
@@ -8,7 +10,7 @@ class Admin {
     string username, password;
 public:
 	Admin(string& uname, string& pass);
-    static list<transaction> all_transactions;
+	list<transaction> alltransactions;
 	static unordered_map<string,Admin> all_admins;
     //getters
 	string getUsername();
@@ -18,3 +20,4 @@ public:
 	void setPassword(string& pass);
      
 };
+#endif

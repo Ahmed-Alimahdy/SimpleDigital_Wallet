@@ -1,5 +1,7 @@
 #pragma once
+#include "Classes/Transaction.h"
 #include "Classes/User.h"
+#include "Classes/admin.h"
 #include "profile.h"
 #include "Requested_transactions.h"
 #include"Balance_managment.h"
@@ -18,6 +20,7 @@ namespace SimpleDigitalWallet {
 	public ref class Dashboard : public System::Windows::Forms::Form
 	{
         private:
+			
             user* current_user; // Declare the User object
 		void MakeRoundedButton(Button^ button, int radius) {
 			GraphicsPath^ path = gcnew Drawing2D::GraphicsPath();
@@ -37,6 +40,15 @@ namespace SimpleDigitalWallet {
 			// Optional: Add a border by drawing the path
 			button->FlatStyle = FlatStyle::Flat; // Ensure the button has a flat style
 			button->Paint += gcnew PaintEventHandler(this, &Dashboard::DrawRoundedButtonBorder);
+		}
+		double TryParseDouble(System::String^ input) {
+			double result = 0.0;
+			if (Double::TryParse(input, result)) {
+				return result;
+			}
+			else {
+				return 0.0; // Default value if parsing fails
+			}
 		}
 
 		void DrawRoundedButtonBorder(Object^ sender, PaintEventArgs^ e) {
@@ -133,7 +145,9 @@ namespace SimpleDigitalWallet {
 		{
 			InitializeComponent();
 		}
-		Form^ previous_form;
+private: System::Windows::Forms::Label^ label3;
+public:
+	Form^ previous_form;
 		Dashboard(Form^ form, user& currentUser)
 		{
 			InitializeComponent();
@@ -250,6 +264,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->add_to_balance = (gcnew System::Windows::Forms::Button());
 			this->current_label = (gcnew System::Windows::Forms::Label());
 			this->balance_label = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->panel1->SuspendLayout();
 			this->panel3->SuspendLayout();
 			this->black_panel->SuspendLayout();
@@ -281,6 +296,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			// panel1
 			// 
 			this->panel1->BackColor = System::Drawing::SystemColors::Control;
+			this->panel1->Controls->Add(this->label3);
 			this->panel1->Controls->Add(this->send_amount_label);
 			this->panel1->Controls->Add(this->recipient_name_label);
 			this->panel1->Controls->Add(this->button3);
@@ -330,7 +346,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->button3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button3->ForeColor = System::Drawing::Color::White;
-			this->button3->Location = System::Drawing::Point(34, 189);
+			this->button3->Location = System::Drawing::Point(34, 201);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(444, 43);
 			this->button3->TabIndex = 9;
@@ -650,10 +666,21 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->balance_label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold));
 			this->balance_label->Location = System::Drawing::Point(185, 39);
 			this->balance_label->Name = L"balance_label";
-			this->balance_label->Size = System::Drawing::Size(66, 25);
+			this->balance_label->Size = System::Drawing::Size(142, 25);
 			this->balance_label->TabIndex = 1;
 			this->balance_label->Text = L"user_balance";
 			this->balance_label->Click += gcnew System::EventHandler(this, &Dashboard::balance_label_Click);
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label3->Location = System::Drawing::Point(27, 180);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(52, 18);
+			this->label3->TabIndex = 12;
+			this->label3->Text = L"label3";
 			// 
 			// Dashboard
 			// 
@@ -736,64 +763,13 @@ private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e)
 		private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {
 
 		}
-		private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-			double amountToSend;
-			if (!Double::TryParse(domainUpDown1->Text, amountToSend)) {
-				label7->Text = "Please enter a valid amount";
-				label7->ForeColor = Color::Red;
-				return;
-			}
-			if (amountToSend <= 0) {
-				label7->Text = "The amount must be greater than zero";
-				label7->ForeColor = Color::Red;
-				return;
-			}
-			/*if (u.balance < amountToSend) {
-				label7->Text = String::Format("Error: Insufficient credit! (Available credit: {0:C})", u.balance);
-				label7->ForeColor = Color::Red;
-				return;
-			}*/
-			else {
-				/*try {*/
-					//std::string toAccount = msclr::interop::marshal_as<std::string>(textBox1->Text);
-					//Transaction* newTransaction = new Transaction(
-					//	toAccount,
-					//	amountToSend,
-					//	TRANSACTION_TYPE::SEND_MONEY,
-					//	RequestStatus::PENDING
-					//);
-				//u.balance -= amountToSend;
-				//label7->Text = String::Format("The operation was successful! Remaining balance: {0:C}", u.balance);
-				label7->ForeColor = Color::Green;
-			/*	DateTime now = DateTime::Now;
-				String^ formattedDate = now.ToString("yyyy/MM/dd HH:mm");
-				String^ amountStr = amountToSend.ToString("C");
-				String^ statusStr = GetStatusString(newTransaction->getStatus());*/
-				//String^ entry = String::Format("[{0}] {1} -> {2}: {3} ({4})",
-				//	formattedDate,
-				//	gcnew String(newTransaction->getSender().c_str()),
-				//	gcnew String(newTransaction->getRecipient().c_str()),
-				//	amountStr,
-				//	statusStr
-				//);
-				//std::list<std::string> history_transaction_log;
-				//// Assuming 'newTransaction' is a Transaction*
-				//u.history_transaction.emplace_front(std::make_shared<Transaction>(*newTransaction));
-			/*}*/
-			/*catch (Exception^ ex) {
-				MessageBox::Show("Transmission failed: " + ex->Message);
-			}*/
-			}
-		}
-			   /*   String^ GetStatusString(RequestStatus status) {
-					  switch (status) {
-					  case RequestStatus::PENDING: return "PENDING";
-					  case RequestStatus::ACCEPTED: return "ACCEPTED";
-					  case RequestStatus::NONE: return "NONE";
-					  case RequestStatus::DECLINED: return "DECLINED";
-					  default: return "UnKnown";
-					  }
-				  }*/
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		
+		
+		
+
+
+	}
 
 private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 }
@@ -802,6 +778,36 @@ private: System::Void button2_Click_1(System::Object^ sender, System::EventArgs^
 private: System::Void label4_Click_1(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+	double amountToSend = TryParseDouble(domainUpDown1->Text);
+	string username = msclr::interop::marshal_as<std::string>(textBox1->Text);
+	auto it = user::allusers.find(username);
+	if (it != user::allusers.end()) {
+		if (current_user->getBalance() < amountToSend) {
+			label3->Text = String::Format("Error: Insufficient credit! (Available credit: {0:C})", current_user->getBalance());
+			label3->ForeColor = Color::Red;
+			return;
+		}
+		else {
+			label3->Text = String::Format("The operation was successful! Remaining balance: {0:C}", current_user->getBalance());
+			label3->ForeColor = Color::Green;
+			double newBalance = current_user->getBalance() - amountToSend;
+			current_user->setBalance(newBalance);
+			balance_label->Text = String::Format("${0:F2}", current_user->getBalance());
+			current_user->get_history_transaction().push_back(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
+			it->second.get_history_transaction().push_back(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
+
+		}
+
+
+	}
+	else {
+		label3->Text = "User not found";
+		label3->ForeColor = Color::Red;
+		return;
+
+
+
+	}
 }
 private: System::Void label8_Click(System::Object^ sender, System::EventArgs^ e) {
 }
