@@ -30,6 +30,7 @@ namespace SimpleDigitalWallet {
 		{
 			InitializeComponent();
 			addAdminPanel->Hide();
+			No_user_ms->Show();
 			MakeRoundedPanel(scrollableTransactionsPanel, 20);
 			generate_transaction_history_panels();
 			editAdminPasswordTextbox->Hide();
@@ -147,10 +148,17 @@ namespace SimpleDigitalWallet {
 	private: System::Windows::Forms::Button^ Delete_button;
 	public: System::Windows::Forms::Label^ payments_label;
 	private: System::Windows::Forms::ListBox^ listBox1;
-private: System::Windows::Forms::Button^ button_to_Admin;
 private: System::Windows::Forms::Button^ button_to_users;
 private: System::Windows::Forms::Label^ usernameExistsLabel;
+private: System::Windows::Forms::Button^ button_to_Admin;
 
+
+
+
+
+private: System::Windows::Forms::PictureBox^ pictureBox1;
+private: System::Windows::Forms::Button^ logout_Admin_button;
+private: System::Windows::Forms::Label^ Adress_wallet;
 
 	public:
 
@@ -193,6 +201,7 @@ private: System::Windows::Forms::Label^ usernameExistsLabel;
 		void InitializeComponent(void)
 		{
 			this->components = (gcnew System::ComponentModel::Container());
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Admin_UI::typeid));
 			this->decLine1 = (gcnew System::Windows::Forms::Panel());
 			this->addAdminPanel = (gcnew System::Windows::Forms::Panel());
 			this->addAdminConfirmationLabel = (gcnew System::Windows::Forms::Label());
@@ -214,6 +223,7 @@ private: System::Windows::Forms::Label^ usernameExistsLabel;
 			this->addAdminUsernameLabel = (gcnew System::Windows::Forms::Label());
 			this->adminPasswordLabel = (gcnew System::Windows::Forms::Label());
 			this->adminUsenameLabel = (gcnew System::Windows::Forms::Label());
+			this->No_user_ms = (gcnew System::Windows::Forms::Label());
 			this->Users_page = (gcnew System::Windows::Forms::Panel());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->searchTextBox = (gcnew System::Windows::Forms::TextBox());
@@ -253,10 +263,12 @@ private: System::Windows::Forms::Label^ usernameExistsLabel;
 			this->Edit_button = (gcnew System::Windows::Forms::Button());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->payments_label = (gcnew System::Windows::Forms::Label());
-			this->No_user_ms = (gcnew System::Windows::Forms::Label());
 			this->top_panal = (gcnew System::Windows::Forms::Panel());
-			this->button_to_users = (gcnew System::Windows::Forms::Button());
+			this->Adress_wallet = (gcnew System::Windows::Forms::Label());
+			this->logout_Admin_button = (gcnew System::Windows::Forms::Button());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->button_to_Admin = (gcnew System::Windows::Forms::Button());
+			this->button_to_users = (gcnew System::Windows::Forms::Button());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->usernameExistsLabel = (gcnew System::Windows::Forms::Label());
@@ -266,6 +278,7 @@ private: System::Windows::Forms::Label^ usernameExistsLabel;
 			this->UserInfo_panal->SuspendLayout();
 			this->Transactions_user_panel->SuspendLayout();
 			this->top_panal->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// decLine1
@@ -297,9 +310,9 @@ private: System::Windows::Forms::Label^ usernameExistsLabel;
 			this->addAdminPanel->Controls->Add(this->addAdminUsernameLabel);
 			this->addAdminPanel->Controls->Add(this->adminPasswordLabel);
 			this->addAdminPanel->Controls->Add(this->adminUsenameLabel);
-			this->addAdminPanel->Location = System::Drawing::Point(0, 67);
+			this->addAdminPanel->Location = System::Drawing::Point(0, 73);
 			this->addAdminPanel->Name = L"addAdminPanel";
-			this->addAdminPanel->Size = System::Drawing::Size(1200, 800);
+			this->addAdminPanel->Size = System::Drawing::Size(1200, 727);
 			this->addAdminPanel->TabIndex = 1;
 			this->addAdminPanel->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Admin_UI::transactionsPanel_Paint);
 			// 
@@ -519,6 +532,21 @@ private: System::Windows::Forms::Label^ usernameExistsLabel;
 			this->adminUsenameLabel->TabIndex = 0;
 			this->adminUsenameLabel->Text = L"username";
 			// 
+			// No_user_ms
+			// 
+			this->No_user_ms->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->No_user_ms->AutoSize = true;
+			this->No_user_ms->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 36, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->No_user_ms->ForeColor = System::Drawing::SystemColors::AppWorkspace;
+			this->No_user_ms->Location = System::Drawing::Point(702, 434);
+			this->No_user_ms->Name = L"No_user_ms";
+			this->No_user_ms->Size = System::Drawing::Size(411, 55);
+			this->No_user_ms->TabIndex = 16;
+			this->No_user_ms->Text = L"NO User Selected";
+			// 
 			// Users_page
 			// 
 			this->Users_page->Controls->Add(this->label3);
@@ -656,7 +684,7 @@ private: System::Windows::Forms::Label^ usernameExistsLabel;
 			// 
 			this->Delete_button->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(0)),
 				static_cast<System::Int32>(static_cast<System::Byte>(0)));
-			this->Delete_button->Cursor = System::Windows::Forms::Cursors::Arrow;
+			this->Delete_button->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->Delete_button->FlatAppearance->BorderSize = 0;
 			this->Delete_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->Delete_button->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
@@ -705,7 +733,7 @@ private: System::Windows::Forms::Label^ usernameExistsLabel;
 			// Add_user_button
 			// 
 			this->Add_user_button->BackColor = System::Drawing::Color::Black;
-			this->Add_user_button->Cursor = System::Windows::Forms::Cursors::Arrow;
+			this->Add_user_button->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->Add_user_button->FlatAppearance->BorderSize = 0;
 			this->Add_user_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->Add_user_button->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
@@ -743,6 +771,7 @@ private: System::Windows::Forms::Label^ usernameExistsLabel;
 			// DownTransaction_button
 			// 
 			this->DownTransaction_button->BackColor = System::Drawing::Color::Green;
+			this->DownTransaction_button->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"DownTransaction_button.BackgroundImage")));
 			this->DownTransaction_button->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->DownTransaction_button->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->DownTransaction_button->FlatAppearance->BorderSize = 0;
@@ -845,7 +874,7 @@ private: System::Windows::Forms::Label^ usernameExistsLabel;
 			// 
 			this->cancel_button->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(0)),
 				static_cast<System::Int32>(static_cast<System::Byte>(0)));
-			this->cancel_button->Cursor = System::Windows::Forms::Cursors::Arrow;
+			this->cancel_button->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->cancel_button->FlatAppearance->BorderSize = 0;
 			this->cancel_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->cancel_button->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
@@ -874,7 +903,8 @@ private: System::Windows::Forms::Label^ usernameExistsLabel;
 			// Save_button
 			// 
 			this->Save_button->BackColor = System::Drawing::Color::Black;
-			this->Save_button->Cursor = System::Windows::Forms::Cursors::Arrow;
+			this->Save_button->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->Save_button->FlatAppearance->BorderColor = System::Drawing::Color::WhiteSmoke;
 			this->Save_button->FlatAppearance->BorderSize = 0;
 			this->Save_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->Save_button->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
@@ -932,7 +962,7 @@ private: System::Windows::Forms::Label^ usernameExistsLabel;
 			// Transactions_button
 			// 
 			this->Transactions_button->BackColor = System::Drawing::Color::Black;
-			this->Transactions_button->Cursor = System::Windows::Forms::Cursors::Arrow;
+			this->Transactions_button->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->Transactions_button->FlatAppearance->BorderSize = 0;
 			this->Transactions_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->Transactions_button->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
@@ -982,7 +1012,7 @@ private: System::Windows::Forms::Label^ usernameExistsLabel;
 			// Edit_button
 			// 
 			this->Edit_button->BackColor = System::Drawing::Color::Black;
-			this->Edit_button->Cursor = System::Windows::Forms::Cursors::Arrow;
+			this->Edit_button->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->Edit_button->FlatAppearance->BorderSize = 0;
 			this->Edit_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->Edit_button->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
@@ -1019,51 +1049,92 @@ private: System::Windows::Forms::Label^ usernameExistsLabel;
 			this->payments_label->Text = L"No payments";
 			this->payments_label->UseCompatibleTextRendering = true;
 			// 
-			// No_user_ms
-			// 
-			this->No_user_ms->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
-				| System::Windows::Forms::AnchorStyles::Left)
-				| System::Windows::Forms::AnchorStyles::Right));
-			this->No_user_ms->AutoSize = true;
-			this->No_user_ms->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 36, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->No_user_ms->ForeColor = System::Drawing::SystemColors::AppWorkspace;
-			this->No_user_ms->Location = System::Drawing::Point(721, 432);
-			this->No_user_ms->Name = L"No_user_ms";
-			this->No_user_ms->Size = System::Drawing::Size(411, 55);
-			this->No_user_ms->TabIndex = 16;
-			this->No_user_ms->Text = L"NO User Selected";
-			// 
 			// top_panal
 			// 
 			this->top_panal->BackColor = System::Drawing::Color::Green;
-			this->top_panal->Controls->Add(this->button_to_users);
+			this->top_panal->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->top_panal->Controls->Add(this->Adress_wallet);
+			this->top_panal->Controls->Add(this->logout_Admin_button);
+			this->top_panal->Controls->Add(this->pictureBox1);
 			this->top_panal->Controls->Add(this->button_to_Admin);
+			this->top_panal->Controls->Add(this->button_to_users);
 			this->top_panal->Dock = System::Windows::Forms::DockStyle::Top;
 			this->top_panal->Location = System::Drawing::Point(0, 0);
 			this->top_panal->Name = L"top_panal";
 			this->top_panal->Size = System::Drawing::Size(1200, 73);
 			this->top_panal->TabIndex = 2;
 			// 
-			// button_to_users
+			// Adress_wallet
 			// 
-			this->button_to_users->Location = System::Drawing::Point(564, 22);
-			this->button_to_users->Name = L"button_to_users";
-			this->button_to_users->Size = System::Drawing::Size(75, 23);
-			this->button_to_users->TabIndex = 1;
-			this->button_to_users->Text = L"button1";
-			this->button_to_users->UseVisualStyleBackColor = true;
-			this->button_to_users->Click += gcnew System::EventHandler(this, &Admin_UI::button_to_users_Click);
+			this->Adress_wallet->AutoSize = true;
+			this->Adress_wallet->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->Adress_wallet->ForeColor = System::Drawing::SystemColors::Control;
+			this->Adress_wallet->Location = System::Drawing::Point(107, 26);
+			this->Adress_wallet->Name = L"Adress_wallet";
+			this->Adress_wallet->Size = System::Drawing::Size(134, 29);
+			this->Adress_wallet->TabIndex = 4;
+			this->Adress_wallet->Text = L"Easy wallet";
+			// 
+			// logout_Admin_button
+			// 
+			this->logout_Admin_button->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"logout_Admin_button.BackgroundImage")));
+			this->logout_Admin_button->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->logout_Admin_button->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->logout_Admin_button->FlatAppearance->BorderSize = 0;
+			this->logout_Admin_button->FlatAppearance->MouseDownBackColor = System::Drawing::Color::Green;
+			this->logout_Admin_button->FlatAppearance->MouseOverBackColor = System::Drawing::Color::Green;
+			this->logout_Admin_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->logout_Admin_button->Location = System::Drawing::Point(1116, 10);
+			this->logout_Admin_button->Name = L"logout_Admin_button";
+			this->logout_Admin_button->Size = System::Drawing::Size(68, 54);
+			this->logout_Admin_button->TabIndex = 3;
+			this->logout_Admin_button->UseVisualStyleBackColor = true;
+			this->logout_Admin_button->Click += gcnew System::EventHandler(this, &Admin_UI::logout_Admin_button_Click);
+			// 
+			// pictureBox1
+			// 
+			this->pictureBox1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.BackgroundImage")));
+			this->pictureBox1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->pictureBox1->Location = System::Drawing::Point(12, 12);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(100, 50);
+			this->pictureBox1->TabIndex = 2;
+			this->pictureBox1->TabStop = false;
 			// 
 			// button_to_Admin
 			// 
-			this->button_to_Admin->Location = System::Drawing::Point(450, 22);
+			this->button_to_Admin->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button_to_Admin.BackgroundImage")));
+			this->button_to_Admin->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->button_to_Admin->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->button_to_Admin->FlatAppearance->BorderSize = 0;
+			this->button_to_Admin->FlatAppearance->MouseDownBackColor = System::Drawing::Color::Green;
+			this->button_to_Admin->FlatAppearance->MouseOverBackColor = System::Drawing::Color::Green;
+			this->button_to_Admin->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button_to_Admin->Location = System::Drawing::Point(1042, 10);
 			this->button_to_Admin->Name = L"button_to_Admin";
-			this->button_to_Admin->Size = System::Drawing::Size(75, 23);
-			this->button_to_Admin->TabIndex = 0;
-			this->button_to_Admin->Text = L"button_to_Admin";
+			this->button_to_Admin->Size = System::Drawing::Size(52, 54);
+			this->button_to_Admin->TabIndex = 1;
 			this->button_to_Admin->UseVisualStyleBackColor = true;
 			this->button_to_Admin->Click += gcnew System::EventHandler(this, &Admin_UI::button_to_Admin_Click);
+			// 
+			// button_to_users
+			// 
+			this->button_to_users->BackColor = System::Drawing::Color::Green;
+			this->button_to_users->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button_to_users.BackgroundImage")));
+			this->button_to_users->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->button_to_users->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->button_to_users->FlatAppearance->BorderSize = 0;
+			this->button_to_users->FlatAppearance->MouseDownBackColor = System::Drawing::Color::Green;
+			this->button_to_users->FlatAppearance->MouseOverBackColor = System::Drawing::Color::Green;
+			this->button_to_users->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button_to_users->ForeColor = System::Drawing::Color::Transparent;
+			this->button_to_users->Location = System::Drawing::Point(953, 13);
+			this->button_to_users->Name = L"button_to_users";
+			this->button_to_users->Size = System::Drawing::Size(58, 51);
+			this->button_to_users->TabIndex = 0;
+			this->button_to_users->UseVisualStyleBackColor = false;
+			this->button_to_users->Click += gcnew System::EventHandler(this, &Admin_UI::button_to_users_Click);
 			// 
 			// timer1
 			// 
@@ -1111,6 +1182,8 @@ private: System::Windows::Forms::Label^ usernameExistsLabel;
 			this->Transactions_user_panel->ResumeLayout(false);
 			this->Transactions_user_panel->PerformLayout();
 			this->top_panal->ResumeLayout(false);
+			this->top_panal->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 
 		}
@@ -1384,6 +1457,7 @@ private: System::Void searchTextBox_TextChanged(System::Object^ sender, System::
 		   
 		   UserInfo_panal->Show();
 		   No_user_ms->Hide();
+		   massage_name_LB->Hide();
 
 		   // Show overlay panel for focused mode
 		   //overlayPanel->Visible = true;
@@ -1849,6 +1923,8 @@ private: System::Void UserEdit_Box_Leave(System::Object^ sender, System::EventAr
 		massage_name_LB->Show();
 		label8->BackColor = System::Drawing::Color::Red;
 		Save_button->Enabled = false;
+		Save_button->BackColor = System::Drawing::Color::Gray;
+		//Save_button->FlatAppearance->MouseDownBackColor = System::Drawing::Color::Red;
 		return;
 	}
 	else {
@@ -1857,6 +1933,9 @@ private: System::Void UserEdit_Box_Leave(System::Object^ sender, System::EventAr
 		massage_name_LB->Hide();
 		label8->BackColor = System::Drawing::Color::Green;
 		Save_button->Enabled = true;
+		Save_button->BackColor = System::Drawing::Color::Black;
+
+
 	}
 }
 private: System::Void BalanceEdit_Box_KeyPress(System::Object ^ sender, System::Windows::Forms::KeyPressEventArgs ^ e) {
@@ -1925,6 +2004,10 @@ private: System::Void button_to_Admin_Click(System::Object^ sender, System::Even
 private: System::Void button_to_users_Click(System::Object^ sender, System::EventArgs^ e) {
 	addAdminPanel->Hide();
 
+}
+
+private: System::Void logout_Admin_button_Click(System::Object^ sender, System::EventArgs^ e) {
+//return to sing page	
 }
 private: System::Void editAdminUsernameTextbox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
