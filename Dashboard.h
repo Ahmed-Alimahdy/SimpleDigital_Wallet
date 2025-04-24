@@ -793,8 +793,8 @@ private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e
 			label3->ForeColor = Color::Green;
 			current_user->setBalance(newBalance);
 			balance_label->Text = String::Format("${0:F2}", current_user->getBalance());
-			current_user->add_transaction(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
-			it->second.add_transaction(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
+			current_user->add_to_historytransaction(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
+			it->second.add_to_historytransaction(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
 			this->scrollable_transaction_panel->Controls->Clear();
 			generate_transaction_history_panels();
 			textBox1->Text = " ";
