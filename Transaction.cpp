@@ -103,7 +103,3 @@ string transaction::getId() const
 {
 	return id;
 }
-void transaction::setStatus(RequestStatus status)
-{
-	this->status = status;
-}
