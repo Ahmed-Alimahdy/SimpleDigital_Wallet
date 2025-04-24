@@ -296,6 +296,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->label1->Size = System::Drawing::Size(134, 26);
 			this->label1->TabIndex = 8;
 			this->label1->Text = L"Send Money";
+			this->label1->Click += gcnew System::EventHandler(this, &Dashboard::label1_Click_1);
 			// 
 			// panel1
 			// 
@@ -339,6 +340,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->send_amount_label->Size = System::Drawing::Size(55, 17);
 			this->send_amount_label->TabIndex = 11;
 			this->send_amount_label->Text = L"amount";
+			this->send_amount_label->Click += gcnew System::EventHandler(this, &Dashboard::send_amount_label_Click);
 			// 
 			// recipient_name_label
 			// 
@@ -781,11 +783,25 @@ private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e
 		string username = msclr::interop::marshal_as<std::string>(sendername_textbox->Text);
 		auto it = user::allusers.find(username);
 		if (it != user::allusers.end()) {
-			transaction t(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::REQUEST_MONEY, RequestStatus::PENDING);
-			it->second.add_to_requestedtransaction(t);
+			if (!current_user->isSuspended() && !it->second.isSuspended()) {
+				transaction t(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::REQUEST_MONEY, RequestStatus::PENDING);
+				it->second.add_to_requestedtransaction(t);
+			}
+			else if (current_user->isSuspended())
+			{
+				label3->Text = String::Format("your account is suspended");
+				label3->ForeColor = Color::Red;
+			}
+			else if (it->second.isSuspended())
+			{
+				label3->Text = String::Format("the user account is suspended");
+				label3->ForeColor = Color::Red;
+			}
 		}
 		else {
 			MessageBox::Show("Sender does not exist ", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			label3->Text = "User not found";
+			label3->ForeColor = Color::Red;
 			return;
 		}
 }
@@ -872,6 +888,10 @@ private: System::Void add_to_balance_Click(System::Object^ sender, System::Event
 	Balance_managment^ balance_form = gcnew Balance_managment(this);
 	balance_form->Show();
 	this->Hide();
+}
+private: System::Void label1_Click_1(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void send_amount_label_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }
