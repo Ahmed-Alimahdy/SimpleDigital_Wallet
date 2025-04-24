@@ -37,6 +37,7 @@ namespace SimpleDigitalWallet {
 			confirmEditAdmin->Hide();
 			cancelEditAdmin->Hide();
 			addAdminConfirmationLabel->Hide();
+			usernameExistsLabel->Hide();
 			
 
 			
@@ -148,6 +149,8 @@ namespace SimpleDigitalWallet {
 	private: System::Windows::Forms::ListBox^ listBox1;
 private: System::Windows::Forms::Button^ button_to_Admin;
 private: System::Windows::Forms::Button^ button_to_users;
+private: System::Windows::Forms::Label^ usernameExistsLabel;
+
 
 	public:
 
@@ -252,10 +255,11 @@ private: System::Windows::Forms::Button^ button_to_users;
 			this->payments_label = (gcnew System::Windows::Forms::Label());
 			this->No_user_ms = (gcnew System::Windows::Forms::Label());
 			this->top_panal = (gcnew System::Windows::Forms::Panel());
+			this->button_to_users = (gcnew System::Windows::Forms::Button());
 			this->button_to_Admin = (gcnew System::Windows::Forms::Button());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->button_to_users = (gcnew System::Windows::Forms::Button());
+			this->usernameExistsLabel = (gcnew System::Windows::Forms::Label());
 			this->addAdminPanel->SuspendLayout();
 			this->allTransactionsPanel->SuspendLayout();
 			this->Users_page->SuspendLayout();
@@ -275,6 +279,7 @@ private: System::Windows::Forms::Button^ button_to_users;
 			// addAdminPanel
 			// 
 			this->addAdminPanel->BackColor = System::Drawing::SystemColors::Control;
+			this->addAdminPanel->Controls->Add(this->usernameExistsLabel);
 			this->addAdminPanel->Controls->Add(this->addAdminConfirmationLabel);
 			this->addAdminPanel->Controls->Add(this->confirmEditAdmin);
 			this->addAdminPanel->Controls->Add(this->cancelEditAdmin);
@@ -352,6 +357,7 @@ private: System::Windows::Forms::Button^ button_to_users;
 			this->editAdminUsernameTextbox->Name = L"editAdminUsernameTextbox";
 			this->editAdminUsernameTextbox->Size = System::Drawing::Size(167, 24);
 			this->editAdminUsernameTextbox->TabIndex = 13;
+			this->editAdminUsernameTextbox->TextChanged += gcnew System::EventHandler(this, &Admin_UI::editAdminUsernameTextbox_TextChanged);
 			// 
 			// addAdminLabel
 			// 
@@ -526,7 +532,7 @@ private: System::Windows::Forms::Button^ button_to_users;
 			this->Users_page->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->Users_page->Location = System::Drawing::Point(0, 0);
 			this->Users_page->Name = L"Users_page";
-			this->Users_page->Size = System::Drawing::Size(1200, 800);
+			this->Users_page->Size = System::Drawing::Size(1200, 788);
 			this->Users_page->TabIndex = 1;
 			this->Users_page->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Admin_UI::Users_page_Paint);
 			// 
@@ -670,7 +676,7 @@ private: System::Windows::Forms::Button^ button_to_users;
 			this->massage_name_LB->ForeColor = System::Drawing::Color::Red;
 			this->massage_name_LB->Location = System::Drawing::Point(149, 114);
 			this->massage_name_LB->Name = L"massage_name_LB";
-			this->massage_name_LB->Size = System::Drawing::Size(196, 16);
+			this->massage_name_LB->Size = System::Drawing::Size(155, 13);
 			this->massage_name_LB->TabIndex = 29;
 			this->massage_name_LB->Text = L"* this user Name is already exist";
 			// 
@@ -1039,6 +1045,16 @@ private: System::Windows::Forms::Button^ button_to_users;
 			this->top_panal->Size = System::Drawing::Size(1200, 73);
 			this->top_panal->TabIndex = 2;
 			// 
+			// button_to_users
+			// 
+			this->button_to_users->Location = System::Drawing::Point(564, 22);
+			this->button_to_users->Name = L"button_to_users";
+			this->button_to_users->Size = System::Drawing::Size(75, 23);
+			this->button_to_users->TabIndex = 1;
+			this->button_to_users->Text = L"button1";
+			this->button_to_users->UseVisualStyleBackColor = true;
+			this->button_to_users->Click += gcnew System::EventHandler(this, &Admin_UI::button_to_users_Click);
+			// 
 			// button_to_Admin
 			// 
 			this->button_to_Admin->Location = System::Drawing::Point(450, 22);
@@ -1059,20 +1075,22 @@ private: System::Windows::Forms::Button^ button_to_users;
 			this->timer2->Interval = 1;
 			this->timer2->Tick += gcnew System::EventHandler(this, &Admin_UI::timer2_Tick);
 			// 
-			// button_to_users
+			// usernameExistsLabel
 			// 
-			this->button_to_users->Location = System::Drawing::Point(564, 22);
-			this->button_to_users->Name = L"button_to_users";
-			this->button_to_users->Size = System::Drawing::Size(75, 23);
-			this->button_to_users->TabIndex = 1;
-			this->button_to_users->Text = L"button1";
-			this->button_to_users->UseVisualStyleBackColor = true;
-			this->button_to_users->Click += gcnew System::EventHandler(this, &Admin_UI::button_to_users_Click);
+			this->usernameExistsLabel->AutoSize = true;
+			this->usernameExistsLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6.75F, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Italic | System::Drawing::FontStyle::Underline)),
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+			this->usernameExistsLabel->ForeColor = System::Drawing::Color::DarkRed;
+			this->usernameExistsLabel->Location = System::Drawing::Point(76, 421);
+			this->usernameExistsLabel->Name = L"usernameExistsLabel";
+			this->usernameExistsLabel->Size = System::Drawing::Size(110, 12);
+			this->usernameExistsLabel->TabIndex = 18;
+			this->usernameExistsLabel->Text = L"Username Already Exists";
 			// 
 			// Admin_UI
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
-			this->ClientSize = System::Drawing::Size(1200, 800);
+			this->ClientSize = System::Drawing::Size(1200, 788);
 			this->Controls->Add(this->addAdminPanel);
 			this->Controls->Add(this->top_panal);
 			this->Controls->Add(this->Users_page);
@@ -1133,41 +1151,41 @@ private: System::Void switchToAdminProfileBtn_Click(System::Object^ sender, Syst
 
 	   void generate_transaction_history_panels()
 	   {
-		   
-		   for (int i = 0; i < 20; i++)
+		   int i = 0;
+		   for (auto it = Admin::all_transactions.begin(); it != Admin::all_transactions.end(); i++, it++)
 		   {
-			   
+
 			   Panel^ panel = gcnew Panel();
 			   panel->Size = System::Drawing::Size(530, 83);
 			   panel->BackColor = System::Drawing::SystemColors::ControlLight;
 			   panel->Location = System::Drawing::Point(0, (i * 100));
 			   MakeRoundedPanel(panel, 15);
 			   Label^ transaction_date_label = gcnew Label();
-			   transaction_date_label->Text = gcnew String("19/4/2025"); 
+			   transaction_date_label->Text = gcnew String(makeFunnyString(it->getTimestampAsString()));
 			   transaction_date_label->Location = System::Drawing::Point(17, 10);
 			   transaction_date_label->AutoSize = true;
 			   Label^ to_form_field = gcnew Label();
 
 			   Label^ status_label = gcnew Label();
-			   status_label->Text = gcnew String("Status : " + "Completed");  
-			   status_label->Location = System::Drawing::Point(290, 10);  
+			   status_label->Text = gcnew String(makeFunnyString("Status : " + (it->getStatusString())));
+			   status_label->Location = System::Drawing::Point(290, 10);
 			   panel->Controls->Add(status_label);
 
 			   Label^ from_label = gcnew Label();
-			   from_label->Text = gcnew String("From: " + "Sender");
-			   from_label->Location = System::Drawing::Point(50, 60); 
+			   from_label->Text = gcnew String(makeFunnyString("From : " + it->getSender()));
+			   from_label->Location = System::Drawing::Point(50, 60);
 			   panel->Controls->Add(from_label);
-			   
-			   to_form_field->Text = gcnew String("To : " + "Recepient");
+
+			   to_form_field->Text = gcnew String(makeFunnyString("To : " + it->getRecipient()));
 			   to_form_field->Location = System::Drawing::Point(50, 40);
 			   to_form_field->AutoSize = true;
 			   Label^ sender_reciever_label = gcnew Label();
-			  
-			   
+
+
 			   sender_reciever_label->Location = System::Drawing::Point(146, 45);
 			   sender_reciever_label->AutoSize = true;
 			   Label^ amount_label = gcnew Label();
-			   amount_label->Text = "amount : " + "100" + "$";
+			   amount_label->Text = makeFunnyString("amount : " + std::to_string(it->getAmount()) + "$");
 			   amount_label->Location = System::Drawing::Point(290, 35);
 			   amount_label->AutoSize = true;
 			   panel->Controls->Add(transaction_date_label);
@@ -1177,14 +1195,27 @@ private: System::Void switchToAdminProfileBtn_Click(System::Object^ sender, Syst
 			   this->Controls->Add(panel);
 			   this->scrollableTransactionsPanel->Controls->Add(panel);
 		   }
-		
+
 	   }
 
 
 
-private: System::Void addAdminButton_Click(System::Object^ sender, System::EventArgs^ e) {
 
-	//adminMap[addAdminUsernameTextfield->Text] = new Admin(username = addAdminUsernameTextfield->Text, password = addAdminPasswordTextfield->Text);
+private: System::Void addAdminButton_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (Admin::adminMap.find(makeString(addAdminUsernameTextfield->Text)) != Admin::adminMap.end()) {
+		usernameExistsLabel->Show();
+		addAdminConfirmationLabel->Hide();
+		addAdminUsernameTextfield->Text = "";
+		addAdminPasswordTextfield->Text = "";
+		return;
+	}
+
+
+	new Admin(makeString(addAdminUsernameTextfield->Text), makeString(addAdminPasswordTextfield->Text));
+	Admin::adminMap.emplace(
+		makeString(addAdminUsernameTextfield->Text), Admin(makeString(addAdminUsernameTextfield->Text),
+			makeString(addAdminPasswordTextfield->Text))
+	);
 	addAdminConfirmationLabel->Show();
 	addAdminUsernameTextfield->Text = "";
 	addAdminPasswordTextfield->Text = "";
@@ -1851,16 +1882,26 @@ private: System::Void Delete_button_Click(System::Object^ sender, System::EventA
 		draw_usercontrols();
 	}
 }
+  private: string makeString(System::String^ word)
+	{
+		 std::string str = msclr::interop::marshal_as<std::string>(word);
+		 return str;
+	 }
+private: System::String^ makeFunnyString(string word)
+{
+
+	return gcnew String(msclr::interop::marshal_as<System::String^>(word));
+}
 
 private: System::Void confirmEditAdmin_Click(System::Object^ sender, System::EventArgs^ e) {
-	//std::string oldUsername = adminUsernameLabel->Text;
-	//std::string newUsername = editAdminUsernameTextbox->Text;
-	//if (adminMap.find(oldUsername) != adminMap.end()) {
-	//	Admin tempAdmin = adminMap[oldUsername];
-	//	tempAdmin.username = newUsername;
-	//	adminMap.erase(oldUsername);
-	//	adminMap[newUsername] = tempAdmin;
-	//}
+	std::string oldUsername = makeString(adminUsenameLabel->Text);
+	std::string newUsername = makeString(editAdminUsernameTextbox->Text);
+	if (Admin::adminMap.find(oldUsername) != Admin::adminMap.end()) {
+		Admin tempAdmin = Admin::adminMap[oldUsername];
+		tempAdmin.username = newUsername;
+		Admin::adminMap.erase(oldUsername);
+		Admin::adminMap[newUsername] = tempAdmin;
+	}
 	adminUsenameLabel->Text = editAdminUsernameTextbox->Text;
 	adminPasswordLabel->Text = editAdminPasswordTextbox->Text;
 	editAdminProfileBtn->Show();
@@ -1884,6 +1925,8 @@ private: System::Void button_to_Admin_Click(System::Object^ sender, System::Even
 private: System::Void button_to_users_Click(System::Object^ sender, System::EventArgs^ e) {
 	addAdminPanel->Hide();
 
+}
+private: System::Void editAdminUsernameTextbox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }
