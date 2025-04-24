@@ -13,7 +13,7 @@ user::user(string uname, string mail, string hashedPwd)
 	username = uname;
 	email = mail;
 	hashedPassword = hashedPwd;
-	balance = 1000;
+	balance = 0;
 	suspended = false;
 }
 unordered_map<string, user> user::allusers;

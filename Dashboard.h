@@ -1,11 +1,11 @@
 #pragma once
 #include "Classes/Transaction.h"
 #include "Classes/User.h"
-#include "Classes/admin.h"
 #include "profile.h"
 #include "Requested_transactions.h"
 #include"Balance_managment.h"
 #include <msclr/marshal_cppstd.h>
+#include "admin.h"
 namespace SimpleDigitalWallet {
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -802,28 +802,43 @@ private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e
 			return;
 		}
 		else {
-			double newBalance = current_user->getBalance() - amountToSend;
-			label3->Text = String::Format("The operation was successful! Remaining balance: {0:C}", newBalance);
-			label3->ForeColor = Color::Green;
-			current_user->setBalance(newBalance);
-			balance_label->Text = String::Format("${0:F2}", current_user->getBalance());
-			current_user->add_transaction(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
-			it->second.add_transaction(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
-			this->scrollable_transaction_panel->Controls->Clear();
-			generate_transaction_history_panels();
-			textBox1->Text = " ";
-			domainUpDown1->Text = " ";
+			if (amountToSend <= 0) {
+				label3->Text = "Error: Invalid amount!";
+				label3->ForeColor = Color::Red;
+				return;
+			}
+			if (!current_user->isSuspended()&& !it->second.isSuspended())
+			{
+				double newBalance = current_user->getBalance() - amountToSend;
+				label3->Text = String::Format("The operation was successful! Remaining balance: {0:C}", newBalance);
+				label3->ForeColor = Color::Green;
+				current_user->setBalance(newBalance);
+				balance_label->Text = String::Format("${0:F2}", current_user->getBalance());
+				current_user->add_to_historytransaction(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
+				it->second.add_to_historytransaction(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
+				this->scrollable_transaction_panel->Controls->Clear();
+				generate_transaction_history_panels();
+				Admin::alltransactions.push_back(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
+				textBox1->Text = "";
+				domainUpDown1->Text = "";
+			}
+			else if(current_user->isSuspended())
+			{
+				label3->Text = String::Format("your account is suspended");
+				label3->ForeColor = Color::Red;
+			}
+			else if (it->second.isSuspended())
+			{
+				label3->Text = String::Format("the user account is suspended");
+				label3->ForeColor = Color::Red;
+			}
+
 		}
-
-
 	}
 	else {
 		label3->Text = "User not found";
 		label3->ForeColor = Color::Red;
 		return;
-
-
-
 	}
 }
 private: System::Void label8_Click(System::Object^ sender, System::EventArgs^ e) {
