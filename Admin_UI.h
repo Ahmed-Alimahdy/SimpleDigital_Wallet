@@ -39,9 +39,8 @@ namespace SimpleDigitalWallet {
 			cancelEditAdmin->Hide();
 			addAdminConfirmationLabel->Hide();
 			usernameExistsLabel->Hide();
-			
-
-			
+			adminUsenameLabel->Text = makeFunnyString(Admin::currentAdmin.username);
+			adminPasswordLabel->Text = makeFunnyString(Admin::currentAdmin.password);
 			//
 			//TODO: Add the constructor code here
 			//
@@ -378,7 +377,7 @@ private: System::Windows::Forms::Label^ Adress_wallet;
 			this->editAdminUsernameTextbox->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->editAdminUsernameTextbox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->editAdminUsernameTextbox->Location = System::Drawing::Point(37, 50);
+			this->editAdminUsernameTextbox->Location = System::Drawing::Point(25, 50);
 			this->editAdminUsernameTextbox->Name = L"editAdminUsernameTextbox";
 			this->editAdminUsernameTextbox->Size = System::Drawing::Size(167, 24);
 			this->editAdminUsernameTextbox->TabIndex = 13;
@@ -542,6 +541,7 @@ private: System::Windows::Forms::Label^ Adress_wallet;
 			this->adminUsenameLabel->Size = System::Drawing::Size(120, 29);
 			this->adminUsenameLabel->TabIndex = 0;
 			this->adminUsenameLabel->Text = L"username";
+			this->adminUsenameLabel->Click += gcnew System::EventHandler(this, &Admin_UI::adminUsenameLabel_Click);
 			// 
 			// No_user_ms
 			// 
@@ -715,7 +715,7 @@ private: System::Windows::Forms::Label^ Adress_wallet;
 			this->massage_name_LB->ForeColor = System::Drawing::Color::Red;
 			this->massage_name_LB->Location = System::Drawing::Point(149, 114);
 			this->massage_name_LB->Name = L"massage_name_LB";
-			this->massage_name_LB->Size = System::Drawing::Size(196, 16);
+			this->massage_name_LB->Size = System::Drawing::Size(155, 13);
 			this->massage_name_LB->TabIndex = 29;
 			this->massage_name_LB->Text = L"* this user Name is already exist";
 			// 
@@ -2058,6 +2058,8 @@ private: System::Void logout_Admin_button_Click(System::Object^ sender, System::
 //return to sing page	
 }
 private: System::Void editAdminUsernameTextbox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void adminUsenameLabel_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }
