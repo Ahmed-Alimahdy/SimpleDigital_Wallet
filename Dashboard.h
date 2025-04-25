@@ -19,6 +19,7 @@ namespace SimpleDigitalWallet {
 	/// </summary>
 	public ref class Dashboard : public System::Windows::Forms::Form
 	{
+	private: bool isFormClosingHandled = false;
         private:
 			
             user* current_user; // Declare the User object
@@ -147,6 +148,7 @@ namespace SimpleDigitalWallet {
 			InitializeComponent();
 		}
 private: System::Windows::Forms::Label^ label3;
+private: System::Windows::Forms::Label^ error_request_label;
 public:
 	Form^ previous_form;
 		Dashboard(Form^ form, user& currentUser)
@@ -249,6 +251,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->domainUpDown1 = (gcnew System::Windows::Forms::DomainUpDown());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->panel3 = (gcnew System::Windows::Forms::Panel());
+			this->error_request_label = (gcnew System::Windows::Forms::Label());
 			this->request_amount_label = (gcnew System::Windows::Forms::Label());
 			this->sender_name_label = (gcnew System::Windows::Forms::Label());
 			this->label8 = (gcnew System::Windows::Forms::Label());
@@ -283,7 +286,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 				static_cast<System::Byte>(0)));
 			this->label2->Location = System::Drawing::Point(518, 466);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(0, 37);
+			this->label2->Size = System::Drawing::Size(0, 46);
 			this->label2->TabIndex = 7;
 			// 
 			// label1
@@ -293,7 +296,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->label1->ForeColor = System::Drawing::Color::Black;
 			this->label1->Location = System::Drawing::Point(8, 10);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(134, 26);
+			this->label1->Size = System::Drawing::Size(173, 32);
 			this->label1->TabIndex = 8;
 			this->label1->Text = L"Send Money";
 			this->label1->Click += gcnew System::EventHandler(this, &Dashboard::label1_Click_1);
@@ -325,7 +328,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 				static_cast<System::Byte>(0)));
 			this->label3->Location = System::Drawing::Point(27, 180);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(0, 15);
+			this->label3->Size = System::Drawing::Size(0, 18);
 			this->label3->TabIndex = 12;
 			// 
 			// send_amount_label
@@ -337,7 +340,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->send_amount_label->ForeColor = System::Drawing::SystemColors::ControlDarkDark;
 			this->send_amount_label->Location = System::Drawing::Point(21, 119);
 			this->send_amount_label->Name = L"send_amount_label";
-			this->send_amount_label->Size = System::Drawing::Size(55, 17);
+			this->send_amount_label->Size = System::Drawing::Size(64, 20);
 			this->send_amount_label->TabIndex = 11;
 			this->send_amount_label->Text = L"amount";
 			this->send_amount_label->Click += gcnew System::EventHandler(this, &Dashboard::send_amount_label_Click);
@@ -351,7 +354,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->recipient_name_label->ForeColor = System::Drawing::SystemColors::ControlDarkDark;
 			this->recipient_name_label->Location = System::Drawing::Point(20, 61);
 			this->recipient_name_label->Name = L"recipient_name_label";
-			this->recipient_name_label->Size = System::Drawing::Size(116, 17);
+			this->recipient_name_label->Size = System::Drawing::Size(138, 20);
 			this->recipient_name_label->TabIndex = 10;
 			this->recipient_name_label->Text = L"Recipient\'s name";
 			this->recipient_name_label->Click += gcnew System::EventHandler(this, &Dashboard::recipient_name_label_Click);
@@ -377,7 +380,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 				static_cast<System::Byte>(0)));
 			this->label7->Location = System::Drawing::Point(27, 195);
 			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(0, 26);
+			this->label7->Size = System::Drawing::Size(0, 32);
 			this->label7->TabIndex = 7;
 			this->label7->Click += gcnew System::EventHandler(this, &Dashboard::label7_Click);
 			// 
@@ -388,7 +391,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 				static_cast<System::Byte>(0)));
 			this->label5->Location = System::Drawing::Point(255, 239);
 			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(0, 31);
+			this->label5->Size = System::Drawing::Size(0, 38);
 			this->label5->TabIndex = 6;
 			// 
 			// label6
@@ -398,7 +401,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 				static_cast<System::Byte>(0)));
 			this->label6->Location = System::Drawing::Point(231, 239);
 			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(0, 31);
+			this->label6->Size = System::Drawing::Size(0, 38);
 			this->label6->TabIndex = 5;
 			// 
 			// domainUpDown1
@@ -409,7 +412,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->domainUpDown1->ForeColor = System::Drawing::Color::Black;
 			this->domainUpDown1->Location = System::Drawing::Point(21, 139);
 			this->domainUpDown1->Name = L"domainUpDown1";
-			this->domainUpDown1->Size = System::Drawing::Size(472, 24);
+			this->domainUpDown1->Size = System::Drawing::Size(472, 30);
 			this->domainUpDown1->TabIndex = 2;
 			this->domainUpDown1->SelectedItemChanged += gcnew System::EventHandler(this, &Dashboard::domainUpDown1_SelectedItemChanged);
 			this->domainUpDown1->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &Dashboard::domainUpDown1_KeyPress);
@@ -425,13 +428,14 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->textBox1->ForeColor = System::Drawing::SystemColors::ActiveCaptionText;
 			this->textBox1->Location = System::Drawing::Point(21, 81);
 			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(472, 21);
+			this->textBox1->Size = System::Drawing::Size(472, 27);
 			this->textBox1->TabIndex = 0;
 			this->textBox1->Tag = L"";
 			this->textBox1->TextChanged += gcnew System::EventHandler(this, &Dashboard::textBox1_TextChanged);
 			// 
 			// panel3
 			// 
+			this->panel3->Controls->Add(this->error_request_label);
 			this->panel3->Controls->Add(this->request_amount_label);
 			this->panel3->Controls->Add(this->sender_name_label);
 			this->panel3->Controls->Add(this->label8);
@@ -443,6 +447,16 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->panel3->Size = System::Drawing::Size(504, 247);
 			this->panel3->TabIndex = 11;
 			// 
+			// error_request_label
+			// 
+			this->error_request_label->AutoSize = true;
+			this->error_request_label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->error_request_label->Location = System::Drawing::Point(27, 170);
+			this->error_request_label->Name = L"error_request_label";
+			this->error_request_label->Size = System::Drawing::Size(0, 18);
+			this->error_request_label->TabIndex = 12;
+			// 
 			// request_amount_label
 			// 
 			this->request_amount_label->AutoSize = true;
@@ -452,7 +466,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->request_amount_label->ForeColor = System::Drawing::SystemColors::ControlDarkDark;
 			this->request_amount_label->Location = System::Drawing::Point(22, 114);
 			this->request_amount_label->Name = L"request_amount_label";
-			this->request_amount_label->Size = System::Drawing::Size(55, 17);
+			this->request_amount_label->Size = System::Drawing::Size(64, 20);
 			this->request_amount_label->TabIndex = 12;
 			this->request_amount_label->Text = L"amount";
 			// 
@@ -465,7 +479,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->sender_name_label->ForeColor = System::Drawing::SystemColors::ControlDarkDark;
 			this->sender_name_label->Location = System::Drawing::Point(20, 51);
 			this->sender_name_label->Name = L"sender_name_label";
-			this->sender_name_label->Size = System::Drawing::Size(103, 17);
+			this->sender_name_label->Size = System::Drawing::Size(121, 20);
 			this->sender_name_label->TabIndex = 11;
 			this->sender_name_label->Text = L"Sender\'s name";
 			this->sender_name_label->Click += gcnew System::EventHandler(this, &Dashboard::sender_name_label_Click);
@@ -476,7 +490,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->label8->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F));
 			this->label8->Location = System::Drawing::Point(7, 6);
 			this->label8->Name = L"label8";
-			this->label8->Size = System::Drawing::Size(164, 26);
+			this->label8->Size = System::Drawing::Size(212, 32);
 			this->label8->TabIndex = 1;
 			this->label8->Text = L"Request Money";
 			this->label8->Click += gcnew System::EventHandler(this, &Dashboard::label8_Click);
@@ -503,7 +517,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->amount_textbox->ForeColor = System::Drawing::Color::Black;
 			this->amount_textbox->Location = System::Drawing::Point(20, 134);
 			this->amount_textbox->Name = L"amount_textbox";
-			this->amount_textbox->Size = System::Drawing::Size(472, 24);
+			this->amount_textbox->Size = System::Drawing::Size(472, 30);
 			this->amount_textbox->TabIndex = 1;
 			this->amount_textbox->SelectedItemChanged += gcnew System::EventHandler(this, &Dashboard::domainUpDown2_SelectedItemChanged);
 			this->amount_textbox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &Dashboard::domainUpDown2_KeyPress);
@@ -516,7 +530,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->sendername_textbox->ForeColor = System::Drawing::Color::Black;
 			this->sendername_textbox->Location = System::Drawing::Point(20, 70);
 			this->sendername_textbox->Name = L"sendername_textbox";
-			this->sendername_textbox->Size = System::Drawing::Size(472, 21);
+			this->sendername_textbox->Size = System::Drawing::Size(472, 27);
 			this->sendername_textbox->TabIndex = 0;
 			this->sendername_textbox->TextChanged += gcnew System::EventHandler(this, &Dashboard::textBox2_TextChanged);
 			// 
@@ -527,7 +541,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
 			this->transaction_history_label->Location = System::Drawing::Point(12, 201);
 			this->transaction_history_label->Name = L"transaction_history_label";
-			this->transaction_history_label->Size = System::Drawing::Size(194, 26);
+			this->transaction_history_label->Size = System::Drawing::Size(254, 32);
 			this->transaction_history_label->TabIndex = 0;
 			this->transaction_history_label->Text = L"Transaction history";
 			// 
@@ -671,7 +685,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->current_label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
 			this->current_label->Location = System::Drawing::Point(18, 38);
 			this->current_label->Name = L"current_label";
-			this->current_label->Size = System::Drawing::Size(128, 20);
+			this->current_label->Size = System::Drawing::Size(159, 25);
 			this->current_label->TabIndex = 0;
 			this->current_label->Text = L"Current Balance:";
 			this->current_label->Click += gcnew System::EventHandler(this, &Dashboard::current_label_Click);
@@ -682,7 +696,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->balance_label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold));
 			this->balance_label->Location = System::Drawing::Point(185, 39);
 			this->balance_label->Name = L"balance_label";
-			this->balance_label->Size = System::Drawing::Size(117, 20);
+			this->balance_label->Size = System::Drawing::Size(142, 25);
 			this->balance_label->TabIndex = 1;
 			this->balance_label->Text = L"user_balance";
 			this->balance_label->Click += gcnew System::EventHandler(this, &Dashboard::balance_label_Click);
@@ -702,6 +716,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->ForeColor = System::Drawing::Color::Black;
 			this->Name = L"Dashboard";
 			this->Text = L"Dashboard";
+			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &Dashboard::Dashboard_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &Dashboard::Dashboard_Load);
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
@@ -782,26 +797,40 @@ private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e
 		double amountToSend = TryParseDouble(amount_textbox->Text);
 		string username = msclr::interop::marshal_as<std::string>(sendername_textbox->Text);
 		auto it = user::allusers.find(username);
-		if (it != user::allusers.end()) {
+		if (it != user::allusers.end()&&it->first!=current_user->getUsername()) {
+			if (amountToSend <= 0) {
+					error_request_label->Text = "Error: Invalid amount!";
+					error_request_label->ForeColor = Color::Red;
+					return;
+			}
 			if (!current_user->isSuspended() && !it->second.isSuspended()) {
 				transaction t(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::REQUEST_MONEY, RequestStatus::PENDING);
 				it->second.add_to_requestedtransaction(t);
+				error_request_label->Text = String::Format("The operation was successful!");
+				error_request_label->ForeColor = Color::Green;
+				sendername_textbox->Text = "";
+				amount_textbox->Text = "";
 			}
 			else if (current_user->isSuspended())
 			{
-				label3->Text = String::Format("your account is suspended");
-				label3->ForeColor = Color::Red;
+				error_request_label->Text = String::Format("your account is suspended");
+				error_request_label->ForeColor = Color::Red;
 			}
 			else if (it->second.isSuspended())
 			{
-				label3->Text = String::Format("the user account is suspended");
-				label3->ForeColor = Color::Red;
+				error_request_label->Text = String::Format("the user account is suspended");
+				error_request_label->ForeColor = Color::Red;
 			}
 		}
+		else if (it->first == current_user->getUsername())
+		{
+			error_request_label->Text = "Error: You cannot request money from yourself!";
+			error_request_label->ForeColor = Color::Red;
+			return;
+		}
 		else {
-			MessageBox::Show("Sender does not exist ", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			label3->Text = "User not found";
-			label3->ForeColor = Color::Red;
+			error_request_label->Text = "User not found";
+			error_request_label->ForeColor = Color::Red;
 			return;
 		}
 }
@@ -811,7 +840,7 @@ private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e
 	double amountToSend = TryParseDouble(domainUpDown1->Text);
 	string username = msclr::interop::marshal_as<std::string>(textBox1->Text);
 	auto it = user::allusers.find(username);
-	if (it != user::allusers.end()) {
+	if (it != user::allusers.end()&&it->first!=current_user->getUsername()) {
 		if (current_user->getBalance() < amountToSend) {
 			label3->Text = String::Format("Error: Insufficient credit! (Available credit: {0:C})", current_user->getBalance());
 			label3->ForeColor = Color::Red;
@@ -850,6 +879,12 @@ private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e
 			}
 
 		}
+	}
+	else if (it->first == current_user->getUsername())
+	{
+		label3->Text = "Error: You cannot send money to yourself!";
+		label3->ForeColor = Color::Red;
+		return;
 	}
 	else {
 		label3->Text = "User not found";
@@ -892,6 +927,21 @@ private: System::Void add_to_balance_Click(System::Object^ sender, System::Event
 private: System::Void label1_Click_1(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void send_amount_label_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void Dashboard_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
+	if (isFormClosingHandled) {
+		return;
+	}
+
+	isFormClosingHandled = true;
+
+	if (MessageBox::Show("Are you sure you want to exit?", "Exit", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::No) {
+		e->Cancel = true;
+		isFormClosingHandled = false;
+	}
+	else {
+		Application::Exit();
+	}
 }
 };
 }
