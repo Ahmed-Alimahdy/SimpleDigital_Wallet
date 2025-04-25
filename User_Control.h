@@ -44,6 +44,11 @@ namespace SimpleDigitalWallet {
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	public:
 	public: System::Windows::Forms::Panel^ panel1;
+	private: System::Windows::Forms::Button^ clickable_button;
+
+	public:
+
+	public:
 
 	public:
 	private:
@@ -76,6 +81,7 @@ namespace SimpleDigitalWallet {
 			this->LB_Balance = (gcnew System::Windows::Forms::Label());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->clickable_button = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->panel1->SuspendLayout();
 			this->SuspendLayout();
@@ -83,6 +89,7 @@ namespace SimpleDigitalWallet {
 			// LB_Name
 			// 
 			this->LB_Name->AutoSize = true;
+			this->LB_Name->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->LB_Name->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->LB_Name->Location = System::Drawing::Point(104, 26);
@@ -98,6 +105,7 @@ namespace SimpleDigitalWallet {
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->LB_Email->AutoSize = true;
+			this->LB_Email->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->LB_Email->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->LB_Email->Location = System::Drawing::Point(104, 60);
@@ -105,17 +113,19 @@ namespace SimpleDigitalWallet {
 			this->LB_Email->Size = System::Drawing::Size(388, 29);
 			this->LB_Email->TabIndex = 2;
 			this->LB_Email->Text = L"ahmedebrahim200515@gmail.com";
+			this->LB_Email->Click += gcnew System::EventHandler(this, &User_Control::LB_Email_Click);
 			// 
 			// LB_Balance
 			// 
-			this->LB_Balance->AutoSize = true;
+			this->LB_Balance->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->LB_Balance->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->LB_Balance->Location = System::Drawing::Point(492, 26);
+			this->LB_Balance->Location = System::Drawing::Point(355, 26);
 			this->LB_Balance->Name = L"LB_Balance";
-			this->LB_Balance->Size = System::Drawing::Size(65, 29);
+			this->LB_Balance->Size = System::Drawing::Size(202, 29);
 			this->LB_Balance->TabIndex = 3;
 			this->LB_Balance->Text = L"5000";
+			this->LB_Balance->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			this->LB_Balance->Click += gcnew System::EventHandler(this, &User_Control::LB_Balance_Click);
 			// 
 			// pictureBox1
@@ -138,15 +148,27 @@ namespace SimpleDigitalWallet {
 			this->panel1->Controls->Add(this->LB_Balance);
 			this->panel1->Controls->Add(this->LB_Email);
 			this->panel1->Controls->Add(this->LB_Name);
+			this->panel1->Controls->Add(this->clickable_button);
 			this->panel1->Location = System::Drawing::Point(0, 0);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(566, 105);
 			this->panel1->TabIndex = 1;
 			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &User_Control::panel1_Paint);
-			this->panel1->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &User_Control::panel1_MouseDown);
-			this->panel1->MouseLeave += gcnew System::EventHandler(this, &User_Control::panel1_MouseLeave);
-			this->panel1->MouseHover += gcnew System::EventHandler(this, &User_Control::panel1_MouseHover);
 			this->panel1->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &User_Control::panel1_MouseUp);
+			// 
+			// clickable_button
+			// 
+			this->clickable_button->BackColor = System::Drawing::Color::Transparent;
+			this->clickable_button->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
+			this->clickable_button->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->clickable_button->FlatAppearance->BorderSize = 0;
+			this->clickable_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->clickable_button->Location = System::Drawing::Point(0, 0);
+			this->clickable_button->Name = L"clickable_button";
+			this->clickable_button->Size = System::Drawing::Size(566, 105);
+			this->clickable_button->TabIndex = 5;
+			this->clickable_button->UseVisualStyleBackColor = false;
+			this->clickable_button->Click += gcnew System::EventHandler(this, &User_Control::clickable_button_Click);
 			// 
 			// User_Control
 			// 
@@ -177,8 +199,12 @@ namespace SimpleDigitalWallet {
 	private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 	}
 private: System::Void LB_Balance_Click(System::Object^ sender, System::EventArgs^ e) {
+	OnUserControlClick(this, this);
+
 }
 private: System::Void LB_Name_Click(System::Object^ sender, System::EventArgs^ e) {
+	OnUserControlClick(this, this);
+
 }
 private: System::Void User_Control_Load(System::Object^ sender, System::EventArgs^ e) {
 }
@@ -219,6 +245,14 @@ private: System::Void panel1_MouseUp(System::Object^ sender, System::Windows::Fo
 	//this->ParentForm->Close();
 	//this->ParentForm->Show();
 	//this->ParentForm->Hide();
+}
+private: System::Void clickable_button_Click(System::Object^ sender, System::EventArgs^ e) {
+	OnUserControlClick(this, this);
+
+}
+private: System::Void LB_Email_Click(System::Object^ sender, System::EventArgs^ e) {
+	OnUserControlClick(this, this);
+
 }
 };
 }

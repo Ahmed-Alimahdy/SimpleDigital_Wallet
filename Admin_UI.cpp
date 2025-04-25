@@ -21,9 +21,13 @@ int main(cli::array<String^>^ args) {
     string hashedPwd = "ahmed";
     user u1(uname, mail, hashedPwd);
 	transaction t1("ahmed", "mohamed", 100, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE);
-	u1.history_transaction.push_back(t1);
+	//u1.history_transaction.push_back(t1);
+	u1.add_transaction(t1);
+	Admin::all_transactions.push_back(t1);
 	transaction t2("ahmed", "mohamed", 200, TRANSACTION_TYPE::REQUEST_MONEY, RequestStatus::ACCEPTED);
-	u1.history_transaction.push_back(t2);
+	//u1.history_transaction.push_back(t2);
+	u1.add_transaction(t2);
+	Admin::all_transactions.push_back(t2);
 	Payment p1("123456789", "Visa");
 	u1.payment_methods.push_back(p1);
     Payment p2("55895", "Vodafone");
@@ -40,6 +44,7 @@ int main(cli::array<String^>^ args) {
     //Payment p2("55895", "Vodafone");
     user u2(uname, mail, hashedPwd);
     //u2.balance = 200.0;
+	u2.setSuspended(true);
     user::allusers.insert({ uname, u2 });
     //id = "amir";
     uname = "amir";
@@ -48,7 +53,11 @@ int main(cli::array<String^>^ args) {
     user u3(uname, mail, hashedPwd);
     //u3.balance = 1000.0;
     transaction t3("ibrahim", "sayed", 5000, TRANSACTION_TYPE::REQUEST_MONEY, RequestStatus::DECLINED);
-    u3.history_transaction.push_back(t3);
+    //u3.history_transaction.push_back(t3);
+	u3.add_transaction(t3);
+	Admin::all_transactions.push_back(t3);
+	//transaction t4("ibrahim", "sayed", 5000, TRANSACTION_TYPE::WITHDRAWAL, RequestStatus::NONE);
+	////u3.history_transaction.push_back(t4);
 	Payment p3("149852", "Bank");
 	u3.payment_methods.push_back(p3);
     user::allusers.insert({ uname, u3 });

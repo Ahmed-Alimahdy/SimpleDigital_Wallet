@@ -1,6 +1,8 @@
 #include "Admin.h"
 
-static std::unordered_map<std::string, Admin> adminMap;
+//static std::unordered_map<std::string, Admin> adminMap;
+std::list<transaction> Admin::all_transactions;
+std::unordered_map<std::string, Admin> Admin::adminMap;
 Admin::Admin()
 {
 	this->username = "admin";

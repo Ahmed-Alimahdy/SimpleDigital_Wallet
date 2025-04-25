@@ -204,6 +204,7 @@ private: System::Windows::Forms::Label^ Adress_wallet;
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Admin_UI::typeid));
 			this->decLine1 = (gcnew System::Windows::Forms::Panel());
 			this->addAdminPanel = (gcnew System::Windows::Forms::Panel());
+			this->usernameExistsLabel = (gcnew System::Windows::Forms::Label());
 			this->addAdminConfirmationLabel = (gcnew System::Windows::Forms::Label());
 			this->confirmEditAdmin = (gcnew System::Windows::Forms::Button());
 			this->cancelEditAdmin = (gcnew System::Windows::Forms::Button());
@@ -271,7 +272,6 @@ private: System::Windows::Forms::Label^ Adress_wallet;
 			this->button_to_users = (gcnew System::Windows::Forms::Button());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->usernameExistsLabel = (gcnew System::Windows::Forms::Label());
 			this->addAdminPanel->SuspendLayout();
 			this->allTransactionsPanel->SuspendLayout();
 			this->Users_page->SuspendLayout();
@@ -315,6 +315,18 @@ private: System::Windows::Forms::Label^ Adress_wallet;
 			this->addAdminPanel->Size = System::Drawing::Size(1200, 727);
 			this->addAdminPanel->TabIndex = 1;
 			this->addAdminPanel->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Admin_UI::transactionsPanel_Paint);
+			// 
+			// usernameExistsLabel
+			// 
+			this->usernameExistsLabel->AutoSize = true;
+			this->usernameExistsLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6.75F, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Italic | System::Drawing::FontStyle::Underline)),
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+			this->usernameExistsLabel->ForeColor = System::Drawing::Color::DarkRed;
+			this->usernameExistsLabel->Location = System::Drawing::Point(76, 421);
+			this->usernameExistsLabel->Name = L"usernameExistsLabel";
+			this->usernameExistsLabel->Size = System::Drawing::Size(110, 12);
+			this->usernameExistsLabel->TabIndex = 18;
+			this->usernameExistsLabel->Text = L"Username Already Exists";
 			// 
 			// addAdminConfirmationLabel
 			// 
@@ -420,8 +432,7 @@ private: System::Windows::Forms::Label^ Adress_wallet;
 			// scrollableTransactionsPanel
 			// 
 			this->scrollableTransactionsPanel->AutoScroll = true;
-			this->scrollableTransactionsPanel->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(224)),
-				static_cast<System::Int32>(static_cast<System::Byte>(224)), static_cast<System::Int32>(static_cast<System::Byte>(224)));
+			this->scrollableTransactionsPanel->BackColor = System::Drawing::SystemColors::Control;
 			this->scrollableTransactionsPanel->Location = System::Drawing::Point(12, 49);
 			this->scrollableTransactionsPanel->Name = L"scrollableTransactionsPanel";
 			this->scrollableTransactionsPanel->Size = System::Drawing::Size(591, 548);
@@ -704,7 +715,7 @@ private: System::Windows::Forms::Label^ Adress_wallet;
 			this->massage_name_LB->ForeColor = System::Drawing::Color::Red;
 			this->massage_name_LB->Location = System::Drawing::Point(149, 114);
 			this->massage_name_LB->Name = L"massage_name_LB";
-			this->massage_name_LB->Size = System::Drawing::Size(155, 13);
+			this->massage_name_LB->Size = System::Drawing::Size(196, 16);
 			this->massage_name_LB->TabIndex = 29;
 			this->massage_name_LB->Text = L"* this user Name is already exist";
 			// 
@@ -1146,18 +1157,6 @@ private: System::Windows::Forms::Label^ Adress_wallet;
 			this->timer2->Interval = 1;
 			this->timer2->Tick += gcnew System::EventHandler(this, &Admin_UI::timer2_Tick);
 			// 
-			// usernameExistsLabel
-			// 
-			this->usernameExistsLabel->AutoSize = true;
-			this->usernameExistsLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6.75F, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Italic | System::Drawing::FontStyle::Underline)),
-				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->usernameExistsLabel->ForeColor = System::Drawing::Color::DarkRed;
-			this->usernameExistsLabel->Location = System::Drawing::Point(76, 421);
-			this->usernameExistsLabel->Name = L"usernameExistsLabel";
-			this->usernameExistsLabel->Size = System::Drawing::Size(110, 12);
-			this->usernameExistsLabel->TabIndex = 18;
-			this->usernameExistsLabel->Text = L"Username Already Exists";
-			// 
 			// Admin_UI
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
@@ -1229,36 +1228,56 @@ private: System::Void switchToAdminProfileBtn_Click(System::Object^ sender, Syst
 		   {
 
 			   Panel^ panel = gcnew Panel();
-			   panel->Size = System::Drawing::Size(530, 83);
+			   panel->Size = System::Drawing::Size(530, 90);
 			   panel->BackColor = System::Drawing::SystemColors::ControlLight;
 			   panel->Location = System::Drawing::Point(0, (i * 100));
 			   MakeRoundedPanel(panel, 15);
 			   Label^ transaction_date_label = gcnew Label();
+			   transaction_date_label->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point);
 			   transaction_date_label->Text = gcnew String(makeFunnyString(it->getTimestampAsString()));
 			   transaction_date_label->Location = System::Drawing::Point(17, 10);
 			   transaction_date_label->AutoSize = true;
 			   Label^ to_form_field = gcnew Label();
 
+			   String^ stautus = gcnew String(it->getStatusString().c_str());
 			   Label^ status_label = gcnew Label();
+			   status_label->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point);
 			   status_label->Text = gcnew String(makeFunnyString("Status : " + (it->getStatusString())));
 			   status_label->Location = System::Drawing::Point(290, 10);
+			   status_label->AutoSize = true;
 			   panel->Controls->Add(status_label);
+			   if (stautus == "Accepted")
+			   {
+				   status_label->Text = gcnew String("Accepted");
+				   status_label->ForeColor = System::Drawing::Color::Green;
+			   }
+			   else if (stautus == "Declined")
+			   {
+				   status_label->Text = gcnew String("Declined");
+				   status_label->ForeColor = System::Drawing::Color::Red;
+			   }
 
 			   Label^ from_label = gcnew Label();
+			   from_label->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point);
 			   from_label->Text = gcnew String(makeFunnyString("From : " + it->getSender()));
-			   from_label->Location = System::Drawing::Point(50, 60);
+			   from_label->Location = System::Drawing::Point(17, 60);
+			   from_label->AutoSize = true;
 			   panel->Controls->Add(from_label);
 
 			   to_form_field->Text = gcnew String(makeFunnyString("To : " + it->getRecipient()));
-			   to_form_field->Location = System::Drawing::Point(50, 40);
+			   to_form_field->Location = System::Drawing::Point(17, 40);
 			   to_form_field->AutoSize = true;
+			   to_form_field->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point);
 			   Label^ sender_reciever_label = gcnew Label();
+			   sender_reciever_label->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point);
 
 
 			   sender_reciever_label->Location = System::Drawing::Point(146, 45);
 			   sender_reciever_label->AutoSize = true;
 			   Label^ amount_label = gcnew Label();
-			   amount_label->Text = makeFunnyString("amount : " + std::to_string(it->getAmount()) + "$");
+			   amount_label->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point);
+			   //amount_label->Text = makeFunnyString("amount : " + it->getAmount().ToString("F2") + "$");
+			   amount_label->Text = makeFunnyString(msclr::interop::marshal_as<std::string>("amount : " + it->getAmount().ToString("F2") + "$"));
 			   amount_label->Location = System::Drawing::Point(290, 35);
 			   amount_label->AutoSize = true;
 			   panel->Controls->Add(transaction_date_label);
@@ -1423,7 +1442,7 @@ private: System::Void searchTextBox_TextChanged(System::Object^ sender, System::
 		   key = msclr::interop::marshal_as<std::string>(LB_Name_info->Text);
 		   LB_Email_info->Text = userControl->LB_Email->Text;
 		   LB_Balance_info->Text = userControl->LB_Balance->Text;
-		   if (user::allusers[key].getsuspended())
+		   if (user::allusers[key].isSuspended())
 		   {
 			   suspended_LB->Text = "suspended";
 			   suspended_LB->ForeColor = System::Drawing::Color::Red;
@@ -1715,7 +1734,7 @@ private: System::Void Add_user_button_Click(System::Object^ sender, System::Even
 		   flowLayoutPanel_Users_Transaction->Controls->Clear();
 		   int count_t = 0;
 		   user* user_account = &user::allusers[key];
-		   if (user_account->history_transaction.size() == 0)
+		   if (user_account->get_history_transaction().size() == 0)
 		   {
 		   Label^ noTransactionsLabel = gcnew Label();
 		   noTransactionsLabel->Text = "No transactions yet";
@@ -1728,7 +1747,7 @@ private: System::Void Add_user_button_Click(System::Object^ sender, System::Even
 		   }
 		   else
 		   {
-			for (auto t: user_account->history_transaction)
+			for (auto t: user_account->get_history_transaction())
 			{
 			   /*transaction t = user_account->history_transaction.front();
 			   user_account->history_transaction.pop_front();*/
@@ -1738,21 +1757,24 @@ private: System::Void Add_user_button_Click(System::Object^ sender, System::Even
 			   panel->Location = System::Drawing::Point(0, (count_t * 100));
 			   MakeRoundedPanel(panel, 15);
 			   Label^ transaction_date_label = gcnew Label();
+			   transaction_date_label->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point);
 			   transaction_date_label->Text = gcnew String(t.getTimestampAsString().c_str()/*"19/4/2025"*/);  //"1"
 			   transaction_date_label->Location = System::Drawing::Point(17, 10);
 			   transaction_date_label->AutoSize = true;
 			   Label^ to_form_field = gcnew Label();
+			   to_form_field->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point);
 			   to_form_field->Text = "To: ";
 			   to_form_field->Location = System::Drawing::Point(17, 45);
 			   to_form_field->AutoSize = true;
 			   Label^ sender_reciever_label = gcnew Label();
+			   sender_reciever_label->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point);
 			   sender_reciever_label->Text = gcnew String(t.getSender().c_str());
-			   sender_reciever_label->Location = System::Drawing::Point(40, 45);
-			   sender_reciever_label->AutoSize = false;
+			   sender_reciever_label->Location = System::Drawing::Point(55, 45);
+			   sender_reciever_label->AutoSize = true;
 			   if (t.getType() == TRANSACTION_TYPE::WITHDRAWAL || t.getType() == TRANSACTION_TYPE::REQUEST_MONEY)
 			   {
 				   to_form_field->Text = "From:";
-				   sender_reciever_label->Location = System::Drawing::Point(50, 45);
+				   sender_reciever_label->Location = System::Drawing::Point(75, 45);
 			   }
 			   if (t.getType() == TRANSACTION_TYPE::SEND_MONEY) {
 				   sender_reciever_label->Text = gcnew String(t.getSender().c_str());
@@ -1761,6 +1783,7 @@ private: System::Void Add_user_button_Click(System::Object^ sender, System::Even
 				sender_reciever_label->Text = gcnew String(t.getRecipient().c_str()/*"John Smith"*/); //"2"
 			   }
 			   Label^ amount_label = gcnew Label();
+			   amount_label->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point);
 			   //amount_label->Text = t.getAmount() /*"amount: $100"*/; //t.getAmount();
 			   //amount_label->Text = gcnew System::String(("amount: $" + std::to_string(t.getAmount())).c_str());
 			   amount_label->Text = "amount: $" + t.getAmount().ToString("F2");
@@ -1768,6 +1791,7 @@ private: System::Void Add_user_button_Click(System::Object^ sender, System::Even
 			   amount_label->AutoSize = true;
 			   String^ stautus = gcnew String(t.getStatusString().c_str());
 			   Label^ status_label = gcnew Label();
+			   status_label->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point);
 			   status_label->Text = gcnew String("");
 			   status_label->Location = System::Drawing::Point(300, 10);
 			   status_label->AutoSize = true;
@@ -1834,17 +1858,28 @@ private: System::Void Save_button_Click(System::Object^ sender, System::EventArg
 		string balance = msclr::interop::marshal_as<std::string>(BalanceEdit_Box->Text);
 		string password = msclr::interop::marshal_as<std::string>(password_Box->Text);
 		string specialChars = "!@$%^&*+#";
+
+
 		if (username.empty() || email.empty() || balance.empty()||password.empty()) {
 			Add_user_button_Click(nullptr, gcnew System::EventArgs());
+			UserEdit_Box->Text = gcnew System::String(username.c_str());
+			EmailEdit_Box->Text = gcnew System::String(email.c_str());
+			BalanceEdit_Box->Text = gcnew System::String(balance.c_str());
+			password_Box->Text = gcnew System::String(password.c_str());
 			MessageBox::Show("Please fill all fields!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			return;
 		}
 		if (password.find_first_of(specialChars) == std::string::npos) {
 			Add_user_button_Click(nullptr, gcnew System::EventArgs());
+			UserEdit_Box->Text = gcnew System::String(username.c_str());
+			EmailEdit_Box->Text = gcnew System::String(email.c_str());
+			BalanceEdit_Box->Text = gcnew System::String(balance.c_str());
 			password_Box->Text = "";
 			MessageBox::Show("Password must contain at least one special character (!@$%^&*+#)!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			return;
+
 		}
+
 		//here will check to the errors:
 		//auto ur_Ed = user::allusers.extract(key);
 		//ur_Ed.key() = username;
@@ -1870,6 +1905,19 @@ private: System::Void Save_button_Click(System::Object^ sender, System::EventArg
 		LB_Name_info->Text = UserEdit_Box->Text;
 		LB_Email_info->Text = EmailEdit_Box->Text;
 		LB_Balance_info->Text = BalanceEdit_Box->Text;
+		label7->Text = "payment:";
+		listBox1->Items->Clear(); // Clear previous items
+		listBox1->Items->Add("No Payments");
+		flowLayoutPanel_Users_Transaction->Controls->Clear();
+		Label^ noTransactionsLabel = gcnew Label();
+		noTransactionsLabel->Text = "No transactions yet";
+		noTransactionsLabel->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular);
+		noTransactionsLabel->AutoSize = true;
+		int centerX = (this->flowLayoutPanel_Users_Transaction->Width - noTransactionsLabel->Width) / 6;
+		int centerY = (this->flowLayoutPanel_Users_Transaction->Height - noTransactionsLabel->Height) / 3;
+		noTransactionsLabel->Location = System::Drawing::Point(centerX, centerY);
+		this->flowLayoutPanel_Users_Transaction->Controls->Add(noTransactionsLabel);
+		key = msclr::interop::marshal_as<std::string>(LB_Name_info->Text);
 		draw_usercontrols();
 	}
 	//it is Edit user

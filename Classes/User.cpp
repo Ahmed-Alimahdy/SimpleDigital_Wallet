@@ -6,13 +6,15 @@ user::user()
 	hashedPassword = "";
 	email = "";
 	balance = 0;
+	suspended = false;
 }
-user::user(string& uname, string& mail, string& hashedPwd)
+user::user(string uname, string mail, string hashedPwd)
 {
 	username = uname;
 	email = mail;
 	hashedPassword = hashedPwd;
-	balance = 0;
+	balance = 1000;
+	suspended = false;
 }
 unordered_map<string, user> user::allusers;
 string user::getUsername()
@@ -31,14 +33,14 @@ double user::getBalance()
 {
 	return balance;
 }
-bool user::getsuspended()
-{
-	return this->suspended;
-}
-void user::setSuspended(bool suspended)
-{
-	this->suspended = suspended;
-}
+//bool user::getsuspended()
+//{
+//	return this->suspended;
+//}
+//void user::setSuspended(bool suspended)
+//{
+//	this->suspended = suspended;
+//}
 double user::calculate_balance()
 {
 	double total = 0;
@@ -51,23 +53,35 @@ double user::calculate_balance()
 	}
 	return total;
 }
-void user::setUsername(string& uname)
+list<transaction> user::get_history_transaction()
+{
+	return history_transaction;
+}
+bool user::isSuspended()
+{
+	return suspended;
+}
+void user::setUsername(string uname)
 {
 	this->username = uname;
 }
-void user::setHashedPassword(string& hashedPwd)
-{
-	this->hashedPassword = hashedPwd;
-}
-void user::setEmail(string& mail)
+void user::setEmail(string mail)
 {
 	this->email = mail;
+}
+void user::setHashedPassword(string hashedPwd)
+{
+	this->hashedPassword = hashedPwd;
 }
 void user::setBalance(double balance)
 {
 	this->balance = balance;
 }
-list<transaction> user::get_history_transaction()
+void user::setSuspended(bool susp)
 {
-	return history_transaction;
+	this->suspended = susp;
+}
+void user::add_transaction(transaction trans)
+{
+	history_transaction.push_back(trans);
 }
