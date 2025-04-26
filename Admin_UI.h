@@ -41,6 +41,7 @@ namespace SimpleDigitalWallet {
 			usernameExistsLabel->Hide();
 			adminUsenameLabel->Text = makeFunnyString(Admin::currentAdmin.username);
 			adminPasswordLabel->Text = makeFunnyString(Admin::currentAdmin.password);
+			invalidLabel->Hide()
 			//
 			//TODO: Add the constructor code here
 			//
@@ -158,6 +159,7 @@ private: System::Windows::Forms::Button^ button_to_Admin;
 private: System::Windows::Forms::PictureBox^ pictureBox1;
 private: System::Windows::Forms::Button^ logout_Admin_button;
 private: System::Windows::Forms::Label^ Adress_wallet;
+private: System::Windows::Forms::Label^ invalidLabel;
 
 	public:
 
@@ -271,6 +273,7 @@ private: System::Windows::Forms::Label^ Adress_wallet;
 			this->button_to_users = (gcnew System::Windows::Forms::Button());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->invalidLabel = (gcnew System::Windows::Forms::Label());
 			this->addAdminPanel->SuspendLayout();
 			this->allTransactionsPanel->SuspendLayout();
 			this->Users_page->SuspendLayout();
@@ -291,6 +294,7 @@ private: System::Windows::Forms::Label^ Adress_wallet;
 			// addAdminPanel
 			// 
 			this->addAdminPanel->BackColor = System::Drawing::SystemColors::Control;
+			this->addAdminPanel->Controls->Add(this->invalidLabel);
 			this->addAdminPanel->Controls->Add(this->usernameExistsLabel);
 			this->addAdminPanel->Controls->Add(this->addAdminConfirmationLabel);
 			this->addAdminPanel->Controls->Add(this->confirmEditAdmin);
@@ -1157,6 +1161,18 @@ private: System::Windows::Forms::Label^ Adress_wallet;
 			this->timer2->Interval = 1;
 			this->timer2->Tick += gcnew System::EventHandler(this, &Admin_UI::timer2_Tick);
 			// 
+			// invalidLabel
+			// 
+			this->invalidLabel->AutoSize = true;
+			this->invalidLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6.75F, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Italic | System::Drawing::FontStyle::Underline)),
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+			this->invalidLabel->ForeColor = System::Drawing::Color::DarkRed;
+			this->invalidLabel->Location = System::Drawing::Point(76, 421);
+			this->invalidLabel->Name = L"invalidLabel";
+			this->invalidLabel->Size = System::Drawing::Size(61, 12);
+			this->invalidLabel->TabIndex = 19;
+			this->invalidLabel->Text = L"Invalid Profile";
+			// 
 			// Admin_UI
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
@@ -1294,14 +1310,19 @@ private: System::Void switchToAdminProfileBtn_Click(System::Object^ sender, Syst
 
 
 private: System::Void addAdminButton_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (Admin::adminMap.find(makeString(addAdminUsernameTextfield->Text)) != Admin::adminMap.end()) {
+	if (addAdminUsernameTextfield->Text == "" || addAdminPasswordTextfield->Text == "" /*|| !checkAdminValidity()*/)
+	{
+		invalidLabel->Show();
+		return;
+	}
+	else if (Admin::adminMap.find(makeString(addAdminUsernameTextfield->Text)) != Admin::adminMap.end()) {
 		usernameExistsLabel->Show();
 		addAdminConfirmationLabel->Hide();
 		addAdminUsernameTextfield->Text = "";
 		addAdminPasswordTextfield->Text = "";
 		return;
 	}
-
+	
 
 	new Admin(makeString(addAdminUsernameTextfield->Text), makeString(addAdminPasswordTextfield->Text));
 	Admin::adminMap.emplace(
