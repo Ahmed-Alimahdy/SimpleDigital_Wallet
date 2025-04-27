@@ -41,7 +41,7 @@ namespace SimpleDigitalWallet {
 			usernameExistsLabel->Hide();
 			adminUsenameLabel->Text = makeFunnyString(Admin::currentAdmin.username);
 			adminPasswordLabel->Text = makeFunnyString(Admin::currentAdmin.password);
-			invalidLabel->Hide()
+			invalidLabel->Hide();
 			//
 			//TODO: Add the constructor code here
 			//
@@ -1391,7 +1391,7 @@ private: System::Void Admin_UI_Load(System::Object^ sender, System::EventArgs^ e
    //string email = "ahmed";
    //string password = "ahmed";
    //user newUser(username, email, password);
-           users = gcnew List<User_Control^>();
+          // users = gcnew List<User_Control^>();
 		   //for (int i = 0; i <5 ; i++)
 		   //{
 

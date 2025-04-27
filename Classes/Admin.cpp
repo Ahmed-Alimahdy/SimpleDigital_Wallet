@@ -38,3 +38,5 @@ void Admin::updateUserData(string K, string Nname, string Nemail, string Nbalanc
 	user::allusers.insert(std::move(ur_Ed));
 
 }
+
+Admin Admin::currentAdmin;
