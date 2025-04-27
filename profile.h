@@ -18,7 +18,6 @@ namespace SimpleDigitalWallet {
 	public ref class profile : public System::Windows::Forms::Form
 	{
 	private:
-		user* current_user;
 		void MakeRoundedButton(Button^ button, int radius) {
 			GraphicsPath^ path = gcnew Drawing2D::GraphicsPath();
 			System::Drawing::Rectangle bounds = button->ClientRectangle;
@@ -160,14 +159,16 @@ namespace SimpleDigitalWallet {
 			}
 		}
 	public:
-		Form^ dashboard;
+		Form^ dashboard_form;
+		Form^ login;
+		Form^ requsted_transactions;
+		user* current_user;
 		profile(void)
 		{
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
 			//
-			this->current_user = &currentUser;
 		}
 		profile(Form^ form, Form^ form2, user* u) {
 			InitializeComponent();
@@ -669,9 +670,6 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	auto it = user::allusers.find(username);
 	if (username.empty() || password.empty() || email.empty()) { //check if any field is empty
 		MessageBox::Show("Please fill all fields!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		username_textbox->Text = "";
-		email_textbox->Text = "";
-		password_textbox->Text = "";
 		return;
 	}
 	if (password.find_first_of(specialChars) == std::string::npos) { // checking pass contain special char
@@ -714,7 +712,11 @@ private: System::Void VisaCategory_TextChanged(System::Object^ sender, System::E
 private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 }
 private: System::Void profile_Load(System::Object^ sender, System::EventArgs^ e) {
-
+	// set the current user details
+	name_label->Text = msclr::interop::marshal_as<System::String^>(current_user->getUsername());
+	username_textbox->Text = msclr::interop::marshal_as<System::String^>(current_user->getUsername());
+	email_textbox->Text = msclr::interop::marshal_as<System::String^>(current_user->getEmail());
+	password_textbox->Text = msclr::interop::marshal_as<System::String^>(current_user->getHashedPassword());
 	MakeRoundedTextBox(username_textbox, 5);
 	MakeRoundedTextBox(password_textbox,5);
 	MakeRoundedTextBox(email_textbox, 5);

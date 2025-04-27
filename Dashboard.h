@@ -120,7 +120,7 @@ namespace SimpleDigitalWallet {
 					to_form_field->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold);
 					Label^ amount_label = gcnew Label();
 					amount_label->Text = "amount : "+it.getAmount();
-					amount_label->Location = System::Drawing::Point(360, 45);
+					amount_label->Location = System::Drawing::Point(360, 80);
 					amount_label->AutoSize = true;
 					amount_label->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold);
 					Label^ status_label = gcnew Label();
@@ -829,6 +829,11 @@ private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e)
 private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 	private: System::Void button2_Click_1(System::Object^ sender, System::EventArgs^ e) {
+		if (sendername_textbox->Text == "" || amount_textbox->Text == "") {
+			error_request_label->Text = "Error: Please fill in all fields!";
+			error_request_label->ForeColor = Color::Red;
+			return;
+		}
 		double amountToSend = TryParseDouble(amount_textbox->Text);
 		string username = msclr::interop::marshal_as<std::string>(sendername_textbox->Text);
 		auto it = user::allusers.find(username);
@@ -872,6 +877,11 @@ private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e
 private: System::Void label4_Click_1(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (textBox1->Text == "" || domainUpDown1->Text == "") {
+		label3->Text = "Error: Please fill in all fields!";
+		label3->ForeColor = Color::Red;
+		return;
+	}
 	double amountToSend = TryParseDouble(domainUpDown1->Text);
 	string username = msclr::interop::marshal_as<std::string>(textBox1->Text);
 	auto it = user::allusers.find(username);
