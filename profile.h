@@ -680,14 +680,15 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 		MessageBox::Show("Email must contain @ sign .", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
-	if (it != user::allusers.end() || it->first == current_user->getUsername()) { //check if username exists
-		MessageBox::Show("Username is not valid.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	if (it != user::allusers.end() && it->first != current_user->getUsername()) {
+		MessageBox::Show("Username is already taken.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
+
 	if (current_user->getUsername() == username) { // check if the user is the same
 		current_user->setEmail(email);
 		current_user->setHashedPassword(password);
-		name_label->Text = String::Format(username_textbox->Text);
+		name_label->Text = username_textbox->Text;
 		MessageBox::Show("Profile updated successfully!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		return;
 	}
