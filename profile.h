@@ -674,25 +674,24 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	}
 	if (password.find_first_of(specialChars) == std::string::npos) { // checking pass contain special char
 		MessageBox::Show("Password must contain at least one special character (!@$%^&*+#)!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		username_textbox->Text = "";
-		email_textbox->Text = "";
-		password_textbox->Text = "";
 		return;
 	}
 	if (email.find_first_of(c) == std::string::npos) { // checking pass contain special char
 		MessageBox::Show("Email must contain @ sign .", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		username_textbox->Text = "";
-		email_textbox->Text = "";
-		password_textbox->Text = "";
 		return;
 	}
 	if (it != user::allusers.end() || it->first == current_user->getUsername()) { //check if username exists
 		MessageBox::Show("Username is not valid.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		username_textbox->Text = "";
-		email_textbox->Text = "";
-		password_textbox->Text = "";
 		return;
 	}
+	if (current_user->getUsername() == username) { // check if the user is the same
+		current_user->setEmail(email);
+		current_user->setHashedPassword(password);
+		name_label->Text = String::Format(username_textbox->Text);
+		MessageBox::Show("Profile updated successfully!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		return;
+	}
+
 	else {
 		current_user->setUsername(username);
 		current_user->setEmail(email);
