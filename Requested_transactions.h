@@ -1,6 +1,10 @@
 #pragma once
+#include <msclr/marshal_cppstd.h>
+#include "Classes/User.h"
+#include "Classes/Transaction.h"
 namespace SimpleDigitalWallet {
-
+	ref class profile;
+    ref class waiting_screen;
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -14,6 +18,7 @@ namespace SimpleDigitalWallet {
 	/// </summary>
 	public ref class Requested_transactions : public System::Windows::Forms::Form
 	{
+		
 	private: System::Windows::Forms::FlowLayoutPanel^ flowLayoutPanel;
 
 		   void MakeRoundedPanel(Panel^ panel, int radius) {
@@ -67,49 +72,31 @@ namespace SimpleDigitalWallet {
 
 
 	private: System::Void GeneratePanels() {
-		int panelCount = 12;
-		for (int i = 0; i < panelCount; i++) {
+		for (auto it : current_user->get_requested_transaction()) {
 			Panel^ panel = gcnew Panel();
-			panel->Size = System::Drawing::Size(350, 150); 
+			panel->Size = System::Drawing::Size(350, 150);
 			panel->BackColor = System::Drawing::Color::LightGray;
-			panel->Margin = System::Windows::Forms::Padding(10); 
+			panel->Margin = System::Windows::Forms::Padding(10);
 
-
-
-
-
-
-
-			Label^ label = gcnew Label();
-			label->Text = "John Smith";
-			label->AutoSize = true;
-			label->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold); // Increased font size
-			label->Location = System::Drawing::Point(90, 30);
-			panel->Controls->Add(label);
 
 			Label^ sender_label = gcnew Label();
-			sender_label->Text = "Sender: ";
+			sender_label->Text = "Sender: " + gcnew String(it.getSender().c_str());
 			sender_label->AutoSize = true;
 			sender_label->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold); // Increased font size
 			sender_label->Location = System::Drawing::Point(20, 30);
 			panel->Controls->Add(sender_label);
 
 			Label^ amount_label = gcnew Label();
-			amount_label->Text = "Amount: $";
+			amount_label->Text = "Amount: $" +it.getAmount();
 			amount_label->AutoSize = true;
 			amount_label->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold); // Increased font size
 			amount_label->Location = System::Drawing::Point(20, 70);
 			panel->Controls->Add(amount_label);
 
-			Label^ amount_label2 = gcnew Label();
-			amount_label2->Text = "200";
-			amount_label2->AutoSize = true;
-			amount_label2->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold); // Increased font size
-			amount_label2->Location = System::Drawing::Point(110, 70);
-			panel->Controls->Add(amount_label2);
 
-			Button^ accept_button= gcnew Button();
+			Button^ accept_button = gcnew Button();
 			accept_button->Text = "Accept";
+			accept_button->Name = gcnew String(it.getId().c_str());
 			accept_button->AutoSize = true;
 			accept_button->BackColor = System::Drawing::Color::Green;
 			accept_button->ForeColor = System::Drawing::Color::White;
@@ -118,13 +105,16 @@ namespace SimpleDigitalWallet {
 			accept_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			accept_button->FlatAppearance->BorderColor = accept_button->BackColor;
 			accept_button->FlatAppearance->BorderSize = 1;
+			accept_button->Click += gcnew System::EventHandler(this, &Requested_transactions::accept_button_Click);
 			panel->Controls->Add(accept_button);
 
 			Button^ deny_button = gcnew Button();
 			deny_button->Text = "Deny";
+			deny_button->Name = gcnew String(it.getId().c_str());
 			deny_button->AutoSize = true;
 			deny_button->BackColor = System::Drawing::Color::Gray;
 			deny_button->ForeColor = System::Drawing::Color::Black;
+		    deny_button->Click += gcnew System::EventHandler(this, &Requested_transactions::deny_button_Click);
 			deny_button->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold); // Increased font size
 			deny_button->Location = System::Drawing::Point(270, 100);
 			deny_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
@@ -141,7 +131,10 @@ namespace SimpleDigitalWallet {
 	}
 
 	public:
-		Form^ form1;
+		Form^ dashboard_form;
+		Form^ profile;
+		Form^ login;
+		user* current_user;
 		Requested_transactions(void)
 		{
 			InitializeComponent();
@@ -149,10 +142,23 @@ namespace SimpleDigitalWallet {
 			//TODO: Add the constructor code here
 			//
 		}
-		Requested_transactions(Form ^form)
-		{
+		Requested_transactions(Form^ form, user* u) {
 			InitializeComponent();
-			form1 = form;
+			dashboard_form = form;
+			current_user = u;
+		}
+		Requested_transactions(Form^ form, Form^ form2, user* u) {
+			InitializeComponent();
+			dashboard_form = form;
+			login = form2;
+			current_user = u;
+		}
+		Requested_transactions(Form^ form, Form^ form2, Form^ form3, user* u) {
+			InitializeComponent();
+			dashboard_form = form;
+			current_user = u;
+			profile = form2;
+			login = form3;
 		}
 
 	protected:
@@ -230,6 +236,7 @@ namespace SimpleDigitalWallet {
 			this->logout_button->Size = System::Drawing::Size(49, 50);
 			this->logout_button->TabIndex = 8;
 			this->logout_button->UseVisualStyleBackColor = false;
+			this->logout_button->Click += gcnew System::EventHandler(this, &Requested_transactions::logout_button_Click);
 			// 
 			// transaction_button
 			// 
@@ -310,6 +317,7 @@ namespace SimpleDigitalWallet {
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
 			this->ClientSize = System::Drawing::Size(1182, 753);
+			this->Location = Drawing::Point(0, 0);
 			this->Controls->Add(this->requsted_transaction_label);
 			this->Controls->Add(this->black_panel);
 			this->Name = L"Requested_transactions";
@@ -341,14 +349,65 @@ namespace SimpleDigitalWallet {
 	}
 	private: System::Void home_button_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Hide();
-		form1->Show();
+		dashboard_form->Show();
 	}
-private: System::Void profile_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	this->Hide();
-	form1->Show();
-}
-private: System::Void Requested_transactions_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
+	private: System::Void profile_button_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void Requested_transactions_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
 		Application::Exit();
+	}
+	private: System::Void accept_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		Button^ button = safe_cast<Button^>(sender);
+		String^ name = button->Name;
+		System::String^ firstPart = name->Split('_')[0];
+		string recipient = msclr::interop::marshal_as<std::string>(firstPart);
+		System::String^ secondPart = name->Split('_')[1];
+		string sender_name = msclr::interop::marshal_as<string>(secondPart);
+		System::String^ thirdPart = name->Split('_')[2];
+		string amount = msclr::interop::marshal_as<string>(thirdPart);
+		double amount_value = std::stod(amount);
+		if (current_user->getBalance() < amount_value)
+		{
+			MessageBox::Show("You don't have enough balance to accept this request.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+		current_user->add_to_historytransaction(transaction(sender_name, recipient, std::stod(amount), TRANSACTION_TYPE::DEPOSIT, RequestStatus::ACCEPTED));
+		current_user->remove_from_requestedtransaction(msclr::interop::marshal_as<string>(name));
+		current_user->setBalance(current_user->getBalance() - amount_value);
+		auto it = user::allusers.find(sender_name);
+	    it->second.add_to_historytransaction(transaction(sender_name, recipient, std::stod(amount), TRANSACTION_TYPE::REQUEST_MONEY, RequestStatus::ACCEPTED));
+		it->second.remove_from_requestedtransaction(msclr::interop::marshal_as<string>(name));
+		it->second.setBalance(it->second.getBalance() + amount_value);
+		flowLayoutPanel->Controls->Clear();
+		GeneratePanels();
+	}
+    private: System::Void deny_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		Button^ button = safe_cast<Button^>(sender);
+		String^ name = button->Name;
+		System::String^ firstPart = name->Split('_')[0];
+		string recipient = msclr::interop::marshal_as<std::string>(firstPart);
+		System::String^ secondPart = name->Split('_')[1];
+		string sender_name = msclr::interop::marshal_as<string>(secondPart);
+		System::String^ thirdPart = name->Split('_')[2];
+		string amount = msclr::interop::marshal_as<string>(thirdPart);
+		current_user->add_to_historytransaction(transaction(sender_name, recipient, std::stod(amount), TRANSACTION_TYPE::REQUEST_MONEY, RequestStatus::DECLINED));
+		current_user->remove_from_requestedtransaction(msclr::interop::marshal_as<string>(name));
+		for (auto& it : user::allusers)
+		{
+			if (it.first == recipient)
+			{
+				
+				it.second.add_to_historytransaction(transaction(sender_name, recipient, std::stod(amount), TRANSACTION_TYPE::REQUEST_MONEY, RequestStatus::DECLINED));
+				it.second.remove_from_requestedtransaction(msclr::interop::marshal_as<string>(name));
+				break;
+		
+			}
+		}
+		flowLayoutPanel->Controls->Clear();
+		GeneratePanels();
+    }
+private: System::Void logout_button_Click(System::Object^ sender, System::EventArgs^ e) {
+	this->Hide();
+	login->Show();
 }
 };
 }

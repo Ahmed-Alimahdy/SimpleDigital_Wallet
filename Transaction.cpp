@@ -9,7 +9,7 @@ transaction::transaction(string from, string to, double amount,
 	type = t;
 	status = s;
 	timestamp = time(nullptr);
-	id = to + "_" + from + "_" + to_string(timestamp);
+	id = to + "_" + from +"_"+ to_string(amount);
 }
 string transaction::getSender() const
 {

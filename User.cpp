@@ -15,6 +15,7 @@ user::user(string uname, string mail, string hashedPwd)
 	hashedPassword = hashedPwd;
 	balance = 0;
 	suspended = false;
+
 }
 unordered_map<string, user> user::allusers;
 string user::getUsername()
@@ -45,6 +46,10 @@ double user::calculate_balance()
 	}
 	return total;
 }
+list<transaction> user::get_requested_transaction()
+{
+	return requested_transaction;
+}
 list<transaction> user::get_history_transaction()
 {
 	return history_transaction;
@@ -52,6 +57,10 @@ list<transaction> user::get_history_transaction()
 bool user::isSuspended()
 {
 	return suspended;
+}
+list<Payment> user::get_payment_methods()
+{
+	return payment_methods;
 }
 void user::setUsername(string uname)
 {

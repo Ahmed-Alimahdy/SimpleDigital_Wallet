@@ -1,5 +1,7 @@
 #pragma once
 #include"Requested_transactions.h"
+#include <msclr/marshal_cppstd.h>
+#include "Classes/User.h"
 namespace SimpleDigitalWallet {
 
 	using namespace System;
@@ -106,20 +108,21 @@ namespace SimpleDigitalWallet {
 		}
 		void generate_payment_methods_panels()
 		{
-			/*if (user_account->history_transaction.size() == 0)
-			{*/
-			/*Label^ noTransactionsLabel = gcnew Label();
+			if (current_user->get_payment_methods().size() == 0)
+			{
+			Label^ noTransactionsLabel = gcnew Label();
 			noTransactionsLabel->Text = "No payment methods yet";
-			noTransactionsLabel->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular);
+			noTransactionsLabel->Font = gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Bold);
 			noTransactionsLabel->AutoSize = true;
-			int centerX = (this->scrollable_transaction_panel->Width - noTransactionsLabel->Width) /6 ;
-			int centerY = (this->scrollable_transaction_panel->Height - noTransactionsLabel->Height) / 3;
+			int centerX = (this->scrollable_payment_panel->Width - noTransactionsLabel->Width) /6 ;
+			int centerY = (this->scrollable_payment_panel->Height - noTransactionsLabel->Height) / 3;
 			noTransactionsLabel->Location = System::Drawing::Point(centerX, centerY);
-			this->scrollable_transaction_panel->Controls->Add(noTransactionsLabel);*/
-			//}
-			//else
-			//{
-			for (int i = 0;i < 20;i++)
+			this->scrollable_payment_panel->Controls->Add(noTransactionsLabel);
+			}
+			else
+			{
+				int i = 0;
+			for (auto it:current_user->get_payment_methods())
 			{
 
 				Panel^ panel = gcnew Panel();
@@ -128,21 +131,20 @@ namespace SimpleDigitalWallet {
 				panel->Location = System::Drawing::Point(0, (i * 100));
 				panel->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
 				Label^ payment_method_id_label = gcnew Label();
-				payment_method_id_label->Text = gcnew String(/*t.getTimestampAsString().c_str()*/"Visa**** 1234");  //"1"
+				payment_method_id_label->Text = gcnew String(msclr::interop::marshal_as<System::String^>(it.getGatewayNumber()));  //"1"
 				payment_method_id_label->Location = System::Drawing::Point(17, 10);
 				payment_method_id_label->AutoSize = true;
 				Label^ payment_category_label = gcnew Label();
-				/*if (t.getType() == TRANSACTION_TYPE::WITHDRAWAL || t.getType() == TRANSACTION_TYPE::REQUEST_MONEY)
-					to_form_field->Text = "From";
-				else*/
-				payment_category_label->Text = "Bank Misr";
+				payment_category_label->Text = gcnew String(msclr::interop::marshal_as<System::String^>(it.getGatewayCategory()));
 				payment_category_label->Location = System::Drawing::Point(17, 45);
 				payment_category_label->AutoSize = true;
 			
 				Button^ remove_button = gcnew Button();
-				remove_button->Text = "Remove"; //t.getAmount();
-				remove_button->BackColor = System::Drawing::Color::Red; // Light red
-				remove_button->ForeColor = System::Drawing::Color::White;   // Text color remains white
+				remove_button->Text = "Remove"; 
+				remove_button->Name = gcnew String(msclr::interop::marshal_as<System::String^>(it.getGatewayNumber()));
+				remove_button->Click += gcnew System::EventHandler(this, &profile::remove_button_Click);
+				remove_button->BackColor = System::Drawing::Color::Red; 
+				remove_button->ForeColor = System::Drawing::Color::White;   
 				remove_button->Location = System::Drawing::Point(370, 20);
 				remove_button->AutoSize = true;
 				remove_button->Size = System::Drawing::Size(70, 30);
@@ -151,11 +153,15 @@ namespace SimpleDigitalWallet {
 				panel->Controls->Add(remove_button);
 				this->Controls->Add(panel);
 				this->scrollable_payment_panel->Controls->Add(panel);
+				i++;
 			}
-			//}
+			}
 		}
 	public:
-		Form^ dashboard;
+		Form^ dashboard_form;
+		Form^ requsted_transactions;
+		Form^ login;
+		user* current_user;
 		profile(void)
 		{
 			InitializeComponent();
@@ -163,13 +169,18 @@ namespace SimpleDigitalWallet {
 			//TODO: Add the constructor code here
 			//
 		}
-		profile(Form^ dashboard)
-		{
-			this->dashboard = dashboard;
+		profile(Form^ form, Form^ form2, user* u) {
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+			dashboard_form = form;
+			login = form2;
+			current_user = u;
+		}
+		profile(Form^ form, Form^ form2, Form^ form3, user* u) {
+			InitializeComponent();
+			dashboard_form = form;
+			current_user = u;
+			requsted_transactions = form2;
+			login = form3;
 		}
 
 	protected:
@@ -312,6 +323,7 @@ namespace SimpleDigitalWallet {
 			this->profile_panel->Name = L"profile_panel";
 			this->profile_panel->Size = System::Drawing::Size(610, 421);
 			this->profile_panel->TabIndex = 1;
+			this->profile_panel->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &profile::profile_panel_Paint_1);
 			// 
 			// save_button
 			// 
@@ -426,6 +438,7 @@ namespace SimpleDigitalWallet {
 			this->VisaNumber->Size = System::Drawing::Size(462, 31);
 			this->VisaNumber->TabIndex = 0;
 			this->VisaNumber->TextChanged += gcnew System::EventHandler(this, &profile::VisaNumber_TextChanged);
+			this->VisaNumber->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &profile::VisaNumber_KeyPress);
 			// 
 			// VisaCategory
 			// 
@@ -447,9 +460,9 @@ namespace SimpleDigitalWallet {
 				static_cast<System::Byte>(0)));
 			this->label1->Location = System::Drawing::Point(3, 28);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(188, 32);
+			this->label1->Size = System::Drawing::Size(247, 32);
 			this->label1->TabIndex = 2;
-			this->label1->Text = L"Visa Number";
+			this->label1->Text = L"Gateway Number";
 			this->label1->Click += gcnew System::EventHandler(this, &profile::label1_Click);
 			// 
 			// label2
@@ -459,9 +472,9 @@ namespace SimpleDigitalWallet {
 				static_cast<System::Byte>(0)));
 			this->label2->Location = System::Drawing::Point(3, 125);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(205, 32);
+			this->label2->Size = System::Drawing::Size(264, 32);
 			this->label2->TabIndex = 3;
-			this->label2->Text = L"Visa Category";
+			this->label2->Text = L"Gateway Category";
 			this->label2->Click += gcnew System::EventHandler(this, &profile::label2_Click);
 			// 
 			// button1
@@ -500,6 +513,7 @@ namespace SimpleDigitalWallet {
 			this->scrollable_payment_panel->Name = L"scrollable_payment_panel";
 			this->scrollable_payment_panel->Size = System::Drawing::Size(480, 280);
 			this->scrollable_payment_panel->TabIndex = 0;
+			this->scrollable_payment_panel->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &profile::scrollable_payment_panel_Paint);
 			// 
 			// manage_payment_method_label
 			// 
@@ -540,6 +554,7 @@ namespace SimpleDigitalWallet {
 			this->logout_button->Size = System::Drawing::Size(49, 50);
 			this->logout_button->TabIndex = 8;
 			this->logout_button->UseVisualStyleBackColor = false;
+			this->logout_button->Click += gcnew System::EventHandler(this, &profile::logout_button_Click);
 			// 
 			// transaction_button
 			// 
@@ -566,6 +581,7 @@ namespace SimpleDigitalWallet {
 			this->profile_button->TabIndex = 6;
 			this->profile_button->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageAboveText;
 			this->profile_button->UseVisualStyleBackColor = false;
+			this->profile_button->Click += gcnew System::EventHandler(this, &profile::profile_button_Click);
 			// 
 			// home_button
 			// 
@@ -609,6 +625,7 @@ namespace SimpleDigitalWallet {
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
 			this->ClientSize = System::Drawing::Size(1182, 753);
+			this->Location = Drawing::Point(0, 0);
 			this->Controls->Add(this->black_panel);
 			this->Controls->Add(this->manage_payment_method_label);
 			this->Controls->Add(this->scrollable_payment_panel);
@@ -655,6 +672,7 @@ private: System::Void VisaCategory_TextChanged(System::Object^ sender, System::E
 private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 }
 private: System::Void profile_Load(System::Object^ sender, System::EventArgs^ e) {
+
 	MakeRoundedTextBox(username_textbox, 5);
 	MakeRoundedTextBox(password_textbox,5);
 	MakeRoundedTextBox(email_textbox, 5);
@@ -669,15 +687,42 @@ private: System::Void profile_Load(System::Object^ sender, System::EventArgs^ e)
 }
 private: System::Void home_button_Click(System::Object^ sender, System::EventArgs^ e) {
 	this->Hide();
-	dashboard->Show();
+	dashboard_form->Show();
 }
 private: System::Void profile_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
 	Application::Exit();
 }
 private: System::Void transaction_button_Click(System::Object^ sender, System::EventArgs^ e) {
 	this->Hide();
-	Requested_transactions^ transaction = gcnew Requested_transactions(this);
-	transaction->Show();
+	Requested_transactions^ transaction_form = gcnew Requested_transactions(dashboard_form,this,login,current_user);
+	transaction_form->Show();
+}
+private: System::Void scrollable_payment_panel_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+}
+	private: System::Void remove_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		Button^ button = dynamic_cast<Button^>(sender);
+		if (button != nullptr)
+		{
+			string number = msclr::interop::marshal_as<string>(button->Name);
+			current_user->remove_payment_method(number);
+			this->scrollable_payment_panel->Controls->Clear();
+			generate_payment_methods_panels();
+		}
+	}
+
+private: System::Void VisaNumber_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+	if (!Char::IsDigit(e->KeyChar) && e->KeyChar != '\b' && e->KeyChar != '.') {
+		e->Handled = true;
+	}
+
+}
+	private: System::Void logout_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->Hide();
+		login->Show();
+	}
+private: System::Void profile_button_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void profile_panel_Paint_1(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 }
 };
 }

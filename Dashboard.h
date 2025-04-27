@@ -21,7 +21,7 @@ namespace SimpleDigitalWallet {
 	{
 	private: bool isFormClosingHandled = false;
         private:
-			
+			Form^ requsted_transactions_form;
             user* current_user; // Declare the User object
 		void MakeRoundedButton(Button^ button, int radius) {
 			GraphicsPath^ path = gcnew Drawing2D::GraphicsPath();
@@ -151,13 +151,39 @@ private: System::Windows::Forms::Label^ label3;
 private: System::Windows::Forms::Label^ error_request_label;
 public:
 	Form^ previous_form;
+	Form^ profile_form;
+	Form^ requested_transactions_form;
+	Form^ balance_management_form;
 		Dashboard(Form^ form, user& currentUser)
 		{
 			InitializeComponent();
 			this->current_user = &currentUser;
 			previous_form = form;
 		}
-
+		Dashboard(Form^ form, user& currentUser,Form^ form2)
+		{
+			InitializeComponent();
+			this->current_user = &currentUser;
+			previous_form = form;
+			profile_form = form2;
+		}
+		Dashboard(Form^ form, user& currentUser, Form^ form2, Form^ form3)
+		{
+			InitializeComponent();
+			this->current_user = &currentUser;
+			previous_form = form;
+			profile_form = form2;
+			requested_transactions_form = form3;
+		}
+		Dashboard(Form^ form, user& currentUser, Form^ form2, Form^ form3, Form^ form4)
+		{
+			InitializeComponent();
+			this->current_user = &currentUser;
+			previous_form = form;
+			profile_form = form2;
+			requested_transactions_form = form3;
+			balance_management_form = form4;
+		}
 	protected:
 		/// <summary>
 		/// Clean up any resources being used.
@@ -590,6 +616,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->logout_button->Size = System::Drawing::Size(49, 50);
 			this->logout_button->TabIndex = 8;
 			this->logout_button->UseVisualStyleBackColor = false;
+			this->logout_button->Click += gcnew System::EventHandler(this, &Dashboard::logout_button_Click);
 			// 
 			// transaction_button
 			// 
@@ -705,6 +732,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
 			this->ClientSize = System::Drawing::Size(1200, 749);
+			this->Location = Drawing::Point(0, 0);
 			this->Controls->Add(this->panel3);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->label2);
@@ -718,6 +746,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->Text = L"Dashboard";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &Dashboard::Dashboard_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &Dashboard::Dashboard_Load);
+			this->VisibleChanged += gcnew System::EventHandler(this, &Dashboard::Dashboard_VisibleChanged);
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			this->panel3->ResumeLayout(false);
@@ -740,6 +769,7 @@ private: System::Void transaction_panel_Paint(System::Object^ sender, System::Wi
 
 }
 private: System::Void Dashboard_Load(System::Object^ sender, System::EventArgs^ e) {
+	this->scrollable_transaction_panel->Controls->Clear();
 	generate_transaction_history_panels();
 	balance_label->Text = String::Format("${0:F2}", current_user->getBalance());
 	MakeRoundedPanel(panel2, 15);
@@ -758,9 +788,14 @@ private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArg
 private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void profile_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	profile^ profile_form = gcnew profile(this);
-	profile_form->Show();
+	if(requested_transactions_form==nullptr)
+	profile_form = gcnew profile(this,previous_form,current_user);
+	else
+	profile_form = gcnew profile(this,requested_transactions_form,previous_form, current_user);
 	this->Hide();
+	profile_form->Show();
+
+		
 }
 private: System::Void panel2_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 }
@@ -860,7 +895,8 @@ private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e
 				current_user->setBalance(newBalance);
 				balance_label->Text = String::Format("${0:F2}", current_user->getBalance());
 				current_user->add_to_historytransaction(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
-				it->second.add_to_historytransaction(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
+				it->second.add_to_historytransaction(transaction(current_user->getUsername(),username , amountToSend, TRANSACTION_TYPE::DEPOSIT, RequestStatus::NONE));
+				it->second.setBalance(it->second.getBalance() + amountToSend);
 				this->scrollable_transaction_panel->Controls->Clear();
 				generate_transaction_history_panels();
 				Admin::alltransactions.push_back(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
@@ -915,12 +951,19 @@ private: System::Void domainUpDown2_KeyPress(System::Object^ sender, System::Win
 	}
 }
 private: System::Void transaction_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	Requested_transactions^ transaction_form = gcnew Requested_transactions(this);
-	transaction_form->Show();
+	if(profile_form==nullptr)
+	 requested_transactions_form = gcnew Requested_transactions(this, previous_form,current_user);
+	else
+	requested_transactions_form = gcnew Requested_transactions(this, previous_form,profile_form, current_user);
+	requested_transactions_form->Show();
 	this->Hide();
 }
 private: System::Void add_to_balance_Click(System::Object^ sender, System::EventArgs^ e) {
-	Balance_managment^ balance_form = gcnew Balance_managment(this);
+	
+	
+		Balance_managment^ balance_form = gcnew Balance_managment(this,current_user);
+	
+
 	balance_form->Show();
 	this->Hide();
 }
@@ -929,19 +972,20 @@ private: System::Void label1_Click_1(System::Object^ sender, System::EventArgs^ 
 private: System::Void send_amount_label_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void Dashboard_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
-	if (isFormClosingHandled) {
-		return;
-	}
+	
 
-	isFormClosingHandled = true;
-
-	if (MessageBox::Show("Are you sure you want to exit?", "Exit", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::No) {
-		e->Cancel = true;
-		isFormClosingHandled = false;
-	}
-	else {
 		Application::Exit();
-	}
+
+}
+private: System::Void logout_button_Click(System::Object^ sender, System::EventArgs^ e) {
+	this->Hide();
+	previous_form->Show();
+}
+
+private: System::Void Dashboard_VisibleChanged(System::Object^ sender, System::EventArgs^ e) {
+	this->scrollable_transaction_panel->Controls->Clear();
+	generate_transaction_history_panels();
+	balance_label->Text = String::Format("${0:F2}", current_user->getBalance());
 }
 };
 }

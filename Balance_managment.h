@@ -55,6 +55,14 @@ namespace SimpleDigitalWallet {
 		}
 	public:
 		Form^ dashboard_form;
+		Form^ profile_form;
+		Form^ requsted_transactions;
+		Form^ login;
+	private: System::Windows::Forms::Label^ error_add_money_label;
+	private: System::Windows::Forms::Label^ error_withdraw_label;
+	public:
+
+		   user* current_user;
 		Balance_managment(void)
 		{
 			InitializeComponent();
@@ -62,9 +70,31 @@ namespace SimpleDigitalWallet {
 			//TODO: Add the constructor code here
 			//
 		}
-		Balance_managment(Form^ form) {
+		Balance_managment(Form^ form,user* u) {
 			InitializeComponent();
 			dashboard_form = form;
+			current_user = u;
+		}
+		Balance_managment(Form^ form, Form^ form2, user* u) {
+			InitializeComponent();
+			dashboard_form = form;
+			current_user = u;
+			profile_form = form2;
+		}
+		Balance_managment(Form^ form, Form^ form2,Form^ form3, user* u) {
+			InitializeComponent();
+			dashboard_form = form;
+			current_user = u;
+			profile_form = form2;
+			requsted_transactions = form3;
+		}
+		Balance_managment(Form^ form, Form^ form2, Form^ form3,Form^ form4, user* u) {
+			InitializeComponent();
+			dashboard_form = form;
+			current_user = u;
+			profile_form = form2;
+			requsted_transactions = form3;
+			login = form4;
 		}
 
 	protected:
@@ -131,6 +161,7 @@ namespace SimpleDigitalWallet {
 			this->wallet_icon = (gcnew System::Windows::Forms::PictureBox());
 			this->wallet_label = (gcnew System::Windows::Forms::Label());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->error_add_money_label = (gcnew System::Windows::Forms::Label());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			this->send_amount_label = (gcnew System::Windows::Forms::Label());
 			this->recipient_name_label = (gcnew System::Windows::Forms::Label());
@@ -141,6 +172,7 @@ namespace SimpleDigitalWallet {
 			this->domainUpDown1 = (gcnew System::Windows::Forms::DomainUpDown());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
+			this->error_withdraw_label = (gcnew System::Windows::Forms::Label());
 			this->comboBox2 = (gcnew System::Windows::Forms::ComboBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
@@ -254,6 +286,7 @@ namespace SimpleDigitalWallet {
 			// panel1
 			// 
 			this->panel1->BackColor = System::Drawing::SystemColors::Control;
+			this->panel1->Controls->Add(this->error_add_money_label);
 			this->panel1->Controls->Add(this->comboBox1);
 			this->panel1->Controls->Add(this->send_amount_label);
 			this->panel1->Controls->Add(this->recipient_name_label);
@@ -268,16 +301,26 @@ namespace SimpleDigitalWallet {
 			this->panel1->Padding = System::Windows::Forms::Padding(24);
 			this->panel1->Size = System::Drawing::Size(1158, 251);
 			this->panel1->TabIndex = 10;
+			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Balance_managment::panel1_Paint);
+			// 
+			// error_add_money_label
+			// 
+			this->error_add_money_label->AutoSize = true;
+			this->error_add_money_label->Location = System::Drawing::Point(390, 180);
+			this->error_add_money_label->Name = L"error_add_money_label";
+			this->error_add_money_label->Size = System::Drawing::Size(0, 16);
+			this->error_add_money_label->TabIndex = 13;
 			// 
 			// comboBox1
 			// 
 			this->comboBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Location = System::Drawing::Point(375, 77);
+			this->comboBox1->Location = System::Drawing::Point(375, 69);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(482, 37);
 			this->comboBox1->TabIndex = 12;
+			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &Balance_managment::comboBox1_SelectedIndexChanged);
 			// 
 			// send_amount_label
 			// 
@@ -286,7 +329,7 @@ namespace SimpleDigitalWallet {
 			this->send_amount_label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
 			this->send_amount_label->ForeColor = System::Drawing::SystemColors::ControlDarkDark;
-			this->send_amount_label->Location = System::Drawing::Point(371, 121);
+			this->send_amount_label->Location = System::Drawing::Point(371, 115);
 			this->send_amount_label->Name = L"send_amount_label";
 			this->send_amount_label->Size = System::Drawing::Size(64, 20);
 			this->send_amount_label->TabIndex = 11;
@@ -299,7 +342,7 @@ namespace SimpleDigitalWallet {
 			this->recipient_name_label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
 			this->recipient_name_label->ForeColor = System::Drawing::SystemColors::ControlDarkDark;
-			this->recipient_name_label->Location = System::Drawing::Point(371, 56);
+			this->recipient_name_label->Location = System::Drawing::Point(371, 49);
 			this->recipient_name_label->Name = L"recipient_name_label";
 			this->recipient_name_label->Size = System::Drawing::Size(134, 20);
 			this->recipient_name_label->TabIndex = 10;
@@ -311,12 +354,13 @@ namespace SimpleDigitalWallet {
 			this->button3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button3->ForeColor = System::Drawing::Color::White;
-			this->button3->Location = System::Drawing::Point(393, 195);
+			this->button3->Location = System::Drawing::Point(393, 199);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(444, 43);
 			this->button3->TabIndex = 9;
 			this->button3->Text = L"Add";
 			this->button3->UseVisualStyleBackColor = false;
+			this->button3->Click += gcnew System::EventHandler(this, &Balance_managment::button3_Click);
 			// 
 			// label7
 			// 
@@ -354,7 +398,7 @@ namespace SimpleDigitalWallet {
 			this->domainUpDown1->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->domainUpDown1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F));
 			this->domainUpDown1->ForeColor = System::Drawing::Color::Black;
-			this->domainUpDown1->Location = System::Drawing::Point(375, 144);
+			this->domainUpDown1->Location = System::Drawing::Point(375, 135);
 			this->domainUpDown1->Name = L"domainUpDown1";
 			this->domainUpDown1->Size = System::Drawing::Size(482, 30);
 			this->domainUpDown1->TabIndex = 2;
@@ -375,6 +419,7 @@ namespace SimpleDigitalWallet {
 			// panel2
 			// 
 			this->panel2->BackColor = System::Drawing::SystemColors::Control;
+			this->panel2->Controls->Add(this->error_withdraw_label);
 			this->panel2->Controls->Add(this->comboBox2);
 			this->panel2->Controls->Add(this->label2);
 			this->panel2->Controls->Add(this->label3);
@@ -389,6 +434,15 @@ namespace SimpleDigitalWallet {
 			this->panel2->Padding = System::Windows::Forms::Padding(24);
 			this->panel2->Size = System::Drawing::Size(1158, 274);
 			this->panel2->TabIndex = 11;
+			this->panel2->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Balance_managment::panel2_Paint);
+			// 
+			// error_withdraw_label
+			// 
+			this->error_withdraw_label->AutoSize = true;
+			this->error_withdraw_label->Location = System::Drawing::Point(390, 195);
+			this->error_withdraw_label->Name = L"error_withdraw_label";
+			this->error_withdraw_label->Size = System::Drawing::Size(0, 16);
+			this->error_withdraw_label->TabIndex = 13;
 			// 
 			// comboBox2
 			// 
@@ -432,12 +486,13 @@ namespace SimpleDigitalWallet {
 			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button1->ForeColor = System::Drawing::Color::White;
-			this->button1->Location = System::Drawing::Point(393, 208);
+			this->button1->Location = System::Drawing::Point(393, 215);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(444, 43);
 			this->button1->TabIndex = 9;
 			this->button1->Text = L"Withdraw";
 			this->button1->UseVisualStyleBackColor = false;
+			this->button1->Click += gcnew System::EventHandler(this, &Balance_managment::button1_Click_1);
 			// 
 			// label4
 			// 
@@ -531,13 +586,13 @@ namespace SimpleDigitalWallet {
 	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 private: System::Void Balance_managment_Load(System::Object^ sender, System::EventArgs^ e) {
-	comboBox1->Items->Add("Credit Card");
-	comboBox1->Items->Add("Debit Card");
-	comboBox1->Items->Add("PayPal");
-	comboBox2->Items->Add("Bank Account");
-	comboBox2->Items->Add("Wallet Balance");
-	domainUpDown1->Text = "0.00";
-	domainUpDown2->Text = "0.00";
+	for (auto it : current_user->get_payment_methods())
+	{
+		comboBox1->Items->Add(msclr::interop::marshal_as<System::String^>(it.getGatewayNumber()) + "< " + msclr::interop::marshal_as<System::String^>(it.getGatewayCategory()) + " >");
+		comboBox2->Items->Add(msclr::interop::marshal_as<System::String^>(it.getGatewayNumber()) + "< " + msclr::interop::marshal_as<System::String^>(it.getGatewayCategory())+" >");
+	}
+	domainUpDown1->Text = "";
+	domainUpDown2->Text = "";
 	MakeRoundedButton(button3, 10);
 	MakeRoundedButton(button1, 10);
 
@@ -562,17 +617,95 @@ private: System::Void home_button_Click(System::Object^ sender, System::EventArg
 }
 private: System::Void profile_button_Click(System::Object^ sender, System::EventArgs^ e) {
 	this->Hide();
-	profile^ form = gcnew profile(dashboard_form);
-	form->Show();
+	if (requsted_transactions == nullptr)
+	{
+		profile^ form = gcnew profile(dashboard_form, login, current_user);
+		form->Show();
+	}
+	else
+	{
+		profile^ form = gcnew profile(dashboard_form, login, requsted_transactions, current_user);
+		form->Show();
+	}	
 }
 private: System::Void transaction_button_Click(System::Object^ sender, System::EventArgs^ e) {
 	this->Hide();
-	Requested_transactions^ form = gcnew Requested_transactions(dashboard_form);
-	form->Show();
+	if (profile_form == nullptr)
+	{
+		Requested_transactions^ form = gcnew Requested_transactions(dashboard_form, login, current_user);
+		form->Show();
+	}
+	else
+	{
+		Requested_transactions^ form = gcnew Requested_transactions(dashboard_form, login , profile_form, current_user);
+		form->Show();
+	}
 }
 
 private: System::Void Balance_managment_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
 	Application::Exit();
 }
+private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+}
+private: System::Void comboBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (domainUpDown1->Text == "" || comboBox1->Text == "")
+	{
+		error_add_money_label->ForeColor = System::Drawing::Color::Red;
+		error_add_money_label->Text = "Please fill all fields";
+
+	}
+	else
+	{
+		error_add_money_label->Text = "";
+		double amount = Convert::ToDouble(domainUpDown1->Text);
+		if (amount > 0)
+		{
+			current_user->setBalance(current_user->getBalance() + amount);
+			error_add_money_label->ForeColor = System::Drawing::Color::Green;
+		    error_add_money_label->Text = "Money added successfuly";
+			current_user->add_to_historytransaction(transaction(msclr::interop::marshal_as<std::string>(comboBox1->Text), current_user->getUsername(), amount, TRANSACTION_TYPE::DEPOSIT));
+			domainUpDown1->Text = "";
+			comboBox1->Text = "";
+		}
+		else
+		{
+			error_add_money_label->ForeColor = System::Drawing::Color::Green;
+			error_add_money_label->Text = "Please enter a valid amount";
+		}
+}
 };
+private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void panel2_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+
+}
+	private: System::Void button1_Click_1(System::Object^ sender, System::EventArgs^ e) {
+		if (domainUpDown2->Text == "" || comboBox2->Text == "")
+		{
+			error_withdraw_label->ForeColor = System::Drawing::Color::Red;
+			error_withdraw_label->Text = "Please fill all fields";
+		}
+		else
+		{
+			error_withdraw_label->Text = "";
+			double amount = Convert::ToDouble(domainUpDown2->Text);
+			if (amount > 0 && amount <= current_user->getBalance())
+			{
+				current_user->setBalance(current_user->getBalance() - amount);
+				current_user->add_to_historytransaction(transaction(current_user->getUsername(), msclr::interop::marshal_as<std::string>(comboBox2->Text), amount, TRANSACTION_TYPE::WITHDRAWAL));
+				error_withdraw_label->ForeColor = System::Drawing::Color::Green;
+				error_withdraw_label->Text = "Money withdrawn successfuly";
+				domainUpDown2->Text = "";
+				comboBox2->Text = "";
+			}
+			else
+			{
+				error_withdraw_label->ForeColor = System::Drawing::Color::Red;
+				error_withdraw_label->Text = "Please enter a valid amount";
+			}
+		}
+	}
+	};
 }

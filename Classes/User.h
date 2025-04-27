@@ -28,8 +28,10 @@ public:
     string getHashedPassword();
     string getEmail();
     double getBalance();
+	list<transaction> get_requested_transaction();
     list<transaction> get_history_transaction();
     double calculate_balance();
+	list<Payment> get_payment_methods();
     //setters
 	void setUsername(string uname);
 	void setEmail(string mail);
