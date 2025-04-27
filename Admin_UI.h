@@ -28,6 +28,8 @@ namespace SimpleDigitalWallet {
 	public:
 		Admin_UI(void)
 		{
+			
+			//Admin::currentAdmin = new Admin("admin", "admin");
 			InitializeComponent();
 			addAdminPanel->Hide();
 			No_user_ms->Show();
@@ -39,8 +41,8 @@ namespace SimpleDigitalWallet {
 			cancelEditAdmin->Hide();
 			addAdminConfirmationLabel->Hide();
 			usernameExistsLabel->Hide();
-			adminUsenameLabel->Text = makeFunnyString(Admin::currentAdmin.username);
-			adminPasswordLabel->Text = makeFunnyString(Admin::currentAdmin.password);
+			/*adminUsenameLabel->Text = makeFunnyString(Admin::currentAdmin.username);
+			adminPasswordLabel->Text = makeFunnyString(Admin::currentAdmin.password);*/
 			//
 			//TODO: Add the constructor code here
 			//
