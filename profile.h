@@ -17,6 +17,8 @@ namespace SimpleDigitalWallet {
 	/// </summary>
 	public ref class profile : public System::Windows::Forms::Form
 	{
+	private:
+		user* current_user;
 		void MakeRoundedButton(Button^ button, int radius) {
 			GraphicsPath^ path = gcnew Drawing2D::GraphicsPath();
 			System::Drawing::Rectangle bounds = button->ClientRectangle;
@@ -158,16 +160,14 @@ namespace SimpleDigitalWallet {
 			}
 		}
 	public:
-		Form^ dashboard_form;
-		Form^ requsted_transactions;
-		Form^ login;
-		user* current_user;
+		Form^ dashboard;
 		profile(void)
 		{
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
 			//
+			this->current_user = &currentUser;
 		}
 		profile(Form^ form, Form^ form2, user* u) {
 			InitializeComponent();
@@ -660,6 +660,48 @@ private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArg
 private: System::Void username_textbox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+	string username = msclr::interop::marshal_as<std::string>(username_textbox->Text);
+	string email = msclr::interop::marshal_as<std::string>(email_textbox->Text);
+	string password = msclr::interop::marshal_as<std::string>(password_textbox->Text);
+	string specialChars = "!@$%^&*+#";
+	char c = '@';
+	//start the conditions 
+	auto it = user::allusers.find(username);
+	if (username.empty() || password.empty() || email.empty()) { //check if any field is empty
+		MessageBox::Show("Please fill all fields!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		username_textbox->Text = "";
+		email_textbox->Text = "";
+		password_textbox->Text = "";
+		return;
+	}
+	if (password.find_first_of(specialChars) == std::string::npos) { // checking pass contain special char
+		MessageBox::Show("Password must contain at least one special character (!@$%^&*+#)!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		username_textbox->Text = "";
+		email_textbox->Text = "";
+		password_textbox->Text = "";
+		return;
+	}
+	if (email.find_first_of(c) == std::string::npos) { // checking pass contain special char
+		MessageBox::Show("Email must contain @ sign .", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		username_textbox->Text = "";
+		email_textbox->Text = "";
+		password_textbox->Text = "";
+		return;
+	}
+	if (it != user::allusers.end() || it->first == current_user->getUsername()) { //check if username exists
+		MessageBox::Show("Username is not valid.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		username_textbox->Text = "";
+		email_textbox->Text = "";
+		password_textbox->Text = "";
+		return;
+	}
+	else {
+		current_user->setUsername(username);
+		current_user->setEmail(email);
+		current_user->setHashedPassword(password);
+		name_label->Text = String::Format(username_textbox->Text);
+	}
+	// initialize texts and current user 
 }
 private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
 		}
