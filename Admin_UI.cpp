@@ -9,6 +9,9 @@ using namespace System::Windows::Forms;
 using namespace std;
 [STAThreadAttribute]
 int main(cli::array<String^>^ args) {
+
+	//Admin admin1("admin", "admin");
+	//Admin::currentAdmin = admin1;
     //user u1( "ahmed", "ahmed", "ahmed");
     //u1.balance = 5000.0;
     //string username = "ahmed";

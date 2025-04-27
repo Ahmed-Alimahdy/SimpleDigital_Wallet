@@ -28,6 +28,8 @@ namespace SimpleDigitalWallet {
 	public:
 		Admin_UI(void)
 		{
+			
+			//Admin::currentAdmin = new Admin("admin", "admin");
 			InitializeComponent();
 			addAdminPanel->Hide();
 			No_user_ms->Show();
@@ -39,8 +41,8 @@ namespace SimpleDigitalWallet {
 			cancelEditAdmin->Hide();
 			addAdminConfirmationLabel->Hide();
 			usernameExistsLabel->Hide();
-			adminUsenameLabel->Text = makeFunnyString(Admin::currentAdmin.username);
-			adminPasswordLabel->Text = makeFunnyString(Admin::currentAdmin.password);
+			adminUsenameLabel->Text = makeFunnyString(Admin::currentAdmin->username);
+			adminPasswordLabel->Text = makeFunnyString(Admin::currentAdmin->password);
 			invalidLabel->Hide();
 			//
 			//TODO: Add the constructor code here
@@ -205,6 +207,7 @@ private: System::Windows::Forms::Label^ invalidLabel;
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Admin_UI::typeid));
 			this->decLine1 = (gcnew System::Windows::Forms::Panel());
 			this->addAdminPanel = (gcnew System::Windows::Forms::Panel());
+			this->invalidLabel = (gcnew System::Windows::Forms::Label());
 			this->usernameExistsLabel = (gcnew System::Windows::Forms::Label());
 			this->addAdminConfirmationLabel = (gcnew System::Windows::Forms::Label());
 			this->confirmEditAdmin = (gcnew System::Windows::Forms::Button());
@@ -273,7 +276,6 @@ private: System::Windows::Forms::Label^ invalidLabel;
 			this->button_to_users = (gcnew System::Windows::Forms::Button());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->invalidLabel = (gcnew System::Windows::Forms::Label());
 			this->addAdminPanel->SuspendLayout();
 			this->allTransactionsPanel->SuspendLayout();
 			this->Users_page->SuspendLayout();
@@ -319,6 +321,18 @@ private: System::Windows::Forms::Label^ invalidLabel;
 			this->addAdminPanel->TabIndex = 1;
 			this->addAdminPanel->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Admin_UI::transactionsPanel_Paint);
 			// 
+			// invalidLabel
+			// 
+			this->invalidLabel->AutoSize = true;
+			this->invalidLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6.75F, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Italic | System::Drawing::FontStyle::Underline)),
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+			this->invalidLabel->ForeColor = System::Drawing::Color::DarkRed;
+			this->invalidLabel->Location = System::Drawing::Point(76, 421);
+			this->invalidLabel->Name = L"invalidLabel";
+			this->invalidLabel->Size = System::Drawing::Size(61, 12);
+			this->invalidLabel->TabIndex = 19;
+			this->invalidLabel->Text = L"Invalid Profile";
+			// 
 			// usernameExistsLabel
 			// 
 			this->usernameExistsLabel->AutoSize = true;
@@ -346,22 +360,30 @@ private: System::Windows::Forms::Label^ invalidLabel;
 			// 
 			// confirmEditAdmin
 			// 
+			this->confirmEditAdmin->BackColor = System::Drawing::Color::Black;
+			this->confirmEditAdmin->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->confirmEditAdmin->ForeColor = System::Drawing::Color::White;
 			this->confirmEditAdmin->Location = System::Drawing::Point(369, 88);
 			this->confirmEditAdmin->Name = L"confirmEditAdmin";
 			this->confirmEditAdmin->Size = System::Drawing::Size(75, 23);
 			this->confirmEditAdmin->TabIndex = 16;
 			this->confirmEditAdmin->Text = L"Confirm";
-			this->confirmEditAdmin->UseVisualStyleBackColor = true;
+			this->confirmEditAdmin->UseVisualStyleBackColor = false;
 			this->confirmEditAdmin->Click += gcnew System::EventHandler(this, &Admin_UI::confirmEditAdmin_Click);
 			// 
 			// cancelEditAdmin
 			// 
+			this->cancelEditAdmin->BackColor = System::Drawing::Color::Black;
+			this->cancelEditAdmin->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->cancelEditAdmin->ForeColor = System::Drawing::Color::White;
 			this->cancelEditAdmin->Location = System::Drawing::Point(450, 88);
 			this->cancelEditAdmin->Name = L"cancelEditAdmin";
 			this->cancelEditAdmin->Size = System::Drawing::Size(75, 23);
 			this->cancelEditAdmin->TabIndex = 15;
 			this->cancelEditAdmin->Text = L"Cancel";
-			this->cancelEditAdmin->UseVisualStyleBackColor = true;
+			this->cancelEditAdmin->UseVisualStyleBackColor = false;
 			this->cancelEditAdmin->Click += gcnew System::EventHandler(this, &Admin_UI::cancelEditAdmin_Click);
 			// 
 			// editAdminPasswordTextbox
@@ -457,12 +479,17 @@ private: System::Windows::Forms::Label^ invalidLabel;
 			// 
 			// editAdminProfileBtn
 			// 
+			this->editAdminProfileBtn->BackColor = System::Drawing::Color::Black;
+			this->editAdminProfileBtn->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+			this->editAdminProfileBtn->ForeColor = System::Drawing::Color::White;
+			this->editAdminProfileBtn->ImageAlign = System::Drawing::ContentAlignment::MiddleRight;
 			this->editAdminProfileBtn->Location = System::Drawing::Point(450, 88);
 			this->editAdminProfileBtn->Name = L"editAdminProfileBtn";
 			this->editAdminProfileBtn->Size = System::Drawing::Size(75, 23);
 			this->editAdminProfileBtn->TabIndex = 10;
 			this->editAdminProfileBtn->Text = L"Edit";
-			this->editAdminProfileBtn->UseVisualStyleBackColor = true;
+			this->editAdminProfileBtn->UseVisualStyleBackColor = false;
 			this->editAdminProfileBtn->Click += gcnew System::EventHandler(this, &Admin_UI::editAdminProfileBtn_Click);
 			// 
 			// addAdminButton
@@ -1161,18 +1188,6 @@ private: System::Windows::Forms::Label^ invalidLabel;
 			this->timer2->Interval = 1;
 			this->timer2->Tick += gcnew System::EventHandler(this, &Admin_UI::timer2_Tick);
 			// 
-			// invalidLabel
-			// 
-			this->invalidLabel->AutoSize = true;
-			this->invalidLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 6.75F, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Italic | System::Drawing::FontStyle::Underline)),
-				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->invalidLabel->ForeColor = System::Drawing::Color::DarkRed;
-			this->invalidLabel->Location = System::Drawing::Point(76, 421);
-			this->invalidLabel->Name = L"invalidLabel";
-			this->invalidLabel->Size = System::Drawing::Size(61, 12);
-			this->invalidLabel->TabIndex = 19;
-			this->invalidLabel->Text = L"Invalid Profile";
-			// 
 			// Admin_UI
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
@@ -1313,11 +1328,14 @@ private: System::Void addAdminButton_Click(System::Object^ sender, System::Event
 	if (addAdminUsernameTextfield->Text == "" || addAdminPasswordTextfield->Text == "" /*|| !checkAdminValidity()*/)
 	{
 		invalidLabel->Show();
+		usernameExistsLabel->Hide();
+		addAdminConfirmationLabel->Hide();
 		return;
 	}
 	else if (Admin::adminMap.find(makeString(addAdminUsernameTextfield->Text)) != Admin::adminMap.end()) {
 		usernameExistsLabel->Show();
 		addAdminConfirmationLabel->Hide();
+		invalidLabel->Hide();
 		addAdminUsernameTextfield->Text = "";
 		addAdminPasswordTextfield->Text = "";
 		return;
@@ -1330,6 +1348,8 @@ private: System::Void addAdminButton_Click(System::Object^ sender, System::Event
 			makeString(addAdminPasswordTextfield->Text))
 	);
 	addAdminConfirmationLabel->Show();
+	usernameExistsLabel->Hide();
+	invalidLabel->Hide();
 	addAdminUsernameTextfield->Text = "";
 	addAdminPasswordTextfield->Text = "";
 }
@@ -1391,7 +1411,7 @@ private: System::Void Admin_UI_Load(System::Object^ sender, System::EventArgs^ e
    //string email = "ahmed";
    //string password = "ahmed";
    //user newUser(username, email, password);
-          // users = gcnew List<User_Control^>();
+           users = gcnew List<User_Control^>();
 		   //for (int i = 0; i <5 ; i++)
 		   //{
 

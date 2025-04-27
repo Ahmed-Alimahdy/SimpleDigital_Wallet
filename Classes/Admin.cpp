@@ -39,4 +39,4 @@ void Admin::updateUserData(string K, string Nname, string Nemail, string Nbalanc
 
 }
 
-Admin Admin::currentAdmin;
+Admin* Admin::currentAdmin = new Admin("admin","admin");
