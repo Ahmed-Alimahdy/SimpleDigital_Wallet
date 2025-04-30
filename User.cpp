@@ -13,11 +13,9 @@ user::user(string uname, string mail, string hashedPwd)
 	username = uname;
 	email = mail;
 	hashedPassword = hashedPwd;
-	balance = 10000;
+	balance = 0;
 	suspended = false;
-	this->add_payment_method(Payment("0000-0000-0000-0000", "Visa"));
-	this->add_payment_method(Payment("0000-0000-0000-0001", "MasterCard"));
-	this->add_payment_method(Payment("0000-0000-0000-0002", "PayPal"));
+	
 
 }
 unordered_map<string, user> user::allusers;
