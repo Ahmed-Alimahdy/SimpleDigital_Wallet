@@ -29,6 +29,7 @@ private:
     RequestStatus status;
 
 public:
+
     transaction(const std::string& from, const std::string& to, double amount,
         TRANSACTION_TYPE t, RequestStatus s = RequestStatus::NONE);
     // Getters

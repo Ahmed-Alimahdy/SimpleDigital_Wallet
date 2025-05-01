@@ -1201,6 +1201,7 @@ private: System::Windows::Forms::Label^ invalidLabel;
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Admin_UI";
 			this->Load += gcnew System::EventHandler(this, &Admin_UI::Admin_UI_Load);
+
 			this->addAdminPanel->ResumeLayout(false);
 			this->addAdminPanel->PerformLayout();
 			this->allTransactionsPanel->ResumeLayout(false);
@@ -1214,10 +1215,13 @@ private: System::Windows::Forms::Label^ invalidLabel;
 			this->top_panal->ResumeLayout(false);
 			this->top_panal->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+
+
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
+
 	
 
 	private: System::Void transactionsPanel_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
@@ -1227,6 +1231,11 @@ private: System::Windows::Forms::Label^ invalidLabel;
 private: System::Void switchToAdminProfileBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 	allTransactionsPanel->Hide();
 	
+
+	private: System::Void Admin_UI_Load(System::Object^ sender, System::EventArgs^ e) {
+	}
+	};
+
 }
 //private: System::Void switchToAllTransactionsBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 //	
