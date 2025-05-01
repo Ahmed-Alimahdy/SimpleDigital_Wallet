@@ -8,7 +8,12 @@ Payment::Payment(string number, string category) {
 	gatewayNumber = number;
 	gatewaycategory = category;
 }
+Payment::Payment() {
+	gatewayNumber = "";
+	gatewaycategory = "";
+}
 
+list<string>Payment::getwayCategoryList = { "VISA", "MASTERCARD", "AMEX", "DISCOVER", "VODAFONE_CASH","FAWRY_PAY","INSTAPAY","PAYMOP","TPAY","PAYTABS","MEEZA","KHALES", "PAYPAL", "OTHER" };
 // Getter for gatewayNumber
 string Payment::getGatewayNumber() {
 	return gatewayNumber;
@@ -32,4 +37,12 @@ void Payment::setGatewayNumber(string number) {
 // Setter for gatewayCategory
 void Payment::setGatewayCategory(string category) {
 	gatewaycategory = category;
+}
+void Payment::serialize(std::ostream& os){
+	os << gatewayNumber << '\n' << gatewaycategory << '\n';
+}
+
+void Payment::deserialize(std::istream& is) {
+	getline(is, gatewayNumber);
+	getline(is, gatewaycategory);
 }
