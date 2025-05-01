@@ -162,7 +162,12 @@ namespace SimpleDigitalWallet {
 		Form^ dashboard_form;
 		Form^ login;
 		Form^ requsted_transactions;
-		user* current_user;
+private: System::Windows::Forms::ComboBox^ VisaCategory;
+private: System::Windows::Forms::Label^ label3;
+public:
+
+public:
+	user* current_user;
 		profile(void)
 		{
 			InitializeComponent();
@@ -210,8 +215,9 @@ namespace SimpleDigitalWallet {
 	private: System::Windows::Forms::PictureBox^ wallet_icon;
 	private: System::Windows::Forms::Label^ wallet_label;
 	private:System::Windows::Forms::Panel^ scrollable_payment_panel;
-	private: System::Windows::Forms::TextBox^ VisaNumber;
-	private: System::Windows::Forms::TextBox^ VisaCategory;
+private: System::Windows::Forms::TextBox^ VisaNumber;
+
+
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Button^ button1;
@@ -251,11 +257,12 @@ namespace SimpleDigitalWallet {
 			this->username_label = (gcnew System::Windows::Forms::Label());
 			this->details_label = (gcnew System::Windows::Forms::Label());
 			this->VisaNumber = (gcnew System::Windows::Forms::TextBox());
-			this->VisaCategory = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->VisaCategory = (gcnew System::Windows::Forms::ComboBox());
 			this->scrollable_payment_panel = (gcnew System::Windows::Forms::Panel());
 			this->manage_payment_method_label = (gcnew System::Windows::Forms::Label());
 			this->black_panel = (gcnew System::Windows::Forms::Panel());
@@ -434,32 +441,18 @@ namespace SimpleDigitalWallet {
 			this->VisaNumber->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->VisaNumber->ForeColor = System::Drawing::Color::Black;
-			this->VisaNumber->Location = System::Drawing::Point(9, 63);
+			this->VisaNumber->Location = System::Drawing::Point(9, 163);
 			this->VisaNumber->Name = L"VisaNumber";
 			this->VisaNumber->Size = System::Drawing::Size(462, 31);
-			this->VisaNumber->TabIndex = 0;
-			this->VisaNumber->TextChanged += gcnew System::EventHandler(this, &profile::VisaNumber_TextChanged);
-			this->VisaNumber->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &profile::VisaNumber_KeyPress);
-			// 
-			// VisaCategory
-			// 
-			this->VisaCategory->BackColor = System::Drawing::Color::LightGray;
-			this->VisaCategory->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->VisaCategory->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->VisaCategory->ForeColor = System::Drawing::Color::Black;
-			this->VisaCategory->Location = System::Drawing::Point(9, 160);
-			this->VisaCategory->Name = L"VisaCategory";
-			this->VisaCategory->Size = System::Drawing::Size(462, 31);
-			this->VisaCategory->TabIndex = 1;
-			this->VisaCategory->TextChanged += gcnew System::EventHandler(this, &profile::VisaCategory_TextChanged);
+			this->VisaNumber->TabIndex = 1;
+			this->VisaNumber->TextChanged += gcnew System::EventHandler(this, &profile::VisaCategory_TextChanged);
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label1->Location = System::Drawing::Point(3, 28);
+			this->label1->Location = System::Drawing::Point(3, 116);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(247, 32);
 			this->label1->TabIndex = 2;
@@ -471,7 +464,7 @@ namespace SimpleDigitalWallet {
 			this->label2->AutoSize = true;
 			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label2->Location = System::Drawing::Point(3, 125);
+			this->label2->Location = System::Drawing::Point(3, 10);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(264, 32);
 			this->label2->TabIndex = 3;
@@ -490,21 +483,45 @@ namespace SimpleDigitalWallet {
 			this->button1->TabIndex = 4;
 			this->button1->Text = L"Add Payment Method";
 			this->button1->UseVisualStyleBackColor = false;
-			this->button1->Click += gcnew System::EventHandler(this, &profile::button1_Click);
+			this->button1->Click += gcnew System::EventHandler(this, &profile::button2_Click);
 			// 
 			// panel1
 			// 
 			this->panel1->BackColor = System::Drawing::Color::Gainsboro;
-			this->panel1->Controls->Add(this->label1);
-			this->panel1->Controls->Add(this->button1);
+			this->panel1->Controls->Add(this->label3);
 			this->panel1->Controls->Add(this->VisaNumber);
+			this->panel1->Controls->Add(this->label1);
 			this->panel1->Controls->Add(this->VisaCategory);
+			this->panel1->Controls->Add(this->button1);
 			this->panel1->Controls->Add(this->label2);
 			this->panel1->Location = System::Drawing::Point(696, 435);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(474, 306);
 			this->panel1->TabIndex = 5;
 			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &profile::panel1_Paint);
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label3->Location = System::Drawing::Point(9, 201);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(0, 25);
+			this->label3->TabIndex = 6;
+			this->label3->Click += gcnew System::EventHandler(this, &profile::label3_Click);
+			// 
+			// VisaCategory
+			// 
+			this->VisaCategory->BackColor = System::Drawing::Color::LightGray;
+			this->VisaCategory->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->VisaCategory->FormattingEnabled = true;
+			this->VisaCategory->Location = System::Drawing::Point(9, 51);
+			this->VisaCategory->Name = L"VisaCategory";
+			this->VisaCategory->Size = System::Drawing::Size(462, 39);
+			this->VisaCategory->TabIndex = 5;
+			this->VisaCategory->SelectedIndexChanged += gcnew System::EventHandler(this, &profile::comboBox1_SelectedIndexChanged);
 			// 
 			// scrollable_payment_panel
 			// 
@@ -626,7 +643,6 @@ namespace SimpleDigitalWallet {
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
 			this->ClientSize = System::Drawing::Size(1182, 753);
-			this->Location = Drawing::Point(0, 0);
 			this->Controls->Add(this->black_panel);
 			this->Controls->Add(this->manage_payment_method_label);
 			this->Controls->Add(this->scrollable_payment_panel);
@@ -680,14 +696,15 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 		MessageBox::Show("Email must contain @ sign .", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
-	if (it != user::allusers.end() || it->first == current_user->getUsername()) { //check if username exists
-		MessageBox::Show("Username is not valid.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	if (it != user::allusers.end() && it->first != current_user->getUsername()) {
+		MessageBox::Show("Username is already taken.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
+
 	if (current_user->getUsername() == username) { // check if the user is the same
 		current_user->setEmail(email);
 		current_user->setHashedPassword(password);
-		name_label->Text = String::Format(username_textbox->Text);
+		name_label->Text = username_textbox->Text;
 		MessageBox::Show("Profile updated successfully!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		return;
 	}
@@ -719,14 +736,18 @@ private: System::Void profile_Load(System::Object^ sender, System::EventArgs^ e)
 	MakeRoundedTextBox(username_textbox, 5);
 	MakeRoundedTextBox(password_textbox,5);
 	MakeRoundedTextBox(email_textbox, 5);
-	MakeRoundedTextBox(VisaCategory, 5);
 	MakeRoundedTextBox(VisaNumber, 5);
+	
 	generate_payment_methods_panels();
 	MakeRoundedPanel(profile_panel, 15);
 	MakeRoundedPanel(pic_panel, 15);
 	MakeRoundedPanel(panel1, 15);
 	MakeRoundedButton(save_button, 15);
 	MakeRoundedButton(button1, 15);
+	for (auto it : Payment::getwayCategoryList)
+	{
+		VisaCategory->Items->Add(msclr::interop::marshal_as<System::String^>(it));
+	}
 }
 private: System::Void home_button_Click(System::Object^ sender, System::EventArgs^ e) {
 	this->Hide();
@@ -766,6 +787,28 @@ private: System::Void VisaNumber_KeyPress(System::Object^ sender, System::Window
 private: System::Void profile_button_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void profile_panel_Paint_1(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+}
+private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	string number = msclr::interop::marshal_as<std::string>(VisaNumber->Text);
+	string category = msclr::interop::marshal_as<std::string>(VisaCategory->Text);
+	if (number.empty() || category.empty()) {
+		
+		label3->Text = "Please fill all fields!";
+		label3->ForeColor = Color::Red;
+		return;
+	}
+	current_user->add_payment_method(Payment(number,category));
+	this->scrollable_payment_panel->Controls->Clear();
+	generate_payment_methods_panels();
+	VisaNumber->Text = "";
+	VisaCategory->Text = "";
+}
+
+private: System::Void comboBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+	
+}
+private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }

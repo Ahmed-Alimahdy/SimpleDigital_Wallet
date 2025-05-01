@@ -391,19 +391,12 @@ namespace SimpleDigitalWallet {
 		string amount = msclr::interop::marshal_as<string>(thirdPart);
 		current_user->add_to_historytransaction(transaction(sender_name, recipient, std::stod(amount), TRANSACTION_TYPE::REQUEST_MONEY, RequestStatus::DECLINED));
 		current_user->remove_from_requestedtransaction(msclr::interop::marshal_as<string>(name));
-		for (auto& it : user::allusers)
-		{
-			if (it.first == recipient)
-			{
-				
-				it.second.add_to_historytransaction(transaction(sender_name, recipient, std::stod(amount), TRANSACTION_TYPE::REQUEST_MONEY, RequestStatus::DECLINED));
-				it.second.remove_from_requestedtransaction(msclr::interop::marshal_as<string>(name));
-				break;
 		
-			}
-		}
-		flowLayoutPanel->Controls->Clear();
-		GeneratePanels();
+		       auto it = user::allusers.find(sender_name);
+				it->second.add_to_historytransaction(transaction(sender_name, recipient, std::stod(amount), TRANSACTION_TYPE::REQUEST_MONEY, RequestStatus::DECLINED));
+				it->second.remove_from_requestedtransaction(msclr::interop::marshal_as<string>(name));
+				flowLayoutPanel->Controls->Clear();
+		        GeneratePanels();
     }
 private: System::Void logout_button_Click(System::Object^ sender, System::EventArgs^ e) {
 	this->Hide();

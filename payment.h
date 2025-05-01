@@ -1,8 +1,9 @@
 #ifndef PAYMENT_H
 #define PAYMENT_H
-
+#include <list>
 #include <string>
 using namespace std;
+
 
 class Payment {
 private:
@@ -17,8 +18,6 @@ public:
     string getGatewayCategory();
     void setGatewayNumber(string number);
     void setGatewayCategory(string category);
-    void serialize(ostream& os);
-    void deserialize(istream& is);
 };
 
 #endif
