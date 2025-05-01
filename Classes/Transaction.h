@@ -1,10 +1,9 @@
 #pragma once
 #ifndef Transaction_H
-#define Transaction_H
+#define TRansaction_H
 #include <string>
 #include <chrono>
 using namespace std;
-
 enum class TRANSACTION_TYPE {
     SEND_MONEY,
     REQUEST_MONEY,
@@ -31,6 +30,10 @@ private:
 
 public:
     transaction(string from, string to, double amount,
+=========
+
+>>>>>>>>> Temporary merge branch 2
+    transaction(const std::string& from, const std::string& to, double amount,
         TRANSACTION_TYPE t, RequestStatus s = RequestStatus::NONE);
     transaction();
     // Getters
