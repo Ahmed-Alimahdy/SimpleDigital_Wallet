@@ -1,5 +1,6 @@
 #pragma once
 #include "profile.h"
+#include"Classes/Transaction.h"
 #include"Requested_transactions.h"
 namespace SimpleDigitalWallet {
 
@@ -665,7 +666,15 @@ private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e
 			current_user->setBalance(current_user->getBalance() + amount);
 			error_add_money_label->ForeColor = System::Drawing::Color::Green;
 		    error_add_money_label->Text = "Money added successfuly";
-			current_user->add_to_historytransaction(transaction(msclr::interop::marshal_as<std::string>(comboBox1->Text), current_user->getUsername(), amount, TRANSACTION_TYPE::DEPOSIT));
+			current_user->add_to_historytransaction(
+				transaction(
+					msclr::interop::marshal_as<std::string>(comboBox1->Text),
+					current_user->getUsername(),
+					amount,
+					TRANSACTION_TYPE::DEPOSIT
+				)
+			);
+
 			domainUpDown1->Text = "";
 			comboBox1->Text = "";
 		}

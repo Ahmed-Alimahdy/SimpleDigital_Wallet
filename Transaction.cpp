@@ -1,7 +1,6 @@
-#include"Classes\Transaction.h"
+#include"Classes/Transaction.h"
 #include <iostream>
-transaction::transaction(string from, string to, double amount,
-	TRANSACTION_TYPE t, RequestStatus s)
+transaction::transaction(string from, string to, double amount, TRANSACTION_TYPE t, RequestStatus s)
 {
 	sender = from;
 	recipient = to;
@@ -9,8 +8,9 @@ transaction::transaction(string from, string to, double amount,
 	type = t;
 	status = s;
 	timestamp = time(nullptr);
-	id = to + "_" + from +"_"+ to_string(amount);
+	id = to + "_" + from + "_" + to_string(amount);
 }
+
 transaction::transaction()
 {
 	sender = "";

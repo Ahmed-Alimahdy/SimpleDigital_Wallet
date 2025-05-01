@@ -29,12 +29,7 @@ private:
     RequestStatus status;
 
 public:
-    transaction(string from, string to, double amount,
-=========
-
->>>>>>>>> Temporary merge branch 2
-    transaction(const std::string& from, const std::string& to, double amount,
-        TRANSACTION_TYPE t, RequestStatus s = RequestStatus::NONE);
+    transaction(string from, string to, double amount,TRANSACTION_TYPE t, RequestStatus s = RequestStatus::NONE);
     transaction();
     // Getters
     string getSender() const;
