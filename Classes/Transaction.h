@@ -1,10 +1,9 @@
 #pragma once
 #ifndef Transaction_H
-#define Transaction_H
+#define TRansaction_H
 #include <string>
 #include <chrono>
 using namespace std;
-
 enum class TRANSACTION_TYPE {
     SEND_MONEY,
     REQUEST_MONEY,
