@@ -17,6 +17,7 @@ user::user(string uname, string mail, string hashedPwd)
 	hashedPassword = hashedPwd;
 	balance = 0;
 	suspended = false;
+
 }
 unordered_map<string, user> user::allusers;
 string user::getUsername()
