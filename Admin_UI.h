@@ -1340,6 +1340,8 @@ private: System::Void addAdminButton_Click(System::Object^ sender, System::Event
 		addAdminPasswordTextfield->Text = "";
 		return;
 	}
+
+	
 	
 
 	new Admin(makeString(addAdminUsernameTextfield->Text), makeString(addAdminPasswordTextfield->Text));
@@ -1909,6 +1911,16 @@ private: System::Void Save_button_Click(System::Object^ sender, System::EventArg
 			password_Box->Text = gcnew System::String(password.c_str());
 			MessageBox::Show("Please fill all fields!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			return;
+		}
+		if (password.length()<8) {
+			Add_user_button_Click(nullptr, gcnew System::EventArgs());
+			UserEdit_Box->Text = gcnew System::String(username.c_str());
+			EmailEdit_Box->Text = gcnew System::String(email.c_str());
+			BalanceEdit_Box->Text = gcnew System::String(balance.c_str());
+			password_Box->Text = "";
+			MessageBox::Show("Password must have at least 8 characters", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+			 
 		}
 		if (password.find_first_of(specialChars) == std::string::npos) {
 			Add_user_button_Click(nullptr, gcnew System::EventArgs());
