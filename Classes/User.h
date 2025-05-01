@@ -17,7 +17,6 @@ private:
     list<Payment> payment_methods;
     double balance;
     bool suspended;
-
 public:
     user();
     user(string uname, string mail, string hashedPwd);
@@ -43,5 +42,9 @@ public:
 	void add_payment_method(Payment payment);
 	void remove_payment_method(string number);
 	void remove_from_requestedtransaction(string);
+	void serialize(std::ostream& os);
+	void deserialize(std::istream& is);
+    void static saveAllUsers(const std::string& filename);
+    void static loadAllUsers(const std::string& filename);
 };
 #endif

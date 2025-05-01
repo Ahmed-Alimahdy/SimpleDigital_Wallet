@@ -1,4 +1,6 @@
 #include"Classes/User.h"
+#include <iostream>
+#include <fstream> 
 using namespace std;
 user::user()
 {
@@ -13,12 +15,8 @@ user::user(string uname, string mail, string hashedPwd)
 	username = uname;
 	email = mail;
 	hashedPassword = hashedPwd;
-	balance = 10000;
+	balance = 0;
 	suspended = false;
-	this->add_payment_method(Payment("0000-0000-0000-0000", "Visa"));
-	this->add_payment_method(Payment("0000-0000-0000-0001", "MasterCard"));
-	this->add_payment_method(Payment("0000-0000-0000-0002", "PayPal"));
-
 }
 unordered_map<string, user> user::allusers;
 string user::getUsername()
@@ -119,4 +117,92 @@ void user::remove_from_requestedtransaction(string id)
 		}
 	}
 }
+void user::serialize(ostream& os){
+	os << username << '\n' << email << '\n' << hashedPassword << '\n';
+	os << balance << '\n' << suspended << '\n';
+
+	// Serialize history_transaction
+	os << history_transaction.size() << '\n';
+	for (auto& t : history_transaction)
+		t.serialize(os);
+
+	// Serialize requested_transaction
+	os << requested_transaction.size() << '\n';
+	for (auto& t : requested_transaction)
+		t.serialize(os);
+
+	// Serialize payment_methods
+	os << payment_methods.size() << '\n';
+	for (auto& p : payment_methods)
+		p.serialize(os);
+}
+
+void user::deserialize(istream& is) {
+	std::getline(is, username);
+	std::getline(is, email);
+	std::getline(is, hashedPassword);
+	is >> balance >> suspended;
+	is.ignore();
+
+	// Deserialize history_transaction
+	size_t h_size;
+	is >> h_size;
+	is.ignore();
+	history_transaction.clear();
+	for (size_t i = 0; i < h_size; ++i) {
+		transaction t;
+		t.deserialize(is);
+		history_transaction.push_back(t);
+	}
+
+	// Deserialize requested_transaction
+	size_t r_size;
+	is >> r_size;
+	is.ignore();
+	requested_transaction.clear();
+	for (size_t i = 0; i < r_size; ++i) {
+		transaction t;
+		t.deserialize(is);
+		requested_transaction.push_back(t);
+	}
+
+	// Deserialize payment_methods
+	size_t p_size;
+	is >> p_size;
+	is.ignore();
+	payment_methods.clear();
+	for (size_t i = 0; i < p_size; ++i) {
+		Payment p;
+		p.deserialize(is);
+		payment_methods.push_back(p);
+	}
+}
+void user::saveAllUsers(const std::string& filename) {
+	ofstream ofs(filename);
+	if (!ofs) return;
+
+	ofs << allusers.size() << '\n';
+	for (auto &it : allusers) {
+		user usr = it.second;
+		usr.serialize(ofs);
+	}
+}
+
+void user::loadAllUsers(const std::string& filename) {
+	ifstream ifs(filename);
+	if (!ifs) return;
+
+	size_t count;
+	ifs >> count;
+	ifs.ignore();
+	allusers.clear();
+
+	for (size_t i = 0; i < count; ++i) {
+		user usr;
+		usr.deserialize(ifs);
+		allusers[usr.username] = usr;
+	}
+}
+
+
 

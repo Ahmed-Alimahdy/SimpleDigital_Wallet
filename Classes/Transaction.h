@@ -32,6 +32,7 @@ private:
 public:
     transaction(string from, string to, double amount,
         TRANSACTION_TYPE t, RequestStatus s = RequestStatus::NONE);
+    transaction();
     // Getters
     string getSender() const;
     string getRecipient() const;
@@ -55,6 +56,7 @@ public:
     string getStatusString() const;
     string getId() const;
 
-
+    void serialize(std::ostream& os);
+    void deserialize(std::istream& is);
 };
 #endif

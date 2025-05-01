@@ -982,8 +982,7 @@ private: System::Void label1_Click_1(System::Object^ sender, System::EventArgs^ 
 private: System::Void send_amount_label_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void Dashboard_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
-	
-
+	   user::saveAllUsers("User.txt");
 		Application::Exit();
 
 }

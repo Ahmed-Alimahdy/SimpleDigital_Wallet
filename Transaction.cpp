@@ -11,6 +11,16 @@ transaction::transaction(string from, string to, double amount,
 	timestamp = time(nullptr);
 	id = to + "_" + from +"_"+ to_string(amount);
 }
+transaction::transaction()
+{
+	sender = "";
+	recipient = "";
+	amount = 0;
+	type = TRANSACTION_TYPE::SEND_MONEY;
+	status = RequestStatus::NONE;
+	timestamp = time(nullptr);
+	id = "";
+}
 string transaction::getSender() const
 {
 	return sender;
@@ -102,4 +112,27 @@ void transaction::setTimestamp(time_t timestamp)
 string transaction::getId() const
 {
 	return id;
+}
+void transaction::serialize(std::ostream& os){
+	os << sender << '\n'
+		<< id << '\n'
+		<< recipient << '\n'
+		<< amount << '\n'
+		<< timestamp << '\n'
+		<< static_cast<int>(type) << '\n'
+		<< static_cast<int>(status) << '\n';
+}
+
+void transaction::deserialize(std::istream& is) {
+	getline(is, sender);
+	getline(is, id);
+	getline(is, recipient);
+	is >> amount >> timestamp;
+
+	int typeInt, statusInt;
+	is >> typeInt >> statusInt;
+	is.ignore();
+
+	type = static_cast<TRANSACTION_TYPE>(typeInt);
+	status = static_cast<RequestStatus>(statusInt);
 }
