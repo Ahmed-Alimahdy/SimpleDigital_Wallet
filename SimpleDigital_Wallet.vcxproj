@@ -123,22 +123,15 @@
     <ClInclude Include="Classes\User.h" />
     <ClInclude Include="payment.h" />
     <ClInclude Include="Sign.h" />
-    <ClInclude Include="Balance_managment.h">
+    <ClInclude Include="Balance_managment.h" />
     <ClInclude Include="Admin_UI.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-
     <ClInclude Include="Classes\Admin.h" />
     <ClInclude Include="Classes\Payment.h" />
-    <ClInclude Include="Classes\Transaction.h" />
-    <ClInclude Include="Classes\User.h" />
     <ClInclude Include="User_Control.h">
       <FileType>CppControl</FileType>
-
-    <ClInclude Include="Classes\Payment.h" />
-    <ClInclude Include="Classes\Transaction.h" />
-    <ClInclude Include="Classes\User.h" />
-    <ClInclude Include="Sign.h">
+    </ClInclude>
     <ClInclude Include="Dashboard.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -147,7 +140,6 @@
     </ClInclude>
     <ClInclude Include="Requested_transactions.h">
       <FileType>CppForm</FileType>
-
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -160,13 +152,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Admin_UI.cpp" />
-
     <ClCompile Include="Classes\Admin.cpp" />
     <ClCompile Include="Classes\Payment.cpp" />
-    <ClCompile Include="Classes\Transaction.cpp" />
-    <ClCompile Include="Classes\User.cpp" />
     <ClCompile Include="User_Control.cpp" />
-
     <ClCompile Include="admin.cpp" />
     <ClCompile Include="payment.cpp" />
     <ClCompile Include="Sign.cpp" />
@@ -176,19 +164,16 @@
     <ClCompile Include="Dashboard.cpp" />
     <ClCompile Include="profile.cpp" />
     <ClCompile Include="Requested_transactions.cpp" />
-
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Admin_UI.resx">
       <DependentUpon>Admin_UI.h</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="User_Control.resx">
       <DependentUpon>User_Control.h</DependentUpon>
-
+    </EmbeddedResource>
     <EmbeddedResource Include="Sign.resx">
       <DependentUpon>Sign.h</DependentUpon>
-
     </EmbeddedResource>
     <EmbeddedResource Include="Balance_managment.resx">
       <DependentUpon>Balance_managment.h</DependentUpon>
