@@ -21,6 +21,7 @@ enum class RequestStatus {
 class transaction {
 private:
     string sender;
+    string id;
     string recipient;
     double amount;
     time_t timestamp;
@@ -28,8 +29,13 @@ private:
     RequestStatus status;
 
 public:
+    transaction(string from, string to, double amount,
+=========
+
+>>>>>>>>> Temporary merge branch 2
     transaction(const std::string& from, const std::string& to, double amount,
         TRANSACTION_TYPE t, RequestStatus s = RequestStatus::NONE);
+    transaction();
     // Getters
     string getSender() const;
     string getRecipient() const;
@@ -40,9 +46,20 @@ public:
 
     // Setters
     void setStatus(RequestStatus newStatus);
+    void setId(string id);
+	void setSender(string sender);
+	void setRecipient(string recipient);
+	void setAmount(double amount);
+	void setType(TRANSACTION_TYPE type);
+	void setTimestamp(time_t timestamp);
+
 
     // Utility functions
     string getTypeString() const;
     string getStatusString() const;
+    string getId() const;
+
+    void serialize(std::ostream& os);
+    void deserialize(std::istream& is);
 };
 #endif

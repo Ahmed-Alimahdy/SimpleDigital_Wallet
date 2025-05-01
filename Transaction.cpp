@@ -1,6 +1,6 @@
 #include"Classes\Transaction.h"
 #include <iostream>
-transaction::transaction(const std::string& from, const std::string& to, double amount,
+transaction::transaction(string from, string to, double amount,
 	TRANSACTION_TYPE t, RequestStatus s)
 {
 	sender = from;
@@ -9,6 +9,17 @@ transaction::transaction(const std::string& from, const std::string& to, double 
 	type = t;
 	status = s;
 	timestamp = time(nullptr);
+	id = to + "_" + from +"_"+ to_string(amount);
+}
+transaction::transaction()
+{
+	sender = "";
+	recipient = "";
+	amount = 0;
+	type = TRANSACTION_TYPE::SEND_MONEY;
+	status = RequestStatus::NONE;
+	timestamp = time(nullptr);
+	id = "";
 }
 string transaction::getSender() const
 {
@@ -73,4 +84,55 @@ string transaction::getStatusString() const
 	default:
 		return "Unknown Status";
 	}
+}
+void transaction::setId(string id)
+{
+	this->id = id;
+}
+void transaction::setSender(string sender)
+{
+	this->sender = sender;
+}
+void transaction::setRecipient(string recipient)
+{
+	this->recipient = recipient;
+}
+void transaction::setAmount(double amount)
+{
+	this->amount = amount;
+}
+void transaction::setType(TRANSACTION_TYPE type)
+{
+	this->type = type;
+}
+void transaction::setTimestamp(time_t timestamp)
+{
+	this->timestamp = timestamp;
+}
+string transaction::getId() const
+{
+	return id;
+}
+void transaction::serialize(std::ostream& os){
+	os << sender << '\n'
+		<< id << '\n'
+		<< recipient << '\n'
+		<< amount << '\n'
+		<< timestamp << '\n'
+		<< static_cast<int>(type) << '\n'
+		<< static_cast<int>(status) << '\n';
+}
+
+void transaction::deserialize(std::istream& is) {
+	getline(is, sender);
+	getline(is, id);
+	getline(is, recipient);
+	is >> amount >> timestamp;
+
+	int typeInt, statusInt;
+	is >> typeInt >> statusInt;
+	is.ignore();
+
+	type = static_cast<TRANSACTION_TYPE>(typeInt);
+	status = static_cast<RequestStatus>(statusInt);
 }
