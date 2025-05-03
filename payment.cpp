@@ -1,7 +1,7 @@
 #include "Classes/payment.h"
 
 #include <iostream> 
-using namespace std;
+
 
 // Constructor implementation
 Payment::Payment(string number, string category) {
