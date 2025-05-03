@@ -1,23 +1,28 @@
 #pragma once
-#ifndef ADMIN_H
-#define ADMIN_H
 #include <string>
 #include <list>
-#include <unordered_map>
 #include "Classes/User.h"
-#include "Classes/Transaction.h"
 class Admin {
-    string username, password;
 public:
-	Admin(string& uname, string& pass);
-	static list<transaction> alltransactions;
-	static unordered_map<string,Admin> all_admins;
-    //getters
-	string getUsername();
-	string getPassword();
-	//setters
-	void setUsername(string& uname);
-	void setPassword(string& pass);
-     
+    std::string username, password;
+    Admin();
+    Admin(std::string username, std::string password) : username(username), password(password) {}
+    static std::list<transaction> all_transactions;
+    //static Admin currentAdmin;
+    static Admin* currentAdmin;
+    static std::unordered_map<std::string, Admin> adminMap;
+    //void adminDashboard();
+    //void viewAllUsers();//GUI
+    //user findUser(); //user class behaviour,not needed
+
+    void addUser(string name, string email, string balance, string pass, bool su);
+    void viewUserData();//GUI
+    void deleteUser(string k);
+    void updateUserData(string K, string Nname, string Nemail, string Nbalance, bool su);
+    //void suspendUser(user);
+
+    //void viewAllTransactions();
+
+    //void logout();
+    //void addAdmin();
 };
-#endif

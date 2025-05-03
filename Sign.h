@@ -1,6 +1,7 @@
 #pragma once
 #include "Classes\User.h"
 #include"Dashboard.h"
+#include"Admin_UI1.h"
 #include <msclr/marshal_cppstd.h>
 
 namespace SimpleDigitalWallet {
@@ -685,16 +686,21 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	// Change System::String to std::string
 	string username = msclr::interop::marshal_as<std::string>(textBox1->Text);
 	string password = msclr::interop::marshal_as<std::string>(textBox2->Text);
-
+	// Check username and password if exists
+	auto it = user::allusers.find(username);
 	// Check textboxes if empty
 	if (username.empty() || password.empty()) {
 		MessageBox::Show("Please fill all fields!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
-
-	// Check username and password if exists
-	auto it = user::allusers.find(username);
-	if (it != user::allusers.end()) {
+	if (username == "Admin" && password == "@dmin")
+	{
+		MessageBox::Show("Sign In Successful!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		Admin_UI^ admin = gcnew Admin_UI(this);
+		admin->Show();
+		this->Hide();
+	}
+	else if (it != user::allusers.end()) {
 		if (it->second.getHashedPassword() == password) {
 			MessageBox::Show("Sign In Successful!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 			Dashboard^ dashboard = gcnew Dashboard(this, it->second);

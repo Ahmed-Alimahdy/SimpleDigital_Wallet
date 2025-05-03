@@ -118,6 +118,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="admin.h" />
+    <ClInclude Include="Admin_UI1.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Classes\Transaction.h" />
     <ClInclude Include="Classes\User.h" />
     <ClInclude Include="payment.h" />
@@ -134,6 +137,9 @@
     <ClInclude Include="Requested_transactions.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="User_Control1.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -144,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="admin.cpp" />
+    <ClCompile Include="Admin_UI1.cpp" />
     <ClCompile Include="payment.cpp" />
     <ClCompile Include="Sign.cpp" />
     <ClCompile Include="Transaction.cpp" />
@@ -152,8 +159,12 @@
     <ClCompile Include="Dashboard.cpp" />
     <ClCompile Include="profile.cpp" />
     <ClCompile Include="Requested_transactions.cpp" />
+    <ClCompile Include="User_Control1.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Admin_UI1.resx">
+      <DependentUpon>Admin_UI1.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Sign.resx">
       <DependentUpon>Sign.h</DependentUpon>
     </EmbeddedResource>
@@ -168,6 +179,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Requested_transactions.resx">
       <DependentUpon>Requested_transactions.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User_Control1.resx">
+      <DependentUpon>User_Control1.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

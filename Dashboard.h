@@ -909,7 +909,7 @@ private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e
 				it->second.setBalance(it->second.getBalance() + amountToSend);
 				this->scrollable_transaction_panel->Controls->Clear();
 				generate_transaction_history_panels();
-				Admin::alltransactions.push_back(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
+				Admin::all_transactions.push_back(transaction(current_user->getUsername(), username, amountToSend, TRANSACTION_TYPE::SEND_MONEY, RequestStatus::NONE));
 				textBox1->Text = "";
 				domainUpDown1->Text = "";
 			}
