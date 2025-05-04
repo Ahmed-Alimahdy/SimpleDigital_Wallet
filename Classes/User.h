@@ -42,6 +42,7 @@ public:
 	void add_payment_method(Payment payment);
 	void remove_payment_method(string number);
 	void remove_from_requestedtransaction(string);
+    string xorEncryptDecrypt(const std::string& input, char key);
 	void serialize(std::ostream& os);
 	void deserialize(std::istream& is);
     void static saveAllUsers(const std::string& filename);

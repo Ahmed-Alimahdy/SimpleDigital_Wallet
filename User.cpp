@@ -102,6 +102,12 @@ void user::remove_payment_method(string number)
 		}
 	}
 }
+string user::xorEncryptDecrypt(const std::string& input, char key = 'K') {
+	string output = input;
+	for (char& c : output)
+		c ^= key;
+	return output;
+}
 void user::add_to_requestedtransaction(transaction trans)
 {
 	requested_transaction.push_back(trans);
@@ -117,30 +123,37 @@ void user::remove_from_requestedtransaction(string id)
 		}
 	}
 }
-void user::serialize(ostream& os){
-	os << username << '\n' << email << '\n' << hashedPassword << '\n';
+void user::serialize(std::ostream& os) {
+	os << username << '\n' << email << '\n';
+
+	// Encrypt the hashed password before writing
+	std::string encryptedPassword = xorEncryptDecrypt(hashedPassword);
+	os << encryptedPassword << '\n';
+
 	os << balance << '\n' << suspended << '\n';
 
-	// Serialize history_transaction
 	os << history_transaction.size() << '\n';
 	for (auto& t : history_transaction)
 		t.serialize(os);
 
-	// Serialize requested_transaction
 	os << requested_transaction.size() << '\n';
 	for (auto& t : requested_transaction)
 		t.serialize(os);
 
-	// Serialize payment_methods
 	os << payment_methods.size() << '\n';
 	for (auto& p : payment_methods)
 		p.serialize(os);
 }
 
-void user::deserialize(istream& is) {
+
+void user::deserialize(std::istream& is) {
 	std::getline(is, username);
 	std::getline(is, email);
 	std::getline(is, hashedPassword);
+
+	// Decrypt the hashed password
+	hashedPassword = xorEncryptDecrypt(hashedPassword);
+
 	is >> balance >> suspended;
 	is.ignore();
 
@@ -177,6 +190,7 @@ void user::deserialize(istream& is) {
 		payment_methods.push_back(p);
 	}
 }
+
 void user::saveAllUsers(const std::string& filename) {
 	ofstream ofs(filename);
 	if (!ofs) return;
