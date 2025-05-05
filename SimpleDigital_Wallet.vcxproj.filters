@@ -45,6 +45,12 @@
     <ClInclude Include="admin.h">
       <Filter>Header Files\Classes</Filter>
     </ClInclude>
+    <ClInclude Include="User_Control1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AdminUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dashboard.cpp">
@@ -74,5 +80,22 @@
     <ClCompile Include="admin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="User_Control1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AdminUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="logout_Admin_button.Image.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="log_out.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\Downloads\exit.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

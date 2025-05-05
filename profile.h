@@ -446,6 +446,7 @@ private: System::Windows::Forms::TextBox^ VisaNumber;
 			this->VisaNumber->Size = System::Drawing::Size(462, 31);
 			this->VisaNumber->TabIndex = 1;
 			this->VisaNumber->TextChanged += gcnew System::EventHandler(this, &profile::VisaCategory_TextChanged);
+			this->VisaNumber->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &profile::VisaNumber_KeyPress_1);
 			// 
 			// label1
 			// 
@@ -724,11 +725,13 @@ private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e)
 private: System::Void VisaNumber_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void VisaCategory_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	
 }
 private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 }
 private: System::Void profile_Load(System::Object^ sender, System::EventArgs^ e) {
 	// set the current user details
+	VisaCategory->DropDownStyle = ComboBoxStyle::DropDownList;
 	name_label->Text = msclr::interop::marshal_as<System::String^>(current_user->getUsername());
 	username_textbox->Text = msclr::interop::marshal_as<System::String^>(current_user->getUsername());
 	email_textbox->Text = msclr::interop::marshal_as<System::String^>(current_user->getEmail());
@@ -809,6 +812,11 @@ private: System::Void comboBox1_SelectedIndexChanged(System::Object^ sender, Sys
 	
 }
 private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void VisaNumber_KeyPress_1(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+	if (!Char::IsDigit(e->KeyChar) && e->KeyChar != '\b' && e->KeyChar != '-') {
+		e->Handled = true;
+	}
 }
 };
 }

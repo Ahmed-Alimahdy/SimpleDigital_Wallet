@@ -41,10 +41,13 @@ namespace SimpleDigitalWallet {
 	protected:
 	public: System::Windows::Forms::Label^ LB_Email;
 	public: System::Windows::Forms::Label^ LB_Balance;
-	private: System::Windows::Forms::PictureBox^ pictureBox1;
+
 	public:
 	public: System::Windows::Forms::Panel^ panel1;
 	private: System::Windows::Forms::Button^ clickable_button;
+	private: System::Windows::Forms::PictureBox^ pictureBox1;
+
+
 
 	public:
 
@@ -75,15 +78,14 @@ namespace SimpleDigitalWallet {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(User_Control::typeid));
 			this->LB_Name = (gcnew System::Windows::Forms::Label());
 			this->LB_Email = (gcnew System::Windows::Forms::Label());
 			this->LB_Balance = (gcnew System::Windows::Forms::Label());
-			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->clickable_button = (gcnew System::Windows::Forms::Button());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->panel1->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// LB_Name
@@ -94,7 +96,7 @@ namespace SimpleDigitalWallet {
 				static_cast<System::Byte>(0)));
 			this->LB_Name->Location = System::Drawing::Point(104, 26);
 			this->LB_Name->Name = L"LB_Name";
-			this->LB_Name->Size = System::Drawing::Size(181, 29);
+			this->LB_Name->Size = System::Drawing::Size(218, 36);
 			this->LB_Name->TabIndex = 0;
 			this->LB_Name->Text = L"ahmed ebrahim";
 			this->LB_Name->Click += gcnew System::EventHandler(this, &User_Control::LB_Name_Click);
@@ -110,7 +112,7 @@ namespace SimpleDigitalWallet {
 				static_cast<System::Byte>(0)));
 			this->LB_Email->Location = System::Drawing::Point(104, 60);
 			this->LB_Email->Name = L"LB_Email";
-			this->LB_Email->Size = System::Drawing::Size(388, 29);
+			this->LB_Email->Size = System::Drawing::Size(475, 36);
 			this->LB_Email->TabIndex = 2;
 			this->LB_Email->Text = L"ahmedebrahim200515@gmail.com";
 			this->LB_Email->Click += gcnew System::EventHandler(this, &User_Control::LB_Email_Click);
@@ -128,19 +130,6 @@ namespace SimpleDigitalWallet {
 			this->LB_Balance->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			this->LB_Balance->Click += gcnew System::EventHandler(this, &User_Control::LB_Balance_Click);
 			// 
-			// pictureBox1
-			// 
-			//this->pictureBox1->Cursor = System::Windows::Forms::Cursors::WaitCursor;
-			////this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			//this->pictureBox1->InitialImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.InitialImage")));
-			//this->pictureBox1->Location = System::Drawing::Point(23, 26);
-			//this->pictureBox1->Name = L"pictureBox1";
-			//this->pictureBox1->Size = System::Drawing::Size(75, 63);
-			//this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
-			//this->pictureBox1->TabIndex = 4;
-			//this->pictureBox1->TabStop = false;
-			//this->pictureBox1->UseWaitCursor = true;
-			// 
 			// panel1
 			// 
 			this->panel1->BackColor = System::Drawing::SystemColors::ControlLight;
@@ -155,6 +144,16 @@ namespace SimpleDigitalWallet {
 			this->panel1->TabIndex = 1;
 			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &User_Control::panel1_Paint);
 			this->panel1->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &User_Control::panel1_MouseUp);
+			// 
+			// pictureBox1
+			// 
+			this->pictureBox1->Location = System::Drawing::Point(16, 14);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(82, 88);
+			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
+			this->pictureBox1->TabIndex = 0;
+			this->pictureBox1->TabStop = false;
+			this->pictureBox1->Click += gcnew System::EventHandler(this, &User_Control::pictureBox1_Click);
 			// 
 			// clickable_button
 			// 
@@ -177,9 +176,9 @@ namespace SimpleDigitalWallet {
 			this->Name = L"User_Control";
 			this->Size = System::Drawing::Size(566, 128);
 			this->Load += gcnew System::EventHandler(this, &User_Control::User_Control_Load);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 
 		}
@@ -254,5 +253,7 @@ namespace SimpleDigitalWallet {
 		OnUserControlClick(this, this);
 
 	}
-	};
+	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+};
 }

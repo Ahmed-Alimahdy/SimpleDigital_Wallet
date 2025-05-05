@@ -1,5 +1,6 @@
 #pragma once
 #include "profile.h"
+#include"Admin.h"
 #include"Requested_transactions.h"
 namespace SimpleDigitalWallet {
 
@@ -79,22 +80,22 @@ namespace SimpleDigitalWallet {
 			InitializeComponent();
 			dashboard_form = form;
 			current_user = u;
-			profile_form = form2;
+			login = form2;
 		}
 		Balance_managment(Form^ form, Form^ form2,Form^ form3, user* u) {
 			InitializeComponent();
 			dashboard_form = form;
 			current_user = u;
-			profile_form = form2;
-			requsted_transactions = form3;
+			login = form2;
+			profile_form = form3;
 		}
 		Balance_managment(Form^ form, Form^ form2, Form^ form3,Form^ form4, user* u) {
 			InitializeComponent();
 			dashboard_form = form;
 			current_user = u;
-			profile_form = form2;
-			requsted_transactions = form3;
-			login = form4;
+			login = form2;
+			profile_form = form3;
+			requsted_transactions = form4;
 		}
 
 	protected:
@@ -217,6 +218,7 @@ namespace SimpleDigitalWallet {
 			this->logout_button->Size = System::Drawing::Size(49, 50);
 			this->logout_button->TabIndex = 8;
 			this->logout_button->UseVisualStyleBackColor = false;
+			this->logout_button->Click += gcnew System::EventHandler(this, &Balance_managment::logout_button_Click);
 			// 
 			// transaction_button
 			// 
@@ -586,6 +588,8 @@ namespace SimpleDigitalWallet {
 	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 private: System::Void Balance_managment_Load(System::Object^ sender, System::EventArgs^ e) {
+	comboBox1->DropDownStyle = ComboBoxStyle::DropDownList;
+	comboBox2->DropDownStyle = ComboBoxStyle::DropDownList;
 	for (auto it : current_user->get_payment_methods())
 	{
 		comboBox1->Items->Add(msclr::interop::marshal_as<System::String^>(it.getGatewayNumber()) + "< " + msclr::interop::marshal_as<System::String^>(it.getGatewayCategory()) + " >");
@@ -595,9 +599,8 @@ private: System::Void Balance_managment_Load(System::Object^ sender, System::Eve
 	domainUpDown2->Text = "";
 	MakeRoundedButton(button3, 10);
 	MakeRoundedButton(button1, 10);
-
 }
- 
+
 private: System::Void domainUpDown1_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
 	if (!Char::IsDigit(e->KeyChar) && e->KeyChar != '\b' && e->KeyChar != '.') {
 		e->Handled = true;
@@ -650,6 +653,7 @@ private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Form
 private: System::Void comboBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+
 	if (domainUpDown1->Text == "" || comboBox1->Text == "")
 	{
 		error_add_money_label->ForeColor = System::Drawing::Color::Red;
@@ -660,12 +664,14 @@ private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e
 	{
 		error_add_money_label->Text = "";
 		double amount = Convert::ToDouble(domainUpDown1->Text);
+		
 		if (amount > 0)
 		{
 			current_user->setBalance(current_user->getBalance() + amount);
 			error_add_money_label->ForeColor = System::Drawing::Color::Green;
 		    error_add_money_label->Text = "Money added successfuly";
 			current_user->add_to_historytransaction(transaction(msclr::interop::marshal_as<std::string>(comboBox1->Text), current_user->getUsername(), amount, TRANSACTION_TYPE::DEPOSIT));
+			Admin::all_transactions.push_back(transaction(msclr::interop::marshal_as<std::string>(comboBox1->Text), current_user->getUsername(), amount, TRANSACTION_TYPE::DEPOSIT));
 			domainUpDown1->Text = "";
 			comboBox1->Text = "";
 		}
@@ -695,6 +701,7 @@ private: System::Void panel2_Paint(System::Object^ sender, System::Windows::Form
 			{
 				current_user->setBalance(current_user->getBalance() - amount);
 				current_user->add_to_historytransaction(transaction(current_user->getUsername(), msclr::interop::marshal_as<std::string>(comboBox2->Text), amount, TRANSACTION_TYPE::WITHDRAWAL));
+				Admin::all_transactions.push_back(transaction(current_user->getUsername(), msclr::interop::marshal_as<std::string>(comboBox2->Text), amount, TRANSACTION_TYPE::WITHDRAWAL));
 				error_withdraw_label->ForeColor = System::Drawing::Color::Green;
 				error_withdraw_label->Text = "Money withdrawn successfuly";
 				domainUpDown2->Text = "";
@@ -707,5 +714,9 @@ private: System::Void panel2_Paint(System::Object^ sender, System::Windows::Form
 			}
 		}
 	}
-	};
+	private: System::Void logout_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->Hide();
+		login->Show();
+	}
+};
 }

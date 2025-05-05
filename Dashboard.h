@@ -971,7 +971,7 @@ private: System::Void transaction_button_Click(System::Object^ sender, System::E
 private: System::Void add_to_balance_Click(System::Object^ sender, System::EventArgs^ e) {
 	
 	
-		Balance_managment^ balance_form = gcnew Balance_managment(this,current_user);
+		Balance_managment^ balance_form = gcnew Balance_managment(this, previous_form,current_user);
 	
 
 	balance_form->Show();

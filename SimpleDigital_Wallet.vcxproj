@@ -118,8 +118,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="admin.h" />
-    <ClInclude Include="Admin_UI1.h">
+    <ClInclude Include="AdminUI.h">
       <FileType>CppForm</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Classes\Transaction.h" />
     <ClInclude Include="Classes\User.h" />
@@ -150,7 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="admin.cpp" />
-    <ClCompile Include="Admin_UI1.cpp" />
+    <ClCompile Include="AdminUI.cpp" />
     <ClCompile Include="payment.cpp" />
     <ClCompile Include="Sign.cpp" />
     <ClCompile Include="Transaction.cpp" />
@@ -162,14 +166,16 @@
     <ClCompile Include="User_Control1.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Admin_UI1.resx">
-      <DependentUpon>Admin_UI1.h</DependentUpon>
+    <EmbeddedResource Include="AdminUI.resx">
+      <DependentUpon>AdminUI.h</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Sign.resx">
       <DependentUpon>Sign.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Balance_managment.resx">
       <DependentUpon>Balance_managment.h</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Dashboard.resx">
       <DependentUpon>Dashboard.h</DependentUpon>
@@ -183,6 +189,11 @@
     <EmbeddedResource Include="User_Control1.resx">
       <DependentUpon>User_Control1.h</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\Downloads\exit.png" />
+    <Image Include="logout_Admin_button.Image.png" />
+    <Image Include="log_out.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

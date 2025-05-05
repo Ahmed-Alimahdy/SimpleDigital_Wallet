@@ -203,19 +203,51 @@ void user::saveAllUsers(const std::string& filename) {
 }
 
 void user::loadAllUsers(const std::string& filename) {
-	ifstream ifs(filename);
-	if (!ifs) return;
+	std::ifstream ifs(filename);
+	if (!ifs) {
+		// File doesn't exist or can't be opened; initialize empty user list
+		allusers.clear();
+		return;
+	}
+
+	// Check if the file is empty
+	ifs.seekg(0, std::ios::end);
+	if (ifs.tellg() == 0) {
+		// File is empty; initialize empty user list
+		allusers.clear();
+		ifs.close();
+		return;
+	}
+	ifs.seekg(0, std::ios::beg); // Reset to beginning of file
 
 	size_t count;
-	ifs >> count;
-	ifs.ignore();
-	allusers.clear();
+	if (!(ifs >> count)) {
+		// Failed to read count (e.g., file is malformed); initialize empty user list
+		allusers.clear();
+		ifs.close();
+		return;
+	}
+	ifs.ignore(); // Ignore newline
 
+	allusers.clear();
 	for (size_t i = 0; i < count; ++i) {
 		user usr;
-		usr.deserialize(ifs);
-		allusers[usr.username] = usr;
+		// Deserialize and check if successful
+		try {
+			usr.deserialize(ifs);
+			if (ifs.fail()) {
+				// Deserialization failed; skip this user or handle appropriately
+				continue;
+			}
+			allusers[usr.username] = usr;
+		}
+		catch (const std::exception& e) {
+			// Handle any exceptions during deserialization
+			continue; // Skip invalid user data
+		}
 	}
+
+	ifs.close();
 }
 
 

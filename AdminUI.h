@@ -41,23 +41,56 @@ namespace SimpleDigitalWallet {
 			cancelEditAdmin->Hide();
 			addAdminConfirmationLabel->Hide();
 			usernameExistsLabel->Hide();
-			adminUsenameLabel->Text = makeFunnyString(Admin::currentAdmin->username);
-			adminPasswordLabel->Text = makeFunnyString(Admin::currentAdmin->password);
+			adminUsenameLabel->Text = makeFunnyString(currentAdmin->username);
+			adminPasswordLabel->Text = makeFunnyString(currentAdmin->password);
 			invalidLabel->Hide();
 			//
 			//TODO: Add the constructor code here
 			//
 		}
 		Form^ previous_form;
-		Admin_UI(Form^ form)
+		Admin* currentAdmin;
+		Admin_UI(Form^ form, Admin& current_admin)
 		{
 			InitializeComponent();
+			this->currentAdmin = &current_admin;
+			addAdminPanel->Hide();
+			No_user_ms->Show();
+			MakeRoundedPanel(scrollableTransactionsPanel, 20);
+			generate_transaction_history_panels();
+			editAdminPasswordTextbox->Hide();
+			editAdminUsernameTextbox->Hide();
+			confirmEditAdmin->Hide();
+			cancelEditAdmin->Hide();
+			addAdminConfirmationLabel->Hide();
+			usernameExistsLabel->Hide();
+			adminUsenameLabel->Text = makeFunnyString(currentAdmin->username);
+			adminPasswordLabel->Text = makeFunnyString(currentAdmin->password);
+			invalidLabel->Hide();
 			previous_form = form;
-			
+
 			//
 			//TODO: Add the constructor code here
 			//
 		}
+
+	public:
+
+
+
+
+
+
+
+
+	public:
+
+
+
+
+
+
+		 
 
 	protected:
 		/// <summary>
@@ -142,6 +175,9 @@ namespace SimpleDigitalWallet {
 	private: System::Windows::Forms::CheckBox^ suspended_checkBox;
 	private: System::Windows::Forms::Label^ label10;
 	private: System::Windows::Forms::TextBox^ BalanceEdit_Box;
+	private:System::ComponentModel::ComponentResourceManager^ resources = gcnew System::ComponentModel::ComponentResourceManager(Admin_UI::typeid);
+
+
 	private: System::Windows::Forms::Label^ label9;
 	private: System::Windows::Forms::TextBox^ EmailEdit_Box;
 	private: System::Windows::Forms::Label^ label8;
@@ -168,7 +204,7 @@ namespace SimpleDigitalWallet {
 
 
 
-	private: System::Windows::Forms::PictureBox^ pictureBox1;
+
 	private: System::Windows::Forms::Button^ logout_Admin_button;
 	private: System::Windows::Forms::Label^ Adress_wallet;
 	private: System::Windows::Forms::Label^ invalidLabel;
@@ -214,6 +250,7 @@ namespace SimpleDigitalWallet {
 		void InitializeComponent(void)
 		{
 			this->components = (gcnew System::ComponentModel::Container());
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Admin_UI::typeid));
 			this->decLine1 = (gcnew System::Windows::Forms::Panel());
 			this->addAdminPanel = (gcnew System::Windows::Forms::Panel());
 			this->invalidLabel = (gcnew System::Windows::Forms::Label());
@@ -278,9 +315,8 @@ namespace SimpleDigitalWallet {
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->payments_label = (gcnew System::Windows::Forms::Label());
 			this->top_panal = (gcnew System::Windows::Forms::Panel());
-			this->Adress_wallet = (gcnew System::Windows::Forms::Label());
 			this->logout_Admin_button = (gcnew System::Windows::Forms::Button());
-			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->Adress_wallet = (gcnew System::Windows::Forms::Label());
 			this->button_to_Admin = (gcnew System::Windows::Forms::Button());
 			this->button_to_users = (gcnew System::Windows::Forms::Button());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
@@ -291,7 +327,6 @@ namespace SimpleDigitalWallet {
 			this->UserInfo_panal->SuspendLayout();
 			this->Transactions_user_panel->SuspendLayout();
 			this->top_panal->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// decLine1
@@ -324,7 +359,7 @@ namespace SimpleDigitalWallet {
 			this->addAdminPanel->Controls->Add(this->addAdminUsernameLabel);
 			this->addAdminPanel->Controls->Add(this->adminPasswordLabel);
 			this->addAdminPanel->Controls->Add(this->adminUsenameLabel);
-			this->addAdminPanel->Location = System::Drawing::Point(0, 73);
+			this->addAdminPanel->Location = System::Drawing::Point(0, 70);
 			this->addAdminPanel->Name = L"addAdminPanel";
 			this->addAdminPanel->Size = System::Drawing::Size(1200, 727);
 			this->addAdminPanel->TabIndex = 1;
@@ -387,7 +422,7 @@ namespace SimpleDigitalWallet {
 			this->cancelEditAdmin->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->cancelEditAdmin->ForeColor = System::Drawing::Color::White;
-			this->cancelEditAdmin->Location = System::Drawing::Point(450, 88);
+			this->cancelEditAdmin->Location = System::Drawing::Point(451, 88);
 			this->cancelEditAdmin->Name = L"cancelEditAdmin";
 			this->cancelEditAdmin->Size = System::Drawing::Size(75, 23);
 			this->cancelEditAdmin->TabIndex = 15;
@@ -412,7 +447,7 @@ namespace SimpleDigitalWallet {
 			this->editAdminUsernameTextbox->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->editAdminUsernameTextbox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->editAdminUsernameTextbox->Location = System::Drawing::Point(25, 50);
+			this->editAdminUsernameTextbox->Location = System::Drawing::Point(25, 53);
 			this->editAdminUsernameTextbox->Name = L"editAdminUsernameTextbox";
 			this->editAdminUsernameTextbox->Size = System::Drawing::Size(167, 29);
 			this->editAdminUsernameTextbox->TabIndex = 13;
@@ -600,6 +635,7 @@ namespace SimpleDigitalWallet {
 			// 
 			// Users_page
 			// 
+			this->Users_page->Controls->Add(this->addAdminPanel);
 			this->Users_page->Controls->Add(this->label3);
 			this->Users_page->Controls->Add(this->searchTextBox);
 			this->Users_page->Controls->Add(this->label2);
@@ -1103,9 +1139,8 @@ namespace SimpleDigitalWallet {
 			// 
 			this->top_panal->BackColor = System::Drawing::Color::Green;
 			this->top_panal->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
-			this->top_panal->Controls->Add(this->Adress_wallet);
 			this->top_panal->Controls->Add(this->logout_Admin_button);
-			this->top_panal->Controls->Add(this->pictureBox1);
+			this->top_panal->Controls->Add(this->Adress_wallet);
 			this->top_panal->Controls->Add(this->button_to_Admin);
 			this->top_panal->Controls->Add(this->button_to_users);
 			this->top_panal->Dock = System::Windows::Forms::DockStyle::Top;
@@ -1113,6 +1148,29 @@ namespace SimpleDigitalWallet {
 			this->top_panal->Name = L"top_panal";
 			this->top_panal->Size = System::Drawing::Size(1200, 73);
 			this->top_panal->TabIndex = 2;
+			// 
+            // logout_Admin_button
+            // 
+			this->logout_Admin_button->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->logout_Admin_button->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->logout_Admin_button->FlatAppearance->BorderSize = 0;
+			this->logout_Admin_button->FlatAppearance->MouseDownBackColor = System::Drawing::Color::Green;
+			this->logout_Admin_button->FlatAppearance->MouseOverBackColor = System::Drawing::Color::Green;
+			this->logout_Admin_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->logout_Admin_button->Location = System::Drawing::Point(1120, 10);
+			this->logout_Admin_button->Name = L"logout_Admin_button";
+			this->logout_Admin_button->Size = System::Drawing::Size(68, 54);
+			this->logout_Admin_button->TabIndex = 3;
+			this->logout_Admin_button->UseVisualStyleBackColor = true;
+			this->logout_Admin_button->Click += gcnew System::EventHandler(this, &Admin_UI::logout_Admin_button_Click);
+			// Set button image (with error handling)
+			System::String^ imagePath = "C:\\Users\\Ahmed Ali\\Downloads\\exit.png";
+			if (System::IO::File::Exists(imagePath)) {
+				this->logout_Admin_button->Image = System::Drawing::Image::FromFile(imagePath);
+			}
+			else {
+				System::Windows::Forms::MessageBox::Show("Image file not found:\n" + imagePath, "Image Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
 			// 
 			// Adress_wallet
 			// 
@@ -1125,33 +1183,9 @@ namespace SimpleDigitalWallet {
 			this->Adress_wallet->Size = System::Drawing::Size(165, 36);
 			this->Adress_wallet->TabIndex = 4;
 			this->Adress_wallet->Text = L"Easy wallet";
-			// 
-			// logout_Admin_button
-			// 
-			this->logout_Admin_button->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
-			this->logout_Admin_button->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->logout_Admin_button->FlatAppearance->BorderSize = 0;
-			this->logout_Admin_button->FlatAppearance->MouseDownBackColor = System::Drawing::Color::Green;
-			this->logout_Admin_button->FlatAppearance->MouseOverBackColor = System::Drawing::Color::Green;
-			this->logout_Admin_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->logout_Admin_button->Location = System::Drawing::Point(1116, 10);
-			this->logout_Admin_button->Name = L"logout_Admin_button";
-			this->logout_Admin_button->Size = System::Drawing::Size(68, 54);
-			this->logout_Admin_button->TabIndex = 3;
-			this->logout_Admin_button->UseVisualStyleBackColor = true;
-			this->logout_Admin_button->Click += gcnew System::EventHandler(this, &Admin_UI::logout_Admin_button_Click);
-			// 
-			// pictureBox1
-			// 
-			this->pictureBox1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
-			this->pictureBox1->Location = System::Drawing::Point(12, 12);
-			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(100, 50);
-			this->pictureBox1->TabIndex = 2;
-			this->pictureBox1->TabStop = false;
-			// 
-			// button_to_Admin
-			// 
+			//
+            // button_to_Admin
+            //
 			this->button_to_Admin->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->button_to_Admin->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->button_to_Admin->FlatAppearance->BorderSize = 0;
@@ -1164,6 +1198,16 @@ namespace SimpleDigitalWallet {
 			this->button_to_Admin->TabIndex = 1;
 			this->button_to_Admin->UseVisualStyleBackColor = true;
 			this->button_to_Admin->Click += gcnew System::EventHandler(this, &Admin_UI::button_to_Admin_Click);
+
+			// Set button image (with error handling)
+			System::String^ adminImagePath = "C:\\Users\\Ahmed Ali\\Downloads\\user (2).png";
+			if (System::IO::File::Exists(adminImagePath)) {
+				this->button_to_Admin->Image = System::Drawing::Image::FromFile(adminImagePath);
+			}
+			else {
+				System::Windows::Forms::MessageBox::Show("Image file not found:\n" + adminImagePath, "Image Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+
 			// 
 			// button_to_users
 			// 
@@ -1196,7 +1240,6 @@ namespace SimpleDigitalWallet {
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
 			this->ClientSize = System::Drawing::Size(1200, 788);
-			this->Controls->Add(this->addAdminPanel);
 			this->Controls->Add(this->top_panal);
 			this->Controls->Add(this->Users_page);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
@@ -1217,7 +1260,6 @@ namespace SimpleDigitalWallet {
 			this->Transactions_user_panel->PerformLayout();
 			this->top_panal->ResumeLayout(false);
 			this->top_panal->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 
 		}
@@ -2112,12 +2154,48 @@ namespace SimpleDigitalWallet {
 	}
 
 	private: System::Void logout_Admin_button_Click(System::Object^ sender, System::EventArgs^ e) {
-		//return to sing page	
+
+		previous_form->Show(); // Show the previous form (Sign form)
+		this->Hide();
+
 	}
 	private: System::Void editAdminUsernameTextbox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void adminUsenameLabel_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
+	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+		   //private: System::Void addAdminPanel_VisibleChanged(System::Object^ sender, System::EventArgs^ e) {
+		   //	addAdminPanel->Hide();
+		   //	No_user_ms->Show();
+		   //	MakeRoundedPanel(scrollableTransactionsPanel, 20);
+		   //	generate_transaction_history_panels();
+		   //	editAdminPasswordTextbox->Hide();
+		   //	editAdminUsernameTextbox->Hide();
+		   //	confirmEditAdmin->Hide();
+		   //	cancelEditAdmin->Hide();
+		   //	addAdminConfirmationLabel->Hide();
+		   //	usernameExistsLabel->Hide();
+		   //	adminUsenameLabel->Text = makeFunnyString(currentAdmin->username);
+		   //	adminPasswordLabel->Text = makeFunnyString(currentAdmin->password);
+		   //	invalidLabel->Hide();
+		   //}
+
+		   //private: System::Void Users_page_VisibleChanged(System::Object^ sender, System::EventArgs^ e) {
+		   //	addAdminPanel->Hide();
+		   //	No_user_ms->Show();
+		   //	MakeRoundedPanel(scrollableTransactionsPanel, 20);
+		   //	generate_transaction_history_panels();
+		   //	editAdminPasswordTextbox->Hide();
+		   //	editAdminUsernameTextbox->Hide();
+		   //	confirmEditAdmin->Hide();
+		   //	cancelEditAdmin->Hide();
+		   //	addAdminConfirmationLabel->Hide();
+		   //	usernameExistsLabel->Hide();
+		   //	adminUsenameLabel->Text = makeFunnyString(currentAdmin->username);
+		   //	adminPasswordLabel->Text = makeFunnyString(currentAdmin->password);
+		   //	invalidLabel->Hide();
+		   //}
 	};
 }
 
