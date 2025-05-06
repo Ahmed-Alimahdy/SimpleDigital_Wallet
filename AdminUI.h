@@ -197,6 +197,7 @@ namespace SimpleDigitalWallet {
 	public: System::Windows::Forms::Label^ payments_label;
 	private: System::Windows::Forms::ListBox^ listBox1;
 	private: System::Windows::Forms::Button^ button_to_users;
+   private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::Label^ usernameExistsLabel;
 	private: System::Windows::Forms::Button^ button_to_Admin;
 
@@ -321,6 +322,8 @@ namespace SimpleDigitalWallet {
 			this->button_to_users = (gcnew System::Windows::Forms::Button());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->top_panal->Controls->Add(this->pictureBox1);
 			this->addAdminPanel->SuspendLayout();
 			this->allTransactionsPanel->SuspendLayout();
 			this->Users_page->SuspendLayout();
@@ -506,6 +509,25 @@ namespace SimpleDigitalWallet {
 			this->scrollableTransactionsPanel->Name = L"scrollableTransactionsPanel";
 			this->scrollableTransactionsPanel->Size = System::Drawing::Size(591, 548);
 			this->scrollableTransactionsPanel->TabIndex = 11;
+			// 
+	// pictureBox1
+	// 
+			this->pictureBox1->Location = System::Drawing::Point(20, 0); // Adjust position as needed
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(80, 80); // Adjust size as needed
+			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
+			this->pictureBox1->TabIndex = 5;
+			this->pictureBox1->TabStop = false;
+
+			// Set the image for pictureBox1 (with error handling)
+			System::String^ picturePath = "C:\\Users\\Ahmed Ali\\OneDrive\\Pictures\\Screenshots\\WhatsApp Image 2025-04-19 at 17.51.45_60757256.jpg";
+			if (System::IO::File::Exists(picturePath)) {
+				this->pictureBox1->Image = System::Drawing::Image::FromFile(picturePath);
+			}
+			else {
+				System::Windows::Forms::MessageBox::Show("Image file not found:\n" + picturePath, "Image Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+
 			// 
 			// switchToAdminProfileBtn
 			// 
@@ -1164,12 +1186,12 @@ namespace SimpleDigitalWallet {
 			this->logout_Admin_button->UseVisualStyleBackColor = true;
 			this->logout_Admin_button->Click += gcnew System::EventHandler(this, &Admin_UI::logout_Admin_button_Click);
 			// Set button image (with error handling)
-			System::String^ imagePath = "C:\\Users\\Ahmed Ali\\Downloads\\exit.png";
-			if (System::IO::File::Exists(imagePath)) {
-				this->logout_Admin_button->Image = System::Drawing::Image::FromFile(imagePath);
+			System::String^ imagePath1 = "C:\\Users\\Ahmed Ali\\Downloads\\exit.png";
+			if (System::IO::File::Exists(imagePath1)) {
+				this->logout_Admin_button->Image = System::Drawing::Image::FromFile(imagePath1);
 			}
 			else {
-				System::Windows::Forms::MessageBox::Show("Image file not found:\n" + imagePath, "Image Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				System::Windows::Forms::MessageBox::Show("Image file not found:\n" + imagePath1, "Image Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 			// 
 			// Adress_wallet
@@ -1208,9 +1230,9 @@ namespace SimpleDigitalWallet {
 				System::Windows::Forms::MessageBox::Show("Image file not found:\n" + adminImagePath, "Image Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 
-			// 
-			// button_to_users
-			// 
+			//
+// button_to_users
+//
 			this->button_to_users->BackColor = System::Drawing::Color::Green;
 			this->button_to_users->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->button_to_users->Cursor = System::Windows::Forms::Cursors::Hand;
@@ -1225,6 +1247,16 @@ namespace SimpleDigitalWallet {
 			this->button_to_users->TabIndex = 0;
 			this->button_to_users->UseVisualStyleBackColor = false;
 			this->button_to_users->Click += gcnew System::EventHandler(this, &Admin_UI::button_to_users_Click);
+
+			// Set button image (with error handling)
+			System::String^ usersImagePath = "C:\\Users\\Ahmed Ali\\Downloads\\profile-user (1).png";
+			if (System::IO::File::Exists(usersImagePath)) {
+				this->button_to_users->Image = System::Drawing::Image::FromFile(usersImagePath);
+			}
+			else {
+				System::Windows::Forms::MessageBox::Show("Image file not found:\n" + usersImagePath, "Image Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+
 			// 
 			// timer1
 			// 

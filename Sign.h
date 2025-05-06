@@ -579,6 +579,7 @@ namespace SimpleDigitalWallet {
 #pragma endregion
 	private: System::Void Sign_Load(System::Object^ sender, System::EventArgs^ e) {
 		user::loadAllUsers("User.txt");
+		Admin::loadAlladmins("Admin.txt");
 	}
 
 	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -587,6 +588,7 @@ private: System::Void label1_Click_1(System::Object^ sender, System::EventArgs^ 
 	}
 private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 	user::saveAllUsers("User.txt");
+	Admin::saveAlladmins("Admin.txt");
 	Application::Exit();
 }
 private: System::Void checkBox1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {

@@ -2,6 +2,7 @@
 #include <msclr/marshal_cppstd.h>
 #include "Classes/User.h"
 #include "Classes/Transaction.h"
+#include"Admin.h"
 namespace SimpleDigitalWallet {
 	ref class profile;
     ref class waiting_screen;
@@ -375,6 +376,7 @@ namespace SimpleDigitalWallet {
 		current_user->setBalance(current_user->getBalance() - amount_value);
 		auto it = user::allusers.find(sender_name);
 	    it->second.add_to_historytransaction(transaction(sender_name, recipient, std::stod(amount), TRANSACTION_TYPE::REQUEST_MONEY, RequestStatus::ACCEPTED));
+		Admin::all_transactions.push_back(transaction(sender_name, recipient, std::stod(amount), TRANSACTION_TYPE::REQUEST_MONEY, RequestStatus::ACCEPTED));
 		it->second.remove_from_requestedtransaction(msclr::interop::marshal_as<string>(name));
 		it->second.setBalance(it->second.getBalance() + amount_value);
 		flowLayoutPanel->Controls->Clear();
@@ -390,6 +392,7 @@ namespace SimpleDigitalWallet {
 		System::String^ thirdPart = name->Split('_')[2];
 		string amount = msclr::interop::marshal_as<string>(thirdPart);
 		current_user->add_to_historytransaction(transaction(sender_name, recipient, std::stod(amount), TRANSACTION_TYPE::REQUEST_MONEY, RequestStatus::DECLINED));
+		Admin::all_transactions.push_back(transaction(sender_name, recipient, std::stod(amount), TRANSACTION_TYPE::REQUEST_MONEY, RequestStatus::DECLINED));
 		current_user->remove_from_requestedtransaction(msclr::interop::marshal_as<string>(name));
 		
 		       auto it = user::allusers.find(sender_name);

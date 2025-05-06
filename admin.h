@@ -25,4 +25,9 @@ public:
 
     //void logout();
     //void addAdmin();
+    string xorEncryptDecrypt(const std::string& input, char key);
+    void serialize(std::ostream& os);
+    void deserialize(std::istream& is);
+    void static saveAlladmins(const std::string& filename);
+    void static loadAlladmins(const std::string& filename);
 };
