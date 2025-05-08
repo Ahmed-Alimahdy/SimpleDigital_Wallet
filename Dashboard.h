@@ -159,6 +159,7 @@ public:
 			InitializeComponent();
 			this->current_user = &currentUser;
 			previous_form = form;
+			this->DoubleBuffered = true;
 		}
 		Dashboard(Form^ form, user& currentUser,Form^ form2)
 		{
@@ -166,6 +167,7 @@ public:
 			this->current_user = &currentUser;
 			previous_form = form;
 			profile_form = form2;
+			this->DoubleBuffered = true;
 		}
 		Dashboard(Form^ form, user& currentUser, Form^ form2, Form^ form3)
 		{
@@ -174,6 +176,7 @@ public:
 			previous_form = form;
 			profile_form = form2;
 			requested_transactions_form = form3;
+			this->DoubleBuffered = true;
 		}
 		Dashboard(Form^ form, user& currentUser, Form^ form2, Form^ form3, Form^ form4)
 		{
@@ -183,6 +186,7 @@ public:
 			profile_form = form2;
 			requested_transactions_form = form3;
 			balance_management_form = form4;
+			this->DoubleBuffered = true;
 		}
 	protected:
 		/// <summary>
@@ -584,7 +588,7 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->scrollable_transaction_panel->BackColor = System::Drawing::Color::White;
 			this->scrollable_transaction_panel->Location = System::Drawing::Point(12, 252);
 			this->scrollable_transaction_panel->Name = L"scrollable_transaction_panel";
-			this->scrollable_transaction_panel->Size = System::Drawing::Size(550, 548);
+			this->scrollable_transaction_panel->Size = System::Drawing::Size(550, 504);
 			this->scrollable_transaction_panel->TabIndex = 2;
 			// 
 			// black_panel
@@ -730,9 +734,14 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			// 
 			// Dashboard
 			// 
+			this->Opacity = 0.0;
+			Timer^ fadeTimer = gcnew Timer();
+			fadeTimer->Interval = 20; // milliseconds
+			fadeTimer->Tick += gcnew EventHandler(this, &Dashboard::FadeIn);
+			fadeTimer->Start();
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
+			this->DoubleBuffered = true;
 			this->ClientSize = System::Drawing::Size(1200, 749);
-			this->Location = Drawing::Point(0, 0);
 			this->Controls->Add(this->panel3);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->label2);
@@ -740,10 +749,14 @@ private: System::Windows::Forms::Label^ request_amount_label;
 			this->Controls->Add(this->black_panel);
 			this->Controls->Add(this->scrollable_transaction_panel);
 			this->Controls->Add(this->hScrollBar1);
+			this->TopMost = true;
+			this->StartPosition = FormStartPosition::CenterScreen;
 			this->Controls->Add(this->transaction_history_label);
 			this->ForeColor = System::Drawing::Color::Black;
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Name = L"Dashboard";
 			this->Text = L"Dashboard";
+			this->TopMost = true;
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &Dashboard::Dashboard_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &Dashboard::Dashboard_Load);
 			this->VisibleChanged += gcnew System::EventHandler(this, &Dashboard::Dashboard_VisibleChanged);
@@ -996,5 +1009,14 @@ private: System::Void Dashboard_VisibleChanged(System::Object^ sender, System::E
 	generate_transaction_history_panels();
 	balance_label->Text = String::Format("${0:F2}", current_user->getBalance());
 }
+void Dashboard::FadeIn(Object^ sender, EventArgs^ e) {
+		   if (this->Opacity < 1.0) {
+			   this->Opacity += 0.05;
+		   }
+		   else {
+			   ((Timer^)sender)->Stop();
+		   }
+	   }
+
 };
 }

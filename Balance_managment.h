@@ -564,13 +564,22 @@ namespace SimpleDigitalWallet {
 			// 
 			// Balance_managment
 			// 
+			this->TopMost = true;
+			this->StartPosition = FormStartPosition::CenterScreen;
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
 			this->ClientSize = System::Drawing::Size(1182, 753);
 			this->Controls->Add(this->label11);
 			this->Controls->Add(this->panel2);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->black_panel);
+			this->DoubleBuffered = true;
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Name = L"Balance_managment";
+			this->Opacity = 0.0;
+			Timer^ fadeTimer = gcnew Timer();
+			fadeTimer->Interval = 20; // milliseconds
+			fadeTimer->Tick += gcnew EventHandler(this, &Balance_managment::FadeIn);
+			fadeTimer->Start();
 			this->Text = L"Balance_managment";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &Balance_managment::Balance_managment_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &Balance_managment::Balance_managment_Load);
@@ -718,5 +727,14 @@ private: System::Void panel2_Paint(System::Object^ sender, System::Windows::Form
 		this->Hide();
 		login->Show();
 	}
+		   void Balance_managment::FadeIn(Object^ sender, EventArgs^ e) {
+			   if (this->Opacity < 1.0) {
+				   this->Opacity += 0.05;
+			   }
+			   else {
+				   ((Timer^)sender)->Stop();
+			   }
+		   }
+
 };
 }

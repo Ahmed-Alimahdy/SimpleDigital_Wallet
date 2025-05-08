@@ -650,6 +650,21 @@ private: System::Void button4_Click_1(System::Object^ sender, System::EventArgs^
 		return;
 	}
 
+	if (email.find_first_of("@") == std::string::npos)
+	{
+		MessageBox::Show("Email must contain @!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		textBox6->Text = "";
+		return;
+	}
+
+	if (password.length() < 8)
+	{
+		MessageBox::Show("Password must be at least 8 characters", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		textBox4->Text = "";
+		textBox7->Text = "";
+		return;
+	}
+
 	//  To be sure confirm pass == pass
 	if (password != confirmPassword) {
 		MessageBox::Show("Passwords do not match!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -657,6 +672,7 @@ private: System::Void button4_Click_1(System::Object^ sender, System::EventArgs^
 		textBox7->Text = "";
 		return;
 	}
+	
 
 	// Check if pass contain special char or not
 	if (password.find_first_of(specialChars) == std::string::npos) {
@@ -667,7 +683,7 @@ private: System::Void button4_Click_1(System::Object^ sender, System::EventArgs^
 	}
 
 	// Check Username if exist
-	if (user::allusers.find(username) != user::allusers.end()) {
+	if (user::allusers.find(username) != user::allusers.end() && Admin::adminMap.find(username) != Admin::adminMap.end()) {
 		label15->Show();
 		textBox5->Text = "";
 		return;
@@ -698,7 +714,7 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 		MessageBox::Show("Please fill all fields!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
-	if (username == "Admin" && password == "@dmin")
+	else if (username == "Admin" && password == "@dmin")
 	{
 		Admin adminObj("Admin", "@dmin");
 		MessageBox::Show("Sign In Successful!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);

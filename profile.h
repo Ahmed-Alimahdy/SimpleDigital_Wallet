@@ -180,6 +180,8 @@ public:
 			dashboard_form = form;
 			login = form2;
 			current_user = u;
+			this->TopMost = true;
+			this->StartPosition = FormStartPosition::CenterScreen;
 		}
 		profile(Form^ form, Form^ form2, Form^ form3, user* u) {
 			InitializeComponent();
@@ -187,6 +189,8 @@ public:
 			current_user = u;
 			requsted_transactions = form2;
 			login = form3;
+			this->TopMost = true;
+			this->StartPosition = FormStartPosition::CenterScreen;
 		}
 
 	protected:
@@ -305,7 +309,7 @@ private: System::Windows::Forms::TextBox^ VisaNumber;
 			// 
 			// profile_picbox
 			// 
-			this->profile_picbox->ErrorImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"profile_picbox.ErrorImage")));
+			this->profile_picbox->ErrorImage = nullptr;
 			this->profile_picbox->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"profile_picbox.Image")));
 			this->profile_picbox->Location = System::Drawing::Point(27, 19);
 			this->profile_picbox->Name = L"profile_picbox";
@@ -643,14 +647,21 @@ private: System::Windows::Forms::TextBox^ VisaNumber;
 			// profile
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
+			this->DoubleBuffered = true;
 			this->ClientSize = System::Drawing::Size(1182, 753);
 			this->Controls->Add(this->black_panel);
 			this->Controls->Add(this->manage_payment_method_label);
 			this->Controls->Add(this->scrollable_payment_panel);
+			this->Opacity = 0.0;
+			Timer^ fadeTimer = gcnew Timer();
+			fadeTimer->Interval = 20; // milliseconds
+			fadeTimer->Tick += gcnew EventHandler(this, &profile::FadeIn);
+			fadeTimer->Start();
 			this->Controls->Add(this->profile_panel);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->pic_panel);
 			this->ForeColor = System::Drawing::Color::Black;
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Name = L"profile";
 			this->Text = L"profile";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &profile::profile_FormClosing);
@@ -818,5 +829,14 @@ private: System::Void VisaNumber_KeyPress_1(System::Object^ sender, System::Wind
 		e->Handled = true;
 	}
 }
+	   void profile::FadeIn(Object^ sender, EventArgs^ e) {
+		   if (this->Opacity < 1.0) {
+			   this->Opacity += 0.05;
+		   }
+		   else {
+			   ((Timer^)sender)->Stop();
+		   }
+	   }
+
 };
 }

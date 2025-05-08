@@ -208,9 +208,6 @@ namespace SimpleDigitalWallet {
 			this->black_panel->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->wallet_icon))->BeginInit();
 			this->SuspendLayout();
-			// 
-			// black_panel
-			// 
 			this->black_panel->BackColor = System::Drawing::Color::ForestGreen;
 			this->black_panel->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
 			this->black_panel->Controls->Add(this->logout_button);
@@ -224,9 +221,6 @@ namespace SimpleDigitalWallet {
 			this->black_panel->Name = L"black_panel";
 			this->black_panel->Size = System::Drawing::Size(1182, 62);
 			this->black_panel->TabIndex = 1;
-			// 
-			// logout_button
-			// 
 			this->logout_button->BackColor = System::Drawing::Color::ForestGreen;
 			this->logout_button->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->logout_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
@@ -238,9 +232,6 @@ namespace SimpleDigitalWallet {
 			this->logout_button->TabIndex = 8;
 			this->logout_button->UseVisualStyleBackColor = false;
 			this->logout_button->Click += gcnew System::EventHandler(this, &Requested_transactions::logout_button_Click);
-			// 
-			// transaction_button
-			// 
 			this->transaction_button->BackColor = System::Drawing::Color::ForestGreen;
 			this->transaction_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->transaction_button->ForeColor = System::Drawing::Color::ForestGreen;
@@ -250,9 +241,6 @@ namespace SimpleDigitalWallet {
 			this->transaction_button->Size = System::Drawing::Size(49, 50);
 			this->transaction_button->TabIndex = 7;
 			this->transaction_button->UseVisualStyleBackColor = false;
-			// 
-			// profile_button
-			// 
 			this->profile_button->BackColor = System::Drawing::Color::ForestGreen;
 			this->profile_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->profile_button->ForeColor = System::Drawing::Color::ForestGreen;
@@ -264,9 +252,6 @@ namespace SimpleDigitalWallet {
 			this->profile_button->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageAboveText;
 			this->profile_button->UseVisualStyleBackColor = false;
 			this->profile_button->Click += gcnew System::EventHandler(this, &Requested_transactions::profile_button_Click);
-			// 
-			// home_button
-			// 
 			this->home_button->BackColor = System::Drawing::Color::ForestGreen;
 			this->home_button->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->home_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
@@ -278,9 +263,6 @@ namespace SimpleDigitalWallet {
 			this->home_button->TabIndex = 5;
 			this->home_button->UseVisualStyleBackColor = false;
 			this->home_button->Click += gcnew System::EventHandler(this, &Requested_transactions::home_button_Click);
-			// 
-			// wallet_icon
-			// 
 			this->wallet_icon->BackColor = System::Drawing::Color::White;
 			this->wallet_icon->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
 			this->wallet_icon->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"wallet_icon.Image")));
@@ -291,9 +273,6 @@ namespace SimpleDigitalWallet {
 			this->wallet_icon->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->wallet_icon->TabIndex = 9;
 			this->wallet_icon->TabStop = false;
-			// 
-			// wallet_label
-			// 
 			this->wallet_label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold));
 			this->wallet_label->ForeColor = System::Drawing::Color::White;
 			this->wallet_label->Location = System::Drawing::Point(58, 0);
@@ -302,22 +281,27 @@ namespace SimpleDigitalWallet {
 			this->wallet_label->TabIndex = 10;
 			this->wallet_label->Text = L"Easy wallet";
 			this->wallet_label->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			// 
-			// requsted_transaction_label
-			// 
 			this->requsted_transaction_label->AutoSize = true;
-			this->requsted_transaction_label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Regular,
+			this->requsted_transaction_label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
 			this->requsted_transaction_label->Location = System::Drawing::Point(12, 86);
 			this->requsted_transaction_label->Name = L"requsted_transaction_label";
 			this->requsted_transaction_label->Size = System::Drawing::Size(321, 32);
 			this->requsted_transaction_label->TabIndex = 2;
+			this->DoubleBuffered = true;
+
 			this->requsted_transaction_label->Text = L"Requested_transactions";
-			// 
-			// Requested_transactions
-			// 
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
+			this->TopMost = true;
+			this->StartPosition = FormStartPosition::CenterScreen;
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
 			this->ClientSize = System::Drawing::Size(1182, 753);
+			this->Opacity = 0.0;
+			Timer^ fadeTimer = gcnew Timer();
+			fadeTimer->Interval = 20; // milliseconds
+			fadeTimer->Tick += gcnew EventHandler(this, &Requested_transactions::FadeIn);
+			fadeTimer->Start();
+
 			this->Location = Drawing::Point(0, 0);
 			this->Controls->Add(this->requsted_transaction_label);
 			this->Controls->Add(this->black_panel);
@@ -405,5 +389,14 @@ private: System::Void logout_button_Click(System::Object^ sender, System::EventA
 	this->Hide();
 	login->Show();
 }
+	   void Requested_transactions::FadeIn(Object^ sender, EventArgs^ e) {
+		   if (this->Opacity < 1.0) {
+			   this->Opacity += 0.05;
+		   }
+		   else {
+			   ((Timer^)sender)->Stop();
+		   }
+	   }
+
 };
 }

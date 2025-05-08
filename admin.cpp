@@ -91,55 +91,74 @@ string Admin::xorEncryptDecrypt(const std::string& input, char key = 'K') {
     return output;
 }
 void Admin::saveAlladmins(const std::string& filename) {
-    std::ofstream ofs(filename, std::ios::binary);
+    std::ofstream ofs(filename);
     if (!ofs) return;
 
-    size_t count = adminMap.size();
-    ofs.write(reinterpret_cast<const char*>(&count), sizeof(count));
+    ofs << adminMap.size() << '\n';
     for (auto& pair : adminMap) {
         pair.second.serialize(ofs);
     }
 
-    // Write all transactions at the end
-    size_t t_size = all_transactions.size();
-    ofs.write(reinterpret_cast<const char*>(&t_size), sizeof(t_size));
+    // Save all transactions at the end
+    ofs << all_transactions.size() << '\n';
     for (auto& t : all_transactions) {
         t.serialize(ofs);
     }
 
-    ofs.close();
 }
 
+
 void Admin::loadAlladmins(const std::string& filename) {
-    std::ifstream ifs(filename, std::ios::binary);
-    if (!ifs) return;
+    std::ifstream ifs(filename);
+    if (!ifs) {
+        adminMap.clear();
+        all_transactions.clear();
+        return;
+    }
+
+    ifs.seekg(0, std::ios::end);
+    if (ifs.tellg() == 0) {
+        adminMap.clear();
+        all_transactions.clear();
+        ifs.close();
+        return;
+    }
+    ifs.seekg(0, std::ios::beg);
 
     size_t count;
-    if (!ifs.read(reinterpret_cast<char*>(&count), sizeof(count))) {
-        // File is empty or does not contain valid data
+    if (!(ifs >> count)) {
+        adminMap.clear();
+        all_transactions.clear();
+        ifs.close();
         return;
     }
+    ifs.ignore(); // Ignore newline
 
+    adminMap.clear();
     for (size_t i = 0; i < count; ++i) {
         Admin a;
-        if (!ifs) break; // Stop if the stream is invalid
-        a.deserialize(ifs);
-        if (!ifs) break; // Stop if deserialization fails
-        adminMap[a.username] = a;
+        try {
+            a.deserialize(ifs);
+            if (ifs.fail()) continue;
+            adminMap[a.username] = a;
+        }
+        catch (...) {
+            continue;
+        }
     }
 
+    // Load all transactions
     size_t t_size;
-    if (!ifs.read(reinterpret_cast<char*>(&t_size), sizeof(t_size))) {
-        // No transactions to read
+    if (!(ifs >> t_size)) {
+        all_transactions.clear();
         return;
     }
+    ifs.ignore(); // Ignore newline
 
     all_transactions.clear();
     for (size_t i = 0; i < t_size; ++i) {
         transaction t;
-        if (!ifs) break; // Stop if the stream is invalid
         t.deserialize(ifs);
-        if (!ifs) break; // Stop if deserialization fails
         all_transactions.push_back(t);
     }
 
