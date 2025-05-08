@@ -45,52 +45,44 @@ void Admin::updateUserData(string K, string Nname, string Nemail, string Nbalanc
 
 Admin* Admin::currentAdmin = new Admin("admin", "admin");
 void Admin::serialize(std::ostream& os) {
-    std::string encryptedUsername = xorEncryptDecrypt(username,'K');
-    std::string encryptedPassword = xorEncryptDecrypt(password,'K');
+    std::string encryptedPassword = xorEncryptDecrypt(password, 'K');
 
-    size_t usernameLen = encryptedUsername.size();
+    size_t usernameLen = username.size();
     size_t passwordLen = encryptedPassword.size();
-    for (auto& t : all_transactions)
-        t.serialize(os);
+
     os.write(reinterpret_cast<const char*>(&usernameLen), sizeof(usernameLen));
-    os.write(encryptedUsername.c_str(), usernameLen);
+    os.write(username.c_str(), usernameLen);
 
     os.write(reinterpret_cast<const char*>(&passwordLen), sizeof(passwordLen));
     os.write(encryptedPassword.c_str(), passwordLen);
 }
 
-
 void Admin::deserialize(std::istream& is) {
     size_t usernameLen, passwordLen;
     char* buffer;
 
-    // Read and decrypt username
-    is.read(reinterpret_cast<char*>(&usernameLen), sizeof(usernameLen));
+    if (!is.read(reinterpret_cast<char*>(&usernameLen), sizeof(usernameLen))) return;
     buffer = new char[usernameLen + 1];
-    is.read(buffer, usernameLen);
+    if (!is.read(buffer, usernameLen)) {
+        delete[] buffer;
+        return;
+    }
     buffer[usernameLen] = '\0';
-    username = xorEncryptDecrypt(std::string(buffer),'K');
-    delete[] buffer;
-    
-    // Read and decrypt password
-    is.read(reinterpret_cast<char*>(&passwordLen), sizeof(passwordLen));
-    buffer = new char[passwordLen + 1];
-    is.read(buffer, passwordLen);
-    buffer[passwordLen] = '\0';
-    password = xorEncryptDecrypt(std::string(buffer),'K');
+    username = xorEncryptDecrypt(std::string(buffer), 'K');
     delete[] buffer;
 
-    //// Deserialize history_transaction
-    //size_t h_size;
-    //is >> h_size;
-    //is.ignore();
-    //all_transactions.clear();
-    //for (size_t i = 0; i < h_size; ++i) {
-    //    transaction t;
-    //    t.deserialize(is);
-    //    all_transactions.push_back(t);
-    //}
+    if (!is.read(reinterpret_cast<char*>(&passwordLen), sizeof(passwordLen))) return;
+    buffer = new char[passwordLen + 1];
+    if (!is.read(buffer, passwordLen)) {
+        delete[] buffer;
+        return;
+    }
+    buffer[passwordLen] = '\0';
+    password = xorEncryptDecrypt(std::string(buffer), 'K');
+    delete[] buffer;
 }
+
+
 
 string Admin::xorEncryptDecrypt(const std::string& input, char key = 'K') {
     string output = input;
@@ -100,37 +92,56 @@ string Admin::xorEncryptDecrypt(const std::string& input, char key = 'K') {
 }
 void Admin::saveAlladmins(const std::string& filename) {
     std::ofstream ofs(filename, std::ios::binary);
-    if (!ofs) {
-        //std::cerr << "Error opening file for saving admins: " << filename << std::endl;
-        return;
-    }
+    if (!ofs) return;
 
     size_t count = adminMap.size();
     ofs.write(reinterpret_cast<const char*>(&count), sizeof(count));
-
     for (auto& pair : adminMap) {
         pair.second.serialize(ofs);
     }
 
+    // Write all transactions at the end
+    size_t t_size = all_transactions.size();
+    ofs.write(reinterpret_cast<const char*>(&t_size), sizeof(t_size));
+    for (auto& t : all_transactions) {
+        t.serialize(ofs);
+    }
+
     ofs.close();
 }
+
 void Admin::loadAlladmins(const std::string& filename) {
     std::ifstream ifs(filename, std::ios::binary);
-    if (!ifs) {
-       // cerr << "Admin file not found: " << filename << std::endl;
+    if (!ifs) return;
+
+    size_t count;
+    if (!ifs.read(reinterpret_cast<char*>(&count), sizeof(count))) {
+        // File is empty or does not contain valid data
         return;
     }
 
-    size_t count;
-    ifs.read(reinterpret_cast<char*>(&count), sizeof(count));
-
     for (size_t i = 0; i < count; ++i) {
         Admin a;
+        if (!ifs) break; // Stop if the stream is invalid
         a.deserialize(ifs);
+        if (!ifs) break; // Stop if deserialization fails
         adminMap[a.username] = a;
+    }
+
+    size_t t_size;
+    if (!ifs.read(reinterpret_cast<char*>(&t_size), sizeof(t_size))) {
+        // No transactions to read
+        return;
+    }
+
+    all_transactions.clear();
+    for (size_t i = 0; i < t_size; ++i) {
+        transaction t;
+        if (!ifs) break; // Stop if the stream is invalid
+        t.deserialize(ifs);
+        if (!ifs) break; // Stop if deserialization fails
+        all_transactions.push_back(t);
     }
 
     ifs.close();
 }
-
-
