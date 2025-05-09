@@ -3,6 +3,8 @@
 #include"Dashboard.h"
 #include"AdminUI.h"
 #include <msclr/marshal_cppstd.h>
+#include <regex>
+#include <string>
 
 namespace SimpleDigitalWallet {
 
@@ -12,6 +14,8 @@ namespace SimpleDigitalWallet {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Text::RegularExpressions;
+
 
 	/// <summary>
 	/// Summary for Sign
@@ -28,6 +32,10 @@ namespace SimpleDigitalWallet {
 			//
 			//TODO: Add the constructor code here
 			//
+		}
+		bool IsValidEmail(string email) {
+			regex pattern(R"(^\w+([-.+']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$)");
+			return regex_match(email, pattern);
 		}
 
 	protected:
@@ -650,9 +658,9 @@ private: System::Void button4_Click_1(System::Object^ sender, System::EventArgs^
 		return;
 	}
 
-	if (email.find_first_of("@") == std::string::npos)
+	if (!IsValidEmail(email))
 	{
-		MessageBox::Show("Email must contain @!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Invalid email format", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		textBox6->Text = "";
 		return;
 	}
@@ -683,7 +691,7 @@ private: System::Void button4_Click_1(System::Object^ sender, System::EventArgs^
 	}
 
 	// Check Username if exist
-	if (user::allusers.find(username) != user::allusers.end() && Admin::adminMap.find(username) != Admin::adminMap.end()) {
+	if (user::allusers.find(username) != user::allusers.end() && Admin::adminMap.find(username) != Admin::adminMap.end() && username == "Admin") {
 		label15->Show();
 		textBox5->Text = "";
 		return;
