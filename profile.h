@@ -2,6 +2,8 @@
 #include"Requested_transactions.h"
 #include <msclr/marshal_cppstd.h>
 #include "Classes/User.h"
+#include <regex>
+#include <string>
 namespace SimpleDigitalWallet {
 
 	using namespace System;
@@ -11,6 +13,7 @@ namespace SimpleDigitalWallet {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::Drawing::Drawing2D;
+	using namespace System::Text::RegularExpressions;
 
 	/// <summary>
 	/// Summary for profile
@@ -18,6 +21,11 @@ namespace SimpleDigitalWallet {
 	public ref class profile : public System::Windows::Forms::Form
 	{
 	private:
+		bool IsValidEmail(string email) {
+			regex pattern(R"(^\w+([-.+']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$)");
+			return regex_match(email, pattern);
+		}
+
 		void MakeRoundedButton(Button^ button, int radius) {
 			GraphicsPath^ path = gcnew Drawing2D::GraphicsPath();
 			System::Drawing::Rectangle bounds = button->ClientRectangle;
@@ -704,12 +712,18 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 		MessageBox::Show("Password must contain at least one special character (!@$%^&*+#)!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
-	if (email.find_first_of(c) == std::string::npos) { // checking pass contain special char
-		MessageBox::Show("Email must contain @ sign .", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	if (!IsValidEmail(email)) { // checking pass contain special char
+		MessageBox::Show("Invalid email format", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
-	if (it != user::allusers.end() && it->first != current_user->getUsername()) {
+	if (it != user::allusers.end() || it->first != current_user->getUsername() || Admin::adminMap.find(username) != Admin::adminMap.end() || username == "Admin") {
 		MessageBox::Show("Username is already taken.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return;
+	}
+
+	if (password.length() < 8)
+	{
+		MessageBox::Show("Password must be at least 8 characters", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
 

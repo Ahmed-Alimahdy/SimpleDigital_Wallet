@@ -674,7 +674,7 @@ private: System::Void button4_Click_1(System::Object^ sender, System::EventArgs^
 	}
 
 	//  To be sure confirm pass == pass
-	if (password != confirmPassword) {
+	if (password != confirmPassword) {           
 		MessageBox::Show("Passwords do not match!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		textBox4->Text = "";
 		textBox7->Text = "";
@@ -691,17 +691,16 @@ private: System::Void button4_Click_1(System::Object^ sender, System::EventArgs^
 	}
 
 	// Check Username if exist
-	if (user::allusers.find(username) != user::allusers.end() && Admin::adminMap.find(username) != Admin::adminMap.end() && username == "Admin") {
+	if (user::allusers.find(username) != user::allusers.end() || Admin::adminMap.find(username) != Admin::adminMap.end() || username == "Admin") {
 		label15->Show();
 		textBox5->Text = "";
+		MessageBox::Show("Username already exists!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
 
 	// Create New user
 	user newUser(username, email, password);
 	user::allusers[username] = newUser;
-    
-
 	MessageBox::Show("Sign Up Successful!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	pnlSignUp->Hide();
 }
