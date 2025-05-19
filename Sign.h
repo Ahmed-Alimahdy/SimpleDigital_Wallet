@@ -1,6 +1,6 @@
 #pragma once
-#include "Classes\User.h"
-#include"Dashboard.h"
+#include "Classes/User.h"
+#include "Dashboard.h" // Ensure this is included at the top of the file
 #include"AdminUI.h"
 #include <msclr/marshal_cppstd.h>
 #include <regex>

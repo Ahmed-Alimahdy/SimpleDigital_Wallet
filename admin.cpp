@@ -6,16 +6,16 @@ std::list<transaction> Admin::all_transactions;
 std::unordered_map<std::string, Admin> Admin::adminMap;
 Admin::Admin()
 {
-	this->username = "admin";
-	this->password = "admin";
+    this->username = "admin";
+    this->password = "admin";
 }
 
 void Admin::addUser(string name, string email, string balance, string pass, bool su)
 {
-	user newUser(name, email, pass);
-	newUser.setBalance(stod(balance));
-	newUser.setSuspended(su);
-	user::allusers.insert({ name, newUser });
+    user newUser(name, email, pass);
+    newUser.setBalance(stod(balance));
+    newUser.setSuspended(su);
+    user::allusers.insert({ name, newUser });
 }
 
 void Admin::viewUserData()
@@ -25,7 +25,7 @@ void Admin::viewUserData()
 
 void Admin::deleteUser(string k)
 {
-	user::allusers.erase(k);
+    user::allusers.erase(k);
 }
 //SUGGEST AHMED IBRAHIM && AHMED EZZAT
 

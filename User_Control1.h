@@ -78,6 +78,7 @@ namespace SimpleDigitalWallet {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(User_Control::typeid));
 			this->LB_Name = (gcnew System::Windows::Forms::Label());
 			this->LB_Email = (gcnew System::Windows::Forms::Label());
 			this->LB_Balance = (gcnew System::Windows::Forms::Label());
@@ -147,6 +148,8 @@ namespace SimpleDigitalWallet {
 			// 
 			// pictureBox1
 			// 
+			//this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
+			pictureBox1->Image = Image::FromFile("profile-user (1).png");
 			this->pictureBox1->Location = System::Drawing::Point(16, 14);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(82, 88);
