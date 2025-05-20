@@ -639,7 +639,6 @@ private: System::Void label9_Click(System::Object^ sender, System::EventArgs^ e)
 private: System::Void textBox4_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void textBox5_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	label15->Hide();
 }
 private: System::Void textBox6_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
@@ -694,7 +693,6 @@ private: System::Void button4_Click_1(System::Object^ sender, System::EventArgs^
 	if (user::allusers.find(username) != user::allusers.end() || Admin::adminMap.find(username) != Admin::adminMap.end() || username == "Admin") {
 		label15->Show();
 		textBox5->Text = "";
-		MessageBox::Show("Username already exists!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
 
@@ -703,6 +701,10 @@ private: System::Void button4_Click_1(System::Object^ sender, System::EventArgs^
 	user::allusers[username] = newUser;
 	MessageBox::Show("Sign Up Successful!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	pnlSignUp->Hide();
+	textBox5->Text="";
+	textBox4->Text="";
+	textBox7->Text = "";
+	textBox6->Text = "";
 }
 private: System::Void label15_Click(System::Object^ sender, System::EventArgs^ e) {
 }

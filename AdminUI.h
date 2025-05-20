@@ -368,6 +368,14 @@ namespace SimpleDigitalWallet {
 			this->addAdminPanel->TabIndex = 1;
 			this->addAdminPanel->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Admin_UI::transactionsPanel_Paint);
 			// 
+            // fadetimer
+            // 
+			this->Opacity = 0.0;
+			Timer^ fadeTimer = gcnew Timer();
+			fadeTimer->Interval = 20; // milliseconds
+			fadeTimer->Tick += gcnew EventHandler(this, &Admin_UI::FadeIn);
+			fadeTimer->Start();
+			// 
 			// invalidLabel
 			// 
 			this->invalidLabel->AutoSize = true;
@@ -520,7 +528,7 @@ namespace SimpleDigitalWallet {
 			this->pictureBox1->TabStop = false;
 
 			// Set the image for pictureBox1 (with error handling)
-			System::String^ picturePath = "C:\\Users\\Ahmed Ali\\OneDrive\\Pictures\\Screenshots\\WhatsApp Image 2025-04-19 at 17.51.45_60757256.jpg";
+			System::String^ picturePath = "WhatsApp Image 2025-04-19 at 17.51.45_60757256.jpg";
 			if (System::IO::File::Exists(picturePath)) {
 				this->pictureBox1->Image = System::Drawing::Image::FromFile(picturePath);
 			}
@@ -1186,7 +1194,7 @@ namespace SimpleDigitalWallet {
 			this->logout_Admin_button->UseVisualStyleBackColor = true;
 			this->logout_Admin_button->Click += gcnew System::EventHandler(this, &Admin_UI::logout_Admin_button_Click);
 			// Set button image (with error handling)
-			System::String^ imagePath1 = "C:\\Users\\Ahmed Ali\\Downloads\\exit.png";
+			System::String^ imagePath1 = "exit.png";
 			if (System::IO::File::Exists(imagePath1)) {
 				this->logout_Admin_button->Image = System::Drawing::Image::FromFile(imagePath1);
 			}
@@ -1222,7 +1230,7 @@ namespace SimpleDigitalWallet {
 			this->button_to_Admin->Click += gcnew System::EventHandler(this, &Admin_UI::button_to_Admin_Click);
 
 			// Set button image (with error handling)
-			System::String^ adminImagePath = "C:\\Users\\Ahmed Ali\\Downloads\\user (2).png";
+			System::String^ adminImagePath = "user (2).png";
 			if (System::IO::File::Exists(adminImagePath)) {
 				this->button_to_Admin->Image = System::Drawing::Image::FromFile(adminImagePath);
 			}
@@ -1249,7 +1257,7 @@ namespace SimpleDigitalWallet {
 			this->button_to_users->Click += gcnew System::EventHandler(this, &Admin_UI::button_to_users_Click);
 
 			// Set button image (with error handling)
-			System::String^ usersImagePath = "C:\\Users\\Ahmed Ali\\Downloads\\profile-user (1).png";
+			System::String^ usersImagePath = "profile-user (1).png";
 			if (System::IO::File::Exists(usersImagePath)) {
 				this->button_to_users->Image = System::Drawing::Image::FromFile(usersImagePath);
 			}
@@ -2197,6 +2205,15 @@ namespace SimpleDigitalWallet {
 	}
 	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
+    void Admin_UI::FadeIn(Object^ sender, EventArgs^ e) {
+	   if (this->Opacity < 1.0) {
+		   this->Opacity += 0.05;
+	   }
+	   else {
+		   ((Timer^)sender)->Stop();
+	   }
+    }
+
 		   //private: System::Void addAdminPanel_VisibleChanged(System::Object^ sender, System::EventArgs^ e) {
 		   //	addAdminPanel->Hide();
 		   //	No_user_ms->Show();

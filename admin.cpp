@@ -27,7 +27,7 @@ void Admin::deleteUser(string k)
 {
     user::allusers.erase(k);
 }
-//SUGGEST AHMED IBRAHIM && AHMED EZZAT
+
 
 void Admin::updateUserData(string K, string Nname, string Nemail, string Nbalance, bool su)
 {
@@ -87,7 +87,7 @@ void Admin::deserialize(std::istream& is) {
 string Admin::xorEncryptDecrypt(const std::string& input, char key = 'K') {
     string output = input;
     for (char& c : output)
-        c ^= key;
+        c ^= key;    //c Xor key
     return output;
 }
 void Admin::saveAlladmins(const std::string& filename) {
