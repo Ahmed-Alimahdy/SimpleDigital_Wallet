@@ -888,6 +888,13 @@ namespace SimpleDigitalWallet {
 			// DownTransaction_button
 			// 
 			this->DownTransaction_button->BackColor = System::Drawing::Color::Green;
+			System::String^ DownTransaction = "pngegg (1).png";
+			if (System::IO::File::Exists(DownTransaction)) {
+				this->DownTransaction_button->BackgroundImage = System::Drawing::Image::FromFile(DownTransaction);
+			}
+			else {
+				System::Windows::Forms::MessageBox::Show("Image file not found:\n" + DownTransaction, "Image Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
 			this->DownTransaction_button->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->DownTransaction_button->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->DownTransaction_button->FlatAppearance->BorderSize = 0;
@@ -898,6 +905,7 @@ namespace SimpleDigitalWallet {
 			this->DownTransaction_button->TabIndex = 8;
 			this->DownTransaction_button->UseVisualStyleBackColor = false;
 			this->DownTransaction_button->Click += gcnew System::EventHandler(this, &Admin_UI::DownTransaction_button_Click);
+			// Set button image (with error handling)
 			// 
 			// Tr_label
 			// 
@@ -1194,9 +1202,9 @@ namespace SimpleDigitalWallet {
 			this->logout_Admin_button->UseVisualStyleBackColor = true;
 			this->logout_Admin_button->Click += gcnew System::EventHandler(this, &Admin_UI::logout_Admin_button_Click);
 			// Set button image (with error handling)
-			System::String^ imagePath1 = "exit.png";
+			System::String^ imagePath1 = "logout_icon_151219.png";
 			if (System::IO::File::Exists(imagePath1)) {
-				this->logout_Admin_button->Image = System::Drawing::Image::FromFile(imagePath1);
+				this->logout_Admin_button->BackgroundImage = System::Drawing::Image::FromFile(imagePath1);
 			}
 			else {
 				System::Windows::Forms::MessageBox::Show("Image file not found:\n" + imagePath1, "Image Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -1230,9 +1238,9 @@ namespace SimpleDigitalWallet {
 			this->button_to_Admin->Click += gcnew System::EventHandler(this, &Admin_UI::button_to_Admin_Click);
 
 			// Set button image (with error handling)
-			System::String^ adminImagePath = "user (2).png";
+			System::String^ adminImagePath = "Transaction_management.png";
 			if (System::IO::File::Exists(adminImagePath)) {
-				this->button_to_Admin->Image = System::Drawing::Image::FromFile(adminImagePath);
+				this->button_to_Admin->BackgroundImage = System::Drawing::Image::FromFile(adminImagePath);
 			}
 			else {
 				System::Windows::Forms::MessageBox::Show("Image file not found:\n" + adminImagePath, "Image Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -1257,9 +1265,9 @@ namespace SimpleDigitalWallet {
 			this->button_to_users->Click += gcnew System::EventHandler(this, &Admin_UI::button_to_users_Click);
 
 			// Set button image (with error handling)
-			System::String^ usersImagePath = "profile-user (1).png";
+			System::String^ usersImagePath = "favpng_d6c110590af36fd69ed515d36cb182d0.png";
 			if (System::IO::File::Exists(usersImagePath)) {
-				this->button_to_users->Image = System::Drawing::Image::FromFile(usersImagePath);
+				this->button_to_users->BackgroundImage = System::Drawing::Image::FromFile(usersImagePath);
 			}
 			else {
 				System::Windows::Forms::MessageBox::Show("Image file not found:\n" + usersImagePath, "Image Error", MessageBoxButtons::OK, MessageBoxIcon::Error);

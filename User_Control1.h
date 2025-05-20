@@ -149,7 +149,7 @@ namespace SimpleDigitalWallet {
 			// pictureBox1
 			// 
 			//this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			pictureBox1->Image = Image::FromFile("profile-user (1).png");
+			pictureBox1->Image = Image::FromFile("pngegg.png");
 			this->pictureBox1->Location = System::Drawing::Point(16, 14);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(82, 88);
